@@ -28,3 +28,41 @@ ng g s core/services/firestore --skip-tests
 ng g s core/services/auth --skip-tests
 
 ```
+
+```bash
+# Layout's
+ng g c layout/navbar --skip-tests
+ng g c layout/footer --skip-tests
+
+```
+
+```bash
+# Guards
+ng g guard core/guards/auth --skip-tests
+ng g guard core/guards/admin --skip-tests
+
+```
+
+```bash
+# Guards
+ng g i core/interfaces/usuario --type=model
+```
+
+# Instalación de Dependencias y Librerias:
+ 
+```bash
+# Descargar Tailwind
+npm install tailwindcss @tailwindcss/postcss postcss --force
+
+# Descargar Sweet Alert 2
+npm install sweetalert2 
+```
+**Nota:**  Crear un archivo en la raiz ".postcssrc.json" y pega el siguiente código
+```
+{
+  "plugins": {
+    "@tailwindcss/postcss": {}
+  }
+}
+
+```
