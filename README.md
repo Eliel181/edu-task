@@ -12,6 +12,9 @@ Sistema Gestor de tareas, para uns institución educativa. Este sistema permite 
 ## Instalación
 
 Instrucciones para instalar:
+```bash
+# Instalar los modulos de node
+npm install
 
 ```bash
 # Crear el proyecto
