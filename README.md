@@ -15,6 +15,7 @@ Instrucciones para instalar:
 ```bash
 # Instalar los modulos de node
 npm install
+```
 
 ```bash
 # Crear el proyecto
