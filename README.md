@@ -18,6 +18,21 @@ Instrucciones para instalar:
 ng new edu-task --routing --style=css
 ```
 
+# Configuración de la Conexión a Firebase:
+
+Ejecutamos el siguiente comando para agregar firebase al proyecto
+
+```bash
+npm install firebase @angular/fire@19.2.0
+
+```
+Y luego agregamos el environment
+
+```bash
+ng g environments
+
+```
+
 ## Comandos
 
 Estructura del Proyecto y Comando
