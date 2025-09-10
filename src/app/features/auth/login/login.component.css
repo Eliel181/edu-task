@@ -1,0 +1,89 @@
+.shadow__btn {
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 7px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  transition: 0.5s;
+  transition-property: box-shadow;
+
+  background: rgb(68, 121, 216); /* Azul */
+  box-shadow: 0 0 25px rgb(68, 121, 216);
+}
+
+.shadow__btn:hover {
+  box-shadow:
+    0 0 5px rgb(68, 121, 216),
+    0 0 25px rgb(68, 121, 216),
+    0 0 50px rgb(68, 121, 216),
+    0 0 100px rgb(68, 121, 216);
+}
+
+.shadow__btn__alt {
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #000000;
+  border-radius: 7px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  transition: 0.5s;
+  transition-property: box-shadow;
+
+  background: rgb(200, 200, 200); /* Gris claro */
+  box-shadow: 0 0 25px rgb(200, 200, 200);
+}
+
+.shadow__btn__alt:hover {
+  box-shadow:
+    0 0 5px rgb(200, 200, 200),
+    0 0 25px rgb(200, 200, 200),
+    0 0 50px rgb(200, 200, 200),
+    0 0 100px rgb(200, 200, 200);
+}
+
+
+/* Input */
+
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0 1em 0;
+  max-width: 100%;
+  position: relative;
+}
+
+.inputGroup input {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 100%;
+}
+
+.inputGroup label {
+  font-size: 100%;
+  position: absolute;
+  left: 0;
+  padding: 0.8em;
+  margin-left: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: rgb(100, 100, 100);
+  background-color: transparent;
+}
+
+.inputGroup :is(input:focus, input:valid)~label {
+  transform: translateY(-50%) scale(.9);
+  margin: 0em;
+  margin-left: 1.3em;
+  padding: 0.4em;
+  background-color: #ffffff;
+}
+
+.inputGroup :is(input:focus, input:valid) {
+  border-color: #4378d9;
+}
