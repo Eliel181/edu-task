@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from '@angular/fire/auth';
 import { FirestoreService } from './firestore.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../interfaces/usuario.model';
@@ -37,6 +37,60 @@ export class AuthService {
     } catch (error) {
       console.error('Error: en el register() ', error);
       alert('No se pudo completar el registro, es posble que el correo este en uso');
+    }
+  }
+
+  async login({ email, password }: any) {
+    try {
+      await signInWithEmailAndPassword(this.auth, email, password);
+      this.router.navigate(['']);
+    } catch (error) {
+      console.error("Error en el login", error);
+    }
+  }
+
+  async loginWithGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(this.auth, provider);
+      const { user } = userCredential;
+
+      const displayName = user.displayName || "";
+
+      const partes = displayName.trim().split(" ");
+      let nombre = "";
+      let apellido = "";
+
+      if (partes.length > 1) {
+        nombre = partes[0];
+        apellido = partes[partes.length - 1]; // último elemento
+      } else {
+        nombre = displayName; // si solo hay un nombre
+      }
+
+      let appUser = await this.firestoreService.getDocumentById<Usuario>('usuarios', user.uid)
+
+      //si me trae información significa que el usuario ya esta logueado
+      if (!appUser) {
+        console.log(`Usuario con UID:${user.uid} no encontrado, Creando doc nuevo...`);
+        const newUser: Usuario = {
+          uid: user.uid,
+          email: user.email!,
+          telefono: '',
+          apellido: apellido,
+          nombre: nombre,
+          rol: 'Docente',
+          perfil: user.photoURL || ''
+        };
+
+        await this.firestoreService.setDocument('usuarios', user.uid, newUser);
+
+        this.currentUser.set(newUser);
+        this.router.navigate(['/']);
+
+      }
+    } catch (error) {
+      console.error('Error en login con google', error);
     }
   }
 }
