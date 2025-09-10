@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { FirestoreService } from './firestore.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../interfaces/usuario.model';
@@ -14,7 +14,17 @@ export class AuthService {
 
   currentUser: WritableSignal<Usuario | null | undefined> = signal(undefined);
 
-  constructor() { }
+  constructor() {
+    onAuthStateChanged(this.auth,
+      async (firebaseUser) => {
+        if (firebaseUser) {
+          const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
+          this.currentUser.set(user || null);
+        } else {
+          this.currentUser.set(null);
+        }
+      });
+  }
 
   // Metodo para el Registro
   async register({ email, password, telefono, apellido, nombre }: any) {
@@ -37,6 +47,25 @@ export class AuthService {
     } catch (error) {
       console.error('Error: en el register() ', error);
       alert('No se pudo completar el registro, es posble que el correo este en uso');
+    }
+  }
+
+  // Metodo para enviar un email de confirmacion
+  async sendEmailVerification(): Promise<void> {
+    const firebaseUser = this.auth.currentUser;
+
+    if (!firebaseUser) {
+      throw new Error('No hay usuario autenticado');
+    }
+    if (firebaseUser.emailVerified) {
+      throw new Error('No hay usuario autenticado');
+    }
+    try {
+      await sendEmailVerification(firebaseUser);
+      console.log(`Correo de verificación enviado a: ${firebaseUser.email}`);
+    } catch (error) {
+      console.error('Error al enviar verificación:', error);
+      throw new Error('No se pudo enviar el correo de verificación');
     }
   }
 
@@ -92,5 +121,12 @@ export class AuthService {
     } catch (error) {
       console.error('Error en login con google', error);
     }
+  }
+
+  // Metodo para el LogOut
+  async logOut() {
+    await signOut(this.auth);
+    this.currentUser.set(null);
+    this.router.navigate(['/login']);
   }
 }
