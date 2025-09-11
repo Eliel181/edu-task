@@ -76,7 +76,7 @@
   background-color: transparent;
 }
 
-.inputGroup :is(input:focus, input:valid)~label {
+.inputGroup :is(input:focus, input:valid, input:-webkit-autofill)~label {
   transform: translateY(-50%) scale(.9);
   margin: 0em;
   margin-left: 1.3em;
@@ -86,4 +86,9 @@
 
 .inputGroup :is(input:focus, input:valid) {
   border-color: #4378d9;
+}
+
+/* estilo para cuando se usa el autocompletado */
+.inputGroup input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
 }
