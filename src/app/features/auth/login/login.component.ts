@@ -16,31 +16,32 @@ export class LoginComponent {
 
   isSubmitting = false;
 
-  loginForm:FormGroup;
+  loginForm: FormGroup;
+  errorMessage = null;
 
-  constructor(){
+  constructor() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     })
   }
 
-  async onSubmit():Promise<void>{
+  async onSubmit(): Promise<void> {
 
-    if(this.loginForm.invalid){
+    if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched;
       return;
     }
 
     this.isSubmitting = true;
+    this.errorMessage = null;
 
     try {
 
       await this.authService.login(this.loginForm.value)
 
-    } catch (error) {
-      console.error('Error en el login ', error);
-      alert('Credenciales Incorrectas, Por favor verificar los datos ...')
+    } catch (error: any) {
+      this.errorMessage = error.message;
     } finally {
       this.isSubmitting = false;
     }

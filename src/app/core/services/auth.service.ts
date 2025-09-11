@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification, onAuthStateChanged, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification, onAuthStateChanged, signOut, sendPasswordResetEmail } from '@angular/fire/auth';
 import { FirestoreService } from './firestore.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../interfaces/usuario.model';
@@ -71,10 +71,19 @@ export class AuthService {
 
   async login({ email, password }: any) {
     try {
-      await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user;
+
+      await user.reload();
+
+      if (!user.emailVerified) {
+        throw new Error('Debes verificar tu correo antes de ingresar.');
+      }
+
       this.router.navigate(['']);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error en el login", error);
+      throw new Error(error.message || 'Error en el login, revisa tus credenciales.');
     }
   }
 
@@ -129,4 +138,14 @@ export class AuthService {
     this.currentUser.set(null);
     this.router.navigate(['/login']);
   }
+
+  async resetPassword(email: string): Promise<void> {
+    // Metodo para enviar email de recuperacion de la contraseña
+  try {
+    await sendPasswordResetEmail(this.auth, email);
+  } catch (error: any) {
+    console.error("Error al enviar email de recuperación", error);
+    throw new Error(error.message || 'No se pudo enviar el email de recuperación.');
+  }
+}
 }
