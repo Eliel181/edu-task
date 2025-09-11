@@ -69,6 +69,7 @@ ng g i core/interfaces/usuario --type=model
 ```bash
 # Admin
 ng g c features/admin/gestion-usuarios --skip-tests
+ng g c features/admin/edit-usuario --skip-tests
 
 # Public
 ng g c features/auth/login --skip-tests
