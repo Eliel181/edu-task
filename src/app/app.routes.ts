@@ -19,6 +19,9 @@ export const routes: Routes = [
     path: 'gestion-usuarios', loadComponent: () => import('./features/admin/gestion-usuarios/gestion-usuarios.component').then(m => m.GestionUsuariosComponent), canActivate: [authGuard, adminGuard]
   },
   {
+    path: 'edicion-usuario/:id', loadComponent: () => import('./features/admin/edit-usuario/edit-usuario.component').then(m => m.EditUsuarioComponent), canActivate: [authGuard, adminGuard]
+  },
+  {
     path: 'mi-perfil', loadComponent: () => import('./features/auth/perfil/perfil.component').then(m => m.PerfilComponent), canActivate: [authGuard]
   },
   {
