@@ -1,8 +1,10 @@
 import { FirestoreService } from './../../../core/services/firestore.service';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
+import { AfterViewChecked, Component, computed, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { Usuario } from '../../../core/interfaces/usuario.model';
 import Swal from 'sweetalert2';
+
+declare const HSStaticsMethods: any;
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -10,7 +12,10 @@ import Swal from 'sweetalert2';
   templateUrl: './gestion-usuarios.component.html',
   styleUrl: './gestion-usuarios.component.css'
 })
-export class GestionUsuariosComponent implements OnInit{
+export class GestionUsuariosComponent implements OnInit, AfterViewChecked{
+  ngAfterViewChecked(): void {
+    HSStaticsMethods.autoInit();
+  }
   private firestoreService: FirestoreService = inject(FirestoreService);
   private usuariosOriginales: WritableSignal<Usuario[]> = signal([]);
   isLoading = signal(true)
