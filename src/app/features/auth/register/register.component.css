@@ -76,7 +76,7 @@
   background-color: transparent;
 }
 
-.inputGroup :is(input:focus, input:valid)~label {
+.inputGroup :is(input:focus, input:valid, input:-webkit-autofill)~label {
   transform: translateY(-50%) scale(.9);
   margin: 0em;
   margin-left: 1.3em;

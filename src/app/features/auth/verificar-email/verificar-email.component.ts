@@ -13,11 +13,12 @@ export class VerificarEmailComponent {
   
   constructor() {
     // Obtener el email desde sessionStorage
+    
     this.email = sessionStorage.getItem('pendingVerificationEmail') || '';
     // si no hay email redirigimos
-    // if (!this.email) {
-    //   this.router.navigate(['/login']);
-    // }
+    if (!this.email) {
+      this.router.navigate(['/login']);
+    }
   }
 
   volverLogin() {
