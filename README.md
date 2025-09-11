@@ -63,8 +63,16 @@ ng g guard core/guards/admin --skip-tests
 ```
 
 ```bash
-# Guards
+# Interfaces
 ng g i core/interfaces/usuario --type=model
+```
+```bash
+# Admin
+ng g c features/admin/gestion-usuarios --skip-tests
+
+# Public
+ng g c features/auth/login --skip-tests
+ng g c features/auth/register --skip-tests
 ```
 
 # Instalación de Dependencias y Librerias:

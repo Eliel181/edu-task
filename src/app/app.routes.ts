@@ -10,4 +10,7 @@ export const routes: Routes = [
   {
     path:'verificar-email', loadComponent:() => import('./features/auth/verificar-email/verificar-email.component').then(m => m.VerificarEmailComponent)
   },
+  {
+    path:'gestion-usuarios', loadComponent:() => import('./features/admin/gestion-usuarios/gestion-usuarios.component').then(m => m.GestionUsuariosComponent)
+  },
 ];
