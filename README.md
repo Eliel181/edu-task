@@ -71,6 +71,10 @@ ng g i core/interfaces/usuario --type=model
 ng g c features/admin/gestion-usuarios --skip-tests
 ng g c features/admin/edit-usuario --skip-tests
 
+# Tasks
+ng g component features/tasks/gestion-tareas --skip-tests
+ng g component features/tasks/edit-tarea --skip-tests
+
 # Public
 ng g c features/auth/login --skip-tests
 ng g c features/auth/register --skip-tests
