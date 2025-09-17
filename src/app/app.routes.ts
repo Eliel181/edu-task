@@ -15,12 +15,23 @@ export const routes: Routes = [
   {
     path: 'reset-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
   },
+
+  // Rutas para Gestiones de la aplicacion
   {
     path: 'gestion-usuarios', loadComponent: () => import('./features/admin/gestion-usuarios/gestion-usuarios.component').then(m => m.GestionUsuariosComponent), canActivate: [authGuard, adminGuard]
   },
   {
     path: 'edicion-usuario/:id', loadComponent: () => import('./features/admin/edit-usuario/edit-usuario.component').then(m => m.EditUsuarioComponent), canActivate: [authGuard, adminGuard]
   },
+
+  {
+    path: 'gestion-tareas', loadComponent: () => import('./features/tasks/gestion-tareas/gestion-tareas.component').then(m => m.GestionTareasComponent), canActivate: [authGuard]
+  },
+  {
+    path: 'edicion-tarea/:id', loadComponent: () => import('./features/tasks/edit-tarea/edit-tarea.component').then(m => m.EditTareaComponent), canActivate: [authGuard]
+  },
+
+
   {
     path: 'mi-perfil', loadComponent: () => import('./features/auth/perfil/perfil.component').then(m => m.PerfilComponent), canActivate: [authGuard]
   },
