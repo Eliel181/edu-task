@@ -77,6 +77,10 @@ ng g c features/admin/edit-usuario --skip-tests
 ng g c features/schools/school-list --skip-tests
 ng g c features/schools/school-management --skip-tests
 
+# Tasks
+ng g component features/tasks/gestion-tareas --skip-tests
+ng g component features/tasks/edit-tarea --skip-tests
+
 # Public
 ng g c features/auth/login --skip-tests
 ng g c features/auth/register --skip-tests
