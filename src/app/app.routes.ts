@@ -28,6 +28,9 @@ export const routes: Routes = [
     path: 'gestion-tareas', loadComponent: () => import('./features/tasks/gestion-tareas/gestion-tareas.component').then(m => m.GestionTareasComponent), canActivate: [authGuard]
   },
   {
+    path: 'edicion-tarea', loadComponent: () => import('./features/tasks/edit-tarea/edit-tarea.component').then(m => m.EditTareaComponent), canActivate: [authGuard]
+  },
+  {
     path: 'edicion-tarea/:id', loadComponent: () => import('./features/tasks/edit-tarea/edit-tarea.component').then(m => m.EditTareaComponent), canActivate: [authGuard]
   },
 
@@ -35,14 +38,21 @@ export const routes: Routes = [
   {
     path: 'mi-perfil', loadComponent: () => import('./features/auth/perfil/perfil.component').then(m => m.PerfilComponent), canActivate: [authGuard]
   },
+
+  // Ruta para las tareas de un empleado
+  {
+    path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
+  },
+  
+
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: '/home',
+    redirectTo: '/login',
     pathMatch: 'full'
   }
 ];
