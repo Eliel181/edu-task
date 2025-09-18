@@ -1,6 +1,7 @@
 export type NivelEducativo = 'Primario' | 'Secundario' | 'Terciario' | 'Universitario';
 
 export interface Escuela {
+  id?:string;
   nombreCompleto:string;
   nombreCorto:string;
   cue:string;
