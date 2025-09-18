@@ -56,7 +56,7 @@
               <!-- Mega Menu -->
               <div
                 class="hs-dropdown [--strategy:static] md:[--strategy:absolute] [--adaptive:none] [--is-collapse:true] md:[--is-collapse:false] ">
-                @if(currentUser()?.rol === 'Admin'){
+
                 <button id="hs-header-base-mega-menu-fullwidth" type="button"
                   class="hs-dropdown-toggle w-full p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                   aria-haspopup="menu" aria-expanded="false" aria-label="Mega Menu">
@@ -75,14 +75,16 @@
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>
-                }
+
                 <div
                   class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 relative w-full min-w-60 hidden z-10 top-full start-0 before:absolute before:-top-5 before:start-0 before:w-full before:h-5"
                   role="menu" aria-orientation="vertical" aria-labelledby="hs-header-base-mega-menu-fullwidth">
                   <div class="md:mx-6 lg:mx-8 md:bg-white md:rounded-lg md:shadow-md dark:md:bg-neutral-800">
                     <!-- Grid -->
                     <div class="py-1 md:p-2 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      @if(currentUser()?.rol === 'Admin'){
                       <div class="flex flex-col">
+
                         <!-- Link -->
                         <a routerLink="/gestion-usuarios"
                           class="p-3 flex gap-x-4 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 rounded-lg dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
@@ -135,9 +137,10 @@
                           </div>
                         </a>
                         <!-- End Link -->
+
                       </div>
                       <!-- End Col -->
-
+                      }
                       <div class="flex flex-col">
                         <!-- Link -->
                         <a class="p-3 flex gap-x-4 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 rounded-lg dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"

@@ -49,9 +49,9 @@ export const routes: Routes = [
   },
 
   // Ruta para las tareas de un empleado
-  {
-    //path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
-  },
+  // {
+  //   path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
+  // },
 
 
   {
