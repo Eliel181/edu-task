@@ -45,6 +45,7 @@ Estructura del Proyecto y Comando
 # Servicios
 ng g s core/services/firestore --skip-tests
 ng g s core/services/auth --skip-tests
+ng g s core/services/school --skip-tests
 
 ```
 
@@ -65,11 +66,16 @@ ng g guard core/guards/admin --skip-tests
 ```bash
 # Interfaces
 ng g i core/interfaces/usuario --type=model
+ng g i core/interfaces/escuela --type=model
 ```
 ```bash
 # Admin
 ng g c features/admin/gestion-usuarios --skip-tests
 ng g c features/admin/edit-usuario --skip-tests
+
+# Schools
+ng g c features/schools/school-list --skip-tests
+ng g c features/schools/school-management --skip-tests
 
 # Tasks
 ng g component features/tasks/gestion-tareas --skip-tests

@@ -1,0 +1,108 @@
+
+/* Input */
+
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0 1em 0;
+  max-width: 100%;
+  position: relative;
+}
+
+.inputGroup input {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 100%;
+}
+
+.inputGroup label {
+  font-size: 100%;
+  position: absolute;
+  left: 0;
+  padding: 0.8em;
+  margin-left: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: rgb(100, 100, 100);
+  background-color: transparent;
+}
+
+.inputGroup :is(input:focus, input:valid, input:-webkit-autofill)~label {
+  transform: translateY(-50%) scale(.9);
+  margin: 0em;
+  margin-left: 1.3em;
+  padding: 0.4em;
+  background-color: #ffffff;
+}
+
+.inputGroup :is(input:focus, input:valid) {
+  border-color: #4378d9;
+}
+
+/* estilo para cuando se usa el autocompletado */
+.inputGroup input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* ********************************************************************** */
+/* Select */
+.selectGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0;
+  max-width: 100%;
+  position: relative;
+}
+
+.selectGroup select {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 100%;
+  appearance: none; /* elimina el estilo nativo */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+/* Flechita custom (opcional) */
+.selectGroup::after {
+  content: "▼";
+  font-size: 0.8em;
+  position: absolute;
+  right: 1.2em;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgb(100, 100, 100);
+}
+
+.selectGroup label {
+  font-size: 100%;
+  position: absolute;
+  left: 0;
+  padding: 0.8em;
+  margin-left: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: rgb(100, 100, 100);
+  background-color: transparent;
+}
+
+/* Cuando el select está en focus o tiene un valor seleccionado */
+.selectGroup :is(select:focus, select:valid) ~ label {
+  transform: translateY(-50%) scale(.9);
+  margin: 0em;
+  margin-left: 1.3em;
+  padding: 0.4em;
+  background-color: #ffffff;
+}
+
+.selectGroup :is(select:focus, select:valid) {
+  border-color: #4378d9;
+}

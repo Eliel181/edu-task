@@ -43,10 +43,10 @@
    class="relative p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
   <!-- Icono original de Mis Tareas -->
 
-  
+
   <!-- Texto "Mis Tareas" -->
   <span class="hidden md:block">Mis Tareas</span>
-  
+
   <!-- Contador de notificaciones -->
   <span class="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500 text-white">
     99+
@@ -56,6 +56,7 @@
               <!-- Mega Menu -->
               <div
                 class="hs-dropdown [--strategy:static] md:[--strategy:absolute] [--adaptive:none] [--is-collapse:true] md:[--is-collapse:false] ">
+
                 <button id="hs-header-base-mega-menu-fullwidth" type="button"
                   class="hs-dropdown-toggle w-full p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                   aria-haspopup="menu" aria-expanded="false" aria-label="Mega Menu">
@@ -81,7 +82,9 @@
                   <div class="md:mx-6 lg:mx-8 md:bg-white md:rounded-lg md:shadow-md dark:md:bg-neutral-800">
                     <!-- Grid -->
                     <div class="py-1 md:p-2 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      @if(currentUser()?.rol === 'Admin'){
                       <div class="flex flex-col">
+
                         <!-- Link -->
                         <a routerLink="/gestion-usuarios"
                           class="p-3 flex gap-x-4 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 rounded-lg dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
@@ -119,8 +122,8 @@
                         <!-- End Link -->
 
                         <!-- Link -->
-                        <a class="p-3 flex gap-x-4 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 rounded-lg dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                          href="#">
+                        <a routerLink="/gestion-escuelas" class="p-3 flex gap-x-4 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 rounded-lg dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                          >
                           <svg class="shrink-0 size-4 mt-1 text-gray-800 dark:text-neutral-200"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -129,15 +132,15 @@
                             <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
                           </svg>
                           <div class="grow">
-                            <p class="font-medium text-sm text-gray-800 dark:text-neutral-200">API Reference</p>
-                            <p class="text-sm text-gray-500 dark:text-neutral-500">Build custom integrations with our
-                              first-class API.</p>
+                            <p class="font-medium text-sm text-gray-800 dark:text-neutral-200">Gestión Escuelas</p>
+                            <p class="text-sm text-gray-500 dark:text-neutral-500">Administración de las Escuelas</p>
                           </div>
                         </a>
                         <!-- End Link -->
+
                       </div>
                       <!-- End Col -->
-
+                      }
                       <div class="flex flex-col">
                         <!-- Link -->
                         <a class="p-3 flex gap-x-4 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 rounded-lg dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
@@ -259,7 +262,7 @@
                 Blog
               </a> -->
 
-              <!-- Inicio Botón Modo Oscuro -->
+                          <!-- Inicio Botón Modo Oscuro -->
               <div
                 class="flex flex-col gap-y-3 sm:gap-y-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
                 <div class="hs-dropdown relative inline-flex" data-hs-theme-switch>

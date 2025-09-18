@@ -34,16 +34,25 @@ export const routes: Routes = [
     path: 'edicion-tarea/:id', loadComponent: () => import('./features/tasks/edit-tarea/edit-tarea.component').then(m => m.EditTareaComponent), canActivate: [authGuard]
   },
 
+  {
+    path: 'gestion-escuelas', loadComponent: () => import('./features/schools/school-list/school-list.component').then(m => m.SchoolListComponent), canActivate: [authGuard, adminGuard]
+  },
+  {
+    path: 'form-escuela/nuevo', loadComponent: () => import('./features/schools/school-management/school-management.component').then(m => m.SchoolManagementComponent), canActivate: [authGuard, adminGuard]
+  },
+  {
+    path: 'form-escuela/:id', loadComponent: () => import('./features/schools/school-management/school-management.component').then(m => m.SchoolManagementComponent), canActivate: [authGuard, adminGuard]
+  },
 
   {
     path: 'mi-perfil', loadComponent: () => import('./features/auth/perfil/perfil.component').then(m => m.PerfilComponent), canActivate: [authGuard]
   },
 
   // Ruta para las tareas de un empleado
-  {
-    path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
-  },
-  
+  // {
+  //   path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
+  // },
+
 
   {
     path: '',

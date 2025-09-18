@@ -1,0 +1,168 @@
+<!-- Card Section -->
+<div class="max-w-7xl px-4 py-10 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
+
+    <div class="bg-white rounded-xl shadow-xs p-4 sm:p-7">
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800">
+                Formulario Escuela
+            </h2>
+            <p class="text-sm text-gray-600">
+                Administra Escuelas.
+            </p>
+
+        </div>
+        <form>
+
+
+           <div class="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-6">
+              <!-- NOMBRE COMPLETO -->
+              <div class="col-span-1 md:col-span-3">
+                <div class="inputGroup">
+                  <input name="nombreCompleto" formControlName="nombreCompleto" id="nombreCompleto" required>
+                  <label for="nombreCompleto">Nombre Completo</label>
+                </div>
+              </div>
+
+              <!-- NOMBRE CORTO -->
+              <div class="col-span-1 md:col-span-3 md:col-start-4">
+                <div class="inputGroup">
+                  <input name="nombreCorto" formControlName="nombreCorto" id="nombreCorto" required>
+                  <label for="nombreCorto">Nombre Corto</label>
+                </div>
+              </div>
+
+              <!-- CUE -->
+              <div class="col-span-1 md:col-span-2 md:row-start-2">
+                <div class="inputGroup">
+                  <input name="cue" formControlName="cue" id="cue" required>
+                  <label for="cue">CUE</label>
+                </div>
+              </div>
+
+              <!-- DIRECCIÓN -->
+              <div class="col-span-1 md:col-span-4 md:col-start-3 md:row-start-2">
+                <div class="inputGroup">
+                  <input name="direccion" formControlName="direccion" id="direccion" required>
+                  <label for="direccion">Dirección</label>
+                </div>
+              </div>
+
+              <!-- TELÉFONO -->
+              <div class="col-span-1 md:col-span-2 md:row-start-3">
+                <div class="inputGroup">
+                  <input name="telefono" formControlName="telefono" id="telefono" required>
+                  <label for="telefono">Teléfono</label>
+                </div>
+              </div>
+
+              <!-- EMAIL -->
+              <div class="col-span-1 md:col-span-2 md:col-start-3 md:row-start-3">
+                <div class="inputGroup">
+                  <input name="email" formControlName="email" id="email" required>
+                  <label for="email">Email</label>
+                </div>
+              </div>
+
+              <!-- PAGINA WEB -->
+              <div class="col-span-1 md:col-span-2 md:col-start-5 md:row-start-3">
+                <div class="inputGroup">
+                  <input name="paginaWeb" formControlName="paginaWeb" id="paginaWeb" required>
+                  <label for="paginaWeb">Sitio Web (Opcional)</label>
+                </div>
+              </div>
+
+              <!-- DIRECTOR -->
+              <div class="col-span-1 md:col-span-2 md:row-start-4">
+                <div class="selectGroup">
+                  <select name="categoria" formControlName="categoria" id="categoria" required>
+                    <option value="" disabled selected></option>
+                    @for (direct of directores(); track direct.uid) {
+                    <option [value]="direct.uid">{{direct.nombre}} {{direct.apellido}}</option>
+                    }
+                  </select>
+                  <label for="categoria">Director</label>
+                </div>
+              </div>
+
+              <!-- MATRICULA TOTAL -->
+              <div class="col-span-1 md:col-span-4 md:col-start-3 md:row-start-4">
+                <div class="inputGroup">
+                  <input name="matriculaTotal" formControlName="matriculaTotal" id="matriculaTotal" required>
+                  <label for="matriculaTotal">Matrícula Total</label>
+                </div>
+              </div>
+
+              <!-- NIVEL EDUCATIVO -->
+              <div class="col-span-1 md:col-span-5 md:row-start-5">
+                <div class="selectGroup">
+                  <select name="nivel" formControlName="nivel" id="nivel" required>
+                    <option value="" disabled selected></option>
+                    <option value="Primario">Primario</option>
+                    <option value="Secundario">Secundario</option>
+                    <option value="Terciario">Terciario</option>
+                    <option value="Universitario">Universitario</option>
+                  </select>
+                  <label for="nivel">Nivel Educativo</label>
+                </div>
+              </div>
+
+              <!-- CANTIDAD EMPLEADOS -->
+              <div class="col-span-1 md:col-start-6 md:row-start-5">
+                <div class="inputGroup">
+                  <input name="cantEmpleados" formControlName="cantEmpleados" id="cantEmpleados" required>
+                  <label for="cantEmpleados">Empleados</label>
+                </div>
+              </div>
+
+              <!-- CANTIDAD ALUMNOS -->
+              <div class="col-span-1 md:col-span-2 md:row-start-6">
+                <div class="inputGroup">
+                  <input name="cantAlumnos" formControlName="cantAlumnos" id="cantAlumnos" required>
+                  <label for="cantAlumnos">Alumnos</label>
+                </div>
+              </div>
+
+              <!-- CANTIDAD DOCENTES -->
+              <div class="col-span-1 md:col-span-2 md:col-start-3 md:row-start-6">
+                <div class="inputGroup">
+                  <input name="cantDocentes" formControlName="cantDocentes" id="cantDocentes" required>
+                  <label for="cantDocentes">Docentes</label>
+                </div>
+              </div>
+
+              <!-- CANTIDAD ADMINISTRATIVOS -->
+              <div class="col-span-1 md:col-span-2 md:col-start-5 md:row-start-6">
+                <div class="inputGroup">
+                  <input name="cantAdministrativos" formControlName="cantAdministrativos" id="cantAdministrativos" required>
+                  <label for="cantAdministrativos">Administrativos</label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="mt-5 flex justify-end gap-x-2">
+                <button type="button" [disabled]="isSubmitting"
+                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50">
+                    Cancelar
+                </button>
+                <button type="submit" [disabled]="isSubmitting || !escuelaForm.dirty"
+                    class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none min-w-[140px]">
+
+                    @if (isSubmitting) {
+                    <div class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full text-white"
+                        role="status" aria-label="loading"></div>
+                    } @else {
+                    <span>Guardar Cambios</span>
+                    }
+
+                </button>
+
+            </div>
+        </form>
+    </div>
+    <!-- End Card -->
+
+</div>
+<!-- End Card Section -->
+
+
