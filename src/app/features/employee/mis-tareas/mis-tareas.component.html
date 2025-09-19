@@ -1,0 +1,192 @@
+<!-- my-tasks.component.html -->
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Header (sin cambios) -->
+    <div class="mb-10">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Mis Tareas</h1>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Gestiona y organiza tus asignaciones pendientes</p>
+        </div>
+        
+        <!-- Filtros y Ordenamiento (sin cambios) -->
+        <div class="flex items-center gap-2">
+          <div class="hs-dropdown relative inline-flex">
+            <button id="hs-dropdown-filter" type="button" 
+                    class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-xs hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer">
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              Filtrar
+            </button>
+            
+            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 mt-2 bg-white shadow-2xl rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700" 
+                 aria-labelledby="hs-dropdown-filter">
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+                Todas las tareas
+              </a>
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+                Pendientes
+              </a>
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+                En progreso
+              </a>
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+                Completadas
+              </a>
+            </div>
+          </div>
+          
+          <button class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-xs hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer">
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 16 4-4-4-4"></path>
+              <path d="m7 12 14 0"></path>
+              <path d="m21 8-4 4 4 4"></path>
+            </svg>
+            Ordenar
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- End Header -->
+
+    <!-- Grid de Tareas Mejorado -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      @for (tarea of tareas(); track tarea.id) {
+        <!-- NUEVO DISEÑO DE CARD - Inspirado en las imágenes -->
+        <div class="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-xs transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-gray-100 dark:border-gray-700/50 overflow-hidden">
+          
+          <!-- Encabezado con color según prioridad -->
+          <div class="p-5 pb-4" 
+               [ngClass]="{
+                 'bg-green-50 dark:bg-green-900/20': tarea.prioridad === 'Baja',
+                 'bg-yellow-50 dark:bg-yellow-900/20': tarea.prioridad === 'Media',
+                 'bg-orange-50 dark:bg-orange-900/20': tarea.prioridad === 'Alta',
+                 'bg-red-50 dark:bg-red-900/20': tarea.prioridad === 'Urgente'
+               }">
+            <div class="flex justify-between items-start mb-3">
+              <!-- Icono y título -->
+              <div class="flex items-center gap-3">
+                <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+                     [ngClass]="{
+                       'bg-green-100 text-green-600 dark:bg-green-800/40 dark:text-green-400': tarea.prioridad === 'Baja',
+                       'bg-yellow-100 text-yellow-600 dark:bg-yellow-800/40 dark:text-yellow-400': tarea.prioridad === 'Media',
+                       'bg-orange-100 text-orange-600 dark:bg-orange-800/40 dark:text-orange-400': tarea.prioridad === 'Alta',
+                       'bg-red-100 text-red-600 dark:bg-red-800/40 dark:text-red-400': tarea.prioridad === 'Urgente'
+                     }">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 line-clamp-2">
+                  {{ tarea.titulo }}
+                </h3>
+              </div>
+            </div>
+            
+            <!-- Badge de prioridad -->
+            <div class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium"
+                 [ngClass]="{
+                   'bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400': tarea.prioridad === 'Baja',
+                   'bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-400': tarea.prioridad === 'Media',
+                   'bg-orange-100 text-orange-800 dark:bg-orange-800/30 dark:text-orange-400': tarea.prioridad === 'Alta',
+                   'bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-400': tarea.prioridad === 'Urgente'
+                 }">
+              @if(tarea.prioridad === 'Baja') {
+                <span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+              } @else if(tarea.prioridad === 'Media') {
+                <span class="inline-block w-2 h-2 rounded-full bg-yellow-500"></span>
+              } @else if(tarea.prioridad === 'Alta') {
+                <span class="inline-block w-2 h-2 rounded-full bg-orange-500"></span>
+              } @else if(tarea.prioridad === 'Urgente') {
+                <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+              }
+              Prioridad {{ tarea.prioridad }}
+            </div>
+          </div>
+          
+          <!-- Contenido principal -->
+          <div class="p-5 pt-4 flex flex-col flex-grow">
+            <!-- Descripción -->
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-4 flex-grow">
+              {{ tarea.descripcion }}
+            </p>
+            
+            <!-- Información de estado y progreso -->
+            <div class="space-y-4">
+              <!-- Estado -->
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Estado</span>
+                <span class="inline-flex items-center gap-x-1.5 py-1 px-2.5 rounded-full text-xs font-medium"
+                      [ngClass]="{
+                        'bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-400': tarea.estado === 'Pendiente',
+                        'bg-amber-100 text-amber-800 dark:bg-amber-800/30 dark:text-amber-400': tarea.estado === 'En Proceso',
+                        'bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400': tarea.estado === 'Finalizada'
+                      }">
+                  {{ tarea.estado }}
+                </span>
+              </div>
+              
+              <!-- Barra de progreso -->
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Progreso</span>
+                  <span class="text-xs font-medium text-gray-800 dark:text-gray-200">{{ tarea.progreso }}%</span>
+                </div>
+                <div class="flex w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="flex flex-col justify-center rounded-full overflow-hidden transition-all duration-500" 
+                       [style.width.%]="tarea.progreso"
+                       [ngClass]="{
+                         'bg-blue-500': tarea.estado === 'Pendiente',
+                         'bg-amber-500': tarea.estado === 'En Proceso',
+                         'bg-green-500': tarea.estado === 'Finalizada'
+                       }">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Fecha de vencimiento -->
+              <div class="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+                <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0h18M12 12.75h.008v.008H12v-.008Z" />
+                  </svg>
+                  @if (tarea.fechaDeVencimiento) {
+                    <span>Vence: {{ tarea.fechaDeVencimiento.toDate() | date:'d MMM' }}</span>
+                  } @else {
+                    <span class="italic">Sin fecha</span>
+                  }
+                </div>
+                
+                <a [routerLink]="['/mis-tareas', tarea.id]" 
+                   class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+                  Ver detalles
+                  <svg class="shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <!-- Empty State (sin cambios) -->
+        <div class="sm:col-span-2 lg:col-span-3">
+          <div class="flex flex-col items-center justify-center text-center p-12 bg-white dark:bg-gray-800 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl">
+            <div class="flex justify-center items-center size-20 bg-blue-50 dark:bg-blue-900/20 rounded-full mb-6">
+              <svg class="size-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">¡Estás al día!</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">No tienes tareas pendientes. ¡Excelente trabajo!</p>
+          </div>
+        </div>
+      }
+    </div>
+    <!-- End Grid -->
+  </div>
+</div>

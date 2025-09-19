@@ -1,1 +1,325 @@
-<p>edit-tarea works!</p>
+@if (isLoading()) {
+<!-- Spinner de Carga de Página -->
+<div
+    class="fixed inset-0 bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 flex justify-center items-center z-50">
+    <div class="animate-spin inline-block size-8 border-[3px] border-blue-500 border-t-transparent rounded-full"
+        role="status">
+        <span class="sr-only">Cargando...</span>
+    </div>
+</div>
+} @else {
+
+<div class="min-h-screen bg-gray-50/50 dark:bg-gray-900 p-6">
+
+    <div class="mx-auto px-4 py-10 max-w-6xl">
+        <!-- El contenido principal solo se muestra si NO está cargando -->
+        @if (!isEditMode || !isLoading()) {
+
+        <!-- Formulario de Creación -->
+        @if (!isEditMode) {
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-8">Asignar Nueva Tarea</h1>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+                <form [formGroup]="tareaForm" (ngSubmit)="crearTarea()" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Columna Izquierda -->
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label for="create-titulo"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título de la
+                                    Tarea</label>
+                                <input id="create-titulo" formControlName="titulo"
+                                    class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200">
+                            </div>
+                            <!-- Selector de Prioridad -->
+<div class="space-y-2">
+  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Prioridad de la Tarea
+  </label>
+  <div class="flex flex-wrap gap-4">
+    <!-- Prioridad Baja -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Baja" id="prioridad-baja" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-green-600 focus:ring-green-500 
+                    checked:border-green-500 dark:checked:border-green-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'" 
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Baja'">
+      <label for="prioridad-baja" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-green-500 me-1"></span> Baja
+      </label>
+    </div>
+
+    <!-- Prioridad Media -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Media" id="prioridad-media" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-yellow-600 focus:ring-yellow-500 
+                    checked:border-yellow-500 dark:checked:border-yellow-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'"
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Media'">
+      <label for="prioridad-media" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-yellow-500 me-1"></span> Media
+      </label>
+    </div>
+
+    <!-- Prioridad Alta -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Alta" id="prioridad-alta" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-orange-600 focus:ring-orange-500 
+                    checked:border-orange-500 dark:checked:border-orange-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'"
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Alta'">
+      <label for="prioridad-alta" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-orange-500 me-1"></span> Alta
+      </label>
+    </div>
+
+    <!-- Prioridad Urgente -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Urgente" id="prioridad-urgente" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-red-600 focus:ring-red-500 
+                    checked:border-red-500 dark:checked:border-red-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'"
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Urgente'">
+      <label for="prioridad-urgente" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-red-500 me-1"></span> Urgente
+      </label>
+    </div>
+  </div>
+</div>
+                            <div class="space-y-2">
+                                <label for="create-descripcion"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción
+                                    detallada</label>
+                                <textarea id="create-descripcion" formControlName="descripcion" rows="5"
+                                    class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200"></textarea>
+                            </div>
+
+                        </div>
+                        <!-- Columna Derecha -->
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label for="create-asignadoA"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Asignar a</label>
+                                @if (empleados().length > 0) {
+                                <!-- SELECT NO MODIFICADO POR PETICIÓN DEL USUARIO -->
+                                <select id="create-asignadoA" formControlName="asignadoA" data-hs-select='{
+      "placeholder": "Seleccione un empleado",
+      "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+      "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 w-full text-nowrap cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-gray-800 dark:text-gray-200",
+      "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden overflow-y-auto",
+      "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-gray-200 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg",
+      "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>"
+    }' class="hidden">
+                                    <option value="" disabled>Seleccione un empleado</option>
+                                    @for (emp of empleados(); track emp.uid) {
+                                    <option [value]="emp.uid" [attr.data-image]="emp.perfil">{{ emp.apellido }}, {{
+                                        emp.nombre }}</option>
+                                    }
+                                </select>
+                                } @else {
+                                <div
+                                    class="py-3 px-4 block w-full border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm text-gray-400 dark:text-gray-500">
+                                    Cargando empleados...</div>
+                                }
+                            </div>
+                            <div class="space-y-2">
+                                <label for="create-fechaDeVencimiento"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de
+                                    Vencimiento (Opcional)</label>
+                                <input id="create-fechaDeVencimiento" type="date" formControlName="fechaDeVencimiento"
+                                    class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200"
+                                    style="color-scheme: dark;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <button type="button" routerLink="/gestion-tareas"
+                            class="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 hover:border-gray-300 dark:hover:bg-gray-700">Cancelar</button>
+                        <button type="submit" [disabled]="isSubmitting()"
+                            class="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 min-w-[120px]">
+                            @if(isSubmitting()) {
+                            <span
+                                class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span><span>Asignando...</span>
+                            } @else {
+                            <span>Asignar Tarea</span>
+                            }
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        }
+
+        <!-- Formulario de Edición -->
+        @if (isEditMode) {
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-8">Editar Tarea</h1>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+                <form [formGroup]="tareaFormEdicion" (ngSubmit)="guardarCambios()" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Columna Izquierda -->
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label for="edit-titulo"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título de la
+                                    Tarea</label>
+                                <input id="edit-titulo" formControlName="titulo"
+                                    class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200">
+                            </div>
+                            <!-- Selector de Prioridad -->
+<div class="space-y-2">
+  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Prioridad de la Tarea
+  </label>
+  <div class="flex flex-wrap gap-4">
+    <!-- Prioridad Baja -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Baja" id="prioridad-baja" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-green-600 focus:ring-green-500 
+                    checked:border-green-500 dark:checked:border-green-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'" 
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Baja'">
+      <label for="prioridad-baja" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-green-500 me-1"></span> Baja
+      </label>
+    </div>
+
+    <!-- Prioridad Media -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Media" id="prioridad-media" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-yellow-600 focus:ring-yellow-500 
+                    checked:border-yellow-500 dark:checked:border-yellow-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'"
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Media'">
+      <label for="prioridad-media" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-yellow-500 me-1"></span> Media
+      </label>
+    </div>
+
+    <!-- Prioridad Alta -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Alta" id="prioridad-alta" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-orange-600 focus:ring-orange-500 
+                    checked:border-orange-500 dark:checked:border-orange-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'"
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Alta'">
+      <label for="prioridad-alta" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-orange-500 me-1"></span> Alta
+      </label>
+    </div>
+
+    <!-- Prioridad Urgente -->
+    <div class="flex items-center">
+      <input type="radio" name="prioridad" value="Urgente" id="prioridad-urgente" 
+             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-red-600 focus:ring-red-500 
+                    checked:border-red-500 dark:checked:border-red-500 dark:bg-gray-800 
+                    dark:border-gray-600" 
+             [formControlName]="'prioridad'"
+             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Urgente'">
+      <label for="prioridad-urgente" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+        <span class="inline-block w-3 h-3 rounded-full bg-red-500 me-1"></span> Urgente
+      </label>
+    </div>
+  </div>
+</div>
+                            <div class="space-y-2">
+                                <label for="edit-descripcion"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción
+                                    detallada</label>
+                                <textarea id="edit-descripcion" formControlName="descripcion" rows="5"
+                                    class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200"></textarea>
+                            </div>
+                        </div>
+                        <!-- Columna Derecha -->
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label for="edit-asignadoA"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Asignar a</label>
+                                @if (empleados().length > 0) {
+                                <!-- SELECT NO MODIFICADO POR PETICIÓN DEL USUARIO -->
+                                <select id="edit-asignadoA" formControlName="asignadoA" data-hs-select='{
+                              "placeholder": "Seleccione un empleado",
+                              "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                              "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 w-full text-nowrap cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+                              "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto",
+                              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg",
+                              "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>"
+                            }' class="hidden">
+                                    <option value="" disabled>Seleccione un empleado</option>
+                                    @for (emp of empleados(); track emp.uid) {
+                                    <option [value]="emp.uid">{{ emp.apellido }}, {{ emp.nombre }}</option>
+                                    }
+                                </select>
+                                } @else {
+                                <div
+                                    class="py-3 px-4 block w-full border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm text-gray-400 dark:text-gray-500">
+                                    Cargando empleados...</div>
+                                }
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="edit-fechaDeVencimiento"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de
+                                    Vencimiento (Opcional)</label>
+                                <input id="edit-fechaDeVencimiento" type="date" formControlName="fechaDeVencimiento"
+                                    class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200"
+                                    style="color-scheme: dark;">
+                            </div>
+
+
+                                  
+
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label for="edit-estado"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Estado</label>
+                                    <select id="edit-estado" formControlName="estado"
+                                        class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-800 dark:text-gray-200">
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="En Proceso">En Proceso</option>
+                                        <option value="Finalizada">Finalizada</option>
+                                    </select>
+                                </div>
+                                @if (tareaFormEdicion.get('estado')?.value === 'En Proceso') {
+                                <div class="space-y-2">
+                                    <label for="edit-progreso"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Progreso ({{
+                                        tareaFormEdicion.get('progreso')?.value }}%)</label>
+                                    <input id="edit-progreso" type="range" min="1" max="99" formControlName="progreso"
+                                        class="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer">
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <button type="button" routerLink="/gestion-tareas"
+                            class="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 hover:border-gray-300 dark:hover:bg-gray-700">Cancelar</button>
+                        <button type="submit" [disabled]="isSubmitting()"
+                            class="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 min-w-[120px]">
+                            @if(isSubmitting()) {
+                            <span
+                                class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span><span>Guardando...</span>
+                            } @else {
+                            <span>Guardar Cambios</span>
+                            }
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        }
+        } @else {
+        <p class="text-center dark:text-gray-400">Cargando tarea...</p>
+        }
+    </div>
+
+</div>}

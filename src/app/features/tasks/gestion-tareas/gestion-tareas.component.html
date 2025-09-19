@@ -1,0 +1,305 @@
+<!-- task-list.component.html -->
+
+<div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <div>
+    <div class="-m-1.5 overflow-x-auto">
+      <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden">
+
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-end border-b border-gray-200 dark:border-gray-700">
+
+            <div class="flex-grow">
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Listado de Tareas</h2>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Filtra y visualiza todas las tareas asignadas.</p>
+
+              <!-- Campo de Búsqueda -->
+              <div class="mt-2 sm:w-80">
+                <label for="task-search-input" class="sr-only">Buscar</label>
+                <div class="relative">
+                  <input type="text" id="task-search-input"
+                    class="py-2 px-3 ps-11 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-300"
+                    placeholder="Buscar por título, descripción..." (input)="onBusquedaChange($event)">
+                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+                    <svg class="size-4 text-gray-400 dark:text-gray-500" viewBox="0 0 16 16" fill="currentColor">
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-end gap-2">
+
+              @if (empleados().length > 0) {
+              <select (change)="onFiltroEmpleadoChange($event)" data-hs-select='{
+                "placeholder": "Todos los Empleados",
+                "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 w-full min-w-[220px] text-nowrap cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-gray-800 dark:text-gray-200",
+                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:focus:bg-gray-700",
+                "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+                "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+              }' class="hidden">
+                <option value="todos">Todos los Empleados</option>
+                @for (emp of empleados(); track emp.uid) {
+                <option [value]="emp.uid">{{ emp.apellido }} {{ emp.nombre }}</option>
+                }
+              </select>
+              }
+
+              <select (change)="onFiltroEstadoChange($event)" data-hs-select='{
+                "placeholder": "Todos los Estados",
+                "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 w-full min-w-[220px] text-nowrap cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-gray-800 dark:text-gray-300",
+                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-gray-200 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:focus:bg-gray-700",
+                "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+                "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+              }' class="hidden">
+                <option value="todos">Todos los Estados</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En Proceso">En Proceso</option>
+                <option value="Finalizada">Finalizada</option>
+              </select>
+
+              <a routerLink="/edicion-tarea"
+                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
+                Crear Tarea
+              </a>
+            </div>
+          </div>
+
+          @if (isLoading()) {
+          <p class="text-center p-10 text-gray-500 dark:text-gray-400">Cargando tareas...</p>
+          } @else {
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+              <tr>
+                <th scope="col"
+                  class="w-2/5 px-6 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
+                  Tarea
+                </th>
+                                <th scope="col"
+                  class="px-6 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
+                  Prioridad
+                </th>
+                <th scope="col"
+                  class="px-6 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
+                  Progreso
+                </th>
+                <th scope="col"
+                  class="px-6 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
+                  Vencimiento
+                </th>
+                <th scope="col"
+                  class="w-1/5 px-6 py-3 text-center text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
+                  Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              @for (tarea of tareasPaginadas(); track tarea.id) {
+              <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <div class="shrink-0 inline-flex items-center justify-center size-12 rounded-full text-gray-500 dark:text-gray-400"
+                      [ngClass]="{
+                        'bg-blue-100 dark:bg-blue-900/30': tarea.estado === 'Pendiente',
+                        'bg-yellow-100 dark:bg-yellow-900/30': tarea.estado === 'En Proceso',
+                        'bg-green-100 dark:bg-green-900/30': tarea.estado === 'Finalizada'
+                      }">
+                      <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                    </div>
+                    <div class="grow overflow-hidden">
+                      <div class="flex items-center gap-x-3">
+                        <p class="text-sm font-semibold text-gray-900 dark:text-gray-200 truncate uppercase"
+                          >{{ tarea.titulo }}</p>
+                        <span class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium"
+                          [ngClass]="{
+                            'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400': tarea.estado === 'Pendiente',
+                            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400': tarea.estado === 'En Proceso',
+                            'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400': tarea.estado === 'Finalizada'
+                          }">
+                          {{ tarea.estado }}
+                        </span>
+                      </div>
+                      <p class="text-sm text-gray-500 dark:text-gray-400">Asignado a: <span class="font-medium">{{
+                          tarea.nombreEmpleadoAsignado }}</span></p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-1">{{ tarea.descripcion }}</p>
+                    </div>
+                  </div>
+                </td>
+                <!-- Nueva columna de Prioridad -->
+                <td class="py-4 align-top">
+                  <div class="px-6">
+                    <span class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium"
+                      [ngClass]="{
+                        'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400': tarea.prioridad === 'Baja',
+                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400': tarea.prioridad === 'Media',
+                        'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400': tarea.prioridad === 'Alta',
+                        'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400': tarea.prioridad === 'Urgente'
+                      }">
+                      @if(tarea.prioridad === 'Baja') {
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                      } @else if(tarea.prioridad === 'Media') {
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                      } @else if(tarea.prioridad === 'Alta') {
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                      } @else if(tarea.prioridad === 'Urgente') {
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                      }
+                      {{ tarea.prioridad }}
+                    </span>
+                  </div>
+                </td>
+                <!-- Columna Progreso -->
+                <td class="py-4 align-top">
+                  <div class="px-2">
+                    <div class="flex items-center gap-x-3">
+                      <span class="text-xs text-gray-500 dark:text-gray-400 w-12 text-end">{{ tarea.progreso }}%</span>
+                      <div class="flex w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                        <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600"
+                          [style.width.%]="tarea.progreso"></div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Columna Vencimiento -->
+                <td class="py-4 align-top">
+                  <div class="px-6">
+                    @if(tarea.fechaDeVencimiento) {
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ formatDate(tarea.fechaDeVencimiento) |
+                      date:'dd/MM/yyyy' }}</span>
+                    } @else {
+                    <span class="text-sm text-gray-400 dark:text-gray-500 italic">Sin fecha</span>
+                    }
+                  </div>
+                </td>
+
+                <!-- Columna Acciones -->
+                <td class="py-4 align-top">
+                  <div class="px-6 text-center">
+                    <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
+                      <button type="button"
+                        class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center gap-2 rounded-full text-gray-700 dark:text-gray-200 align-middle hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:ring-blue-600">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                          fill="currentColor" viewBox="0 0 16 16">
+                          <path
+                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                        </svg>
+                      </button>
+
+                      <!-- Contenido del menú desplegable -->
+                      <div
+                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 dark:divide-gray-700 min-w-40 z-10 bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-2 mt-2">
+
+                        <!-- Sección Editar -->
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <span
+                            class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-gray-500">Acciones</span>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            [routerLink]="['/edicion-tarea', tarea.id]">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="19" height="19"
+                              fill="none">
+                              <path
+                                d="M6.53792 2.32172C6.69664 1.89276 7.30336 1.89276 7.46208 2.32172L8.1735 4.2443C8.27331 4.51403 8.48597 4.72669 8.7557 4.8265L10.6783 5.53792C11.1072 5.69664 11.1072 6.30336 10.6783 6.46208L8.7557 7.1735C8.48597 7.27331 8.27331 7.48597 8.1735 7.7557L7.46208 9.67828C7.30336 10.1072 6.69665 10.1072 6.53792 9.67828L5.8265 7.7557C5.72669 7.48597 5.51403 7.27331 5.2443 7.1735L3.32172 6.46208C2.89276 6.30336 2.89276 5.69665 3.32172 5.53792L5.2443 4.8265C5.51403 4.72669 5.72669 4.51403 5.8265 4.2443L6.53792 2.32172Z"
+                                stroke="currentColor" stroke-width="1.5"></path>
+                              <path
+                                d="M14.4039 9.64136L15.8869 11.1244M6 22H7.49759C8.70997 22 9.31617 22 9.86124 21.7742C10.4063 21.5484 10.835 21.1198 11.6923 20.2625L19.8417 12.1131C20.3808 11.574 20.6503 11.3045 20.7944 11.0137C21.0685 10.4605 21.0685 9.81094 20.7944 9.25772C20.6503 8.96695 20.3808 8.69741 19.8417 8.15832C19.3026 7.61924 19.0331 7.3497 18.7423 7.20561C18.1891 6.93146 17.5395 6.93146 16.9863 7.20561C16.6955 7.3497 16.426 7.61924 15.8869 8.15832L7.73749 16.3077C6.8802 17.165 6.45156 17.5937 6.22578 18.1388C6 18.6838 6 19.29 6 20.5024V22Z"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                              </path>
+                            </svg>
+                            Editar
+                          </a>
+                        </div>
+
+                        <!-- Sección Eliminar -->
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                            (click)="confirmarEliminacion(tarea)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="19" height="19"
+                              fill="none">
+                              <path
+                                d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                              <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                              </path>
+                              <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round">
+                              </path>
+                              <path
+                                d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                            </svg>
+                            Eliminar
+                          </a>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="4" class="text-center p-10 text-gray-500 dark:text-gray-400">No hay tareas que coincidan con
+                  los filtros.</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          <!-- ================== FOOTER CON PAGINACIÓN AÑADIDO ================== -->
+          <div
+            class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+            <div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Mostrando <span class="font-semibold text-gray-800 dark:text-gray-200">{{ tareasPaginadas().length
+                  }}</span> de <span class="font-semibold text-gray-800 dark:text-gray-200">{{
+                  tareasFiltradas().length }}</span> resultados
+              </p>
+            </div>
+
+            <nav class="flex justify-center items-center gap-x-1" aria-label="Pagination">
+              <button type="button"
+                class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none"
+                [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
+                <svg class="shrink-0 size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+              </button>
+
+              <div class="flex items-center gap-x-1">
+                @for (pagina of paginasDisponibles(); track pagina) {
+                <button type="button"
+                  class="min-h-9.5 min-w-9.5 flex justify-center items-center py-2 px-3 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none text-gray-800 dark:text-gray-200"
+                  [class.bg-gray-200]="pagina === paginaActual()" [class.dark:bg-gray-600]="pagina === paginaActual()"
+                  [class.hover:bg-gray-100]="pagina !== paginaActual()"
+                  [class.dark:hover:bg-gray-700]="pagina !== paginaActual()"
+                  [attr.aria-current]="pagina === paginaActual() ? 'page' : null" (click)="irAPagina(pagina)">
+                  {{ pagina }}
+                </button>
+                }
+              </div>
+
+              <button type="button"
+                class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none"
+                [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
+                <svg class="shrink-0 size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </button>
+            </nav>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

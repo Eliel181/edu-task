@@ -3,12 +3,14 @@ import { Usuario } from '../../../core/interfaces/usuario.model';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Timestamp } from 'firebase/firestore';
-import { TaskService } from '../task.service';
 import { EstadoTarea, Tarea } from '../../../core/interfaces/tarea.model';
+import { TaskService } from '../task.service';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-tareas',
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './gestion-tareas.component.html',
   styleUrl: './gestion-tareas.component.css'
 })
@@ -87,23 +89,23 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
   cargarDatosIniciales(): void {
     this.isLoading.set(true);
 
-    // this.taskService.getEmpleados()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(emps => {
-    //     this.empleados.set(emps);
+    this.taskService.getEmpleados()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(emps => {
+        this.empleados.set(emps);
 
-    //     this.cdr.detectChanges();
-    //     if (window.HSStaticMethods) {
-    //       window.HSStaticMethods.autoInit();
-    //     }
-    //   });
+        this.cdr.detectChanges();
+        if (window.HSStaticMethods) {
+          window.HSStaticMethods.autoInit();
+        }
+      });
 
-    // this.taskService.getAllTareas()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(tasks => {
-    //     this.allTasks.set(tasks);
-    //     this.isLoading.set(false);
-    //   });
+    this.taskService.getAllTareas()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(tasks => {
+        this.allTasks.set(tasks);
+        this.isLoading.set(false);
+      });
   }
 
   onFiltroEmpleadoChange(event: Event): void {
@@ -140,11 +142,11 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: 'Cancelar',
     }).then((result) => {
-      // if (result.isConfirmed) {
-      //   this.taskService.eliminarTarea(tarea.id!, tarea.titulo)
-      //     .then(() => Swal.fire('¡Eliminada!', 'La tarea ha sido eliminada.', 'success'))
-      //     .catch(() => Swal.fire('Error', 'No se pudo eliminar la tarea.', 'error'));
-      // }
+      if (result.isConfirmed) {
+        this.taskService.eliminarTarea(tarea.id!, tarea.titulo)
+          .then(() => Swal.fire('¡Eliminada!', 'La tarea ha sido eliminada.', 'success'))
+          .catch(() => Swal.fire('Error', 'No se pudo eliminar la tarea.', 'error'));
+      }
     });
   }
 

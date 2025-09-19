@@ -117,7 +117,7 @@ export class AuthService {
           telefono: '',
           apellido: apellido,
           nombre: nombre,
-          rol: 'Docente',
+          rol: 'Empleado',
           perfil: user.photoURL || ''
         };
 

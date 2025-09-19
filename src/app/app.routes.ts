@@ -43,6 +43,9 @@ export const routes: Routes = [
   {
     path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
   },
+    {
+    path: 'mis-tareas/:id', loadComponent: () => import('./features/employee/detalle-tarea/detalle-tarea.component').then(m => m.DetalleTareaComponent), canActivate: [authGuard]
+  },
   
 
   {
