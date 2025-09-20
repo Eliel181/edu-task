@@ -55,7 +55,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
       asignadoA: ['', Validators.required],
       fechaDeVencimiento: [''],
       estado: ['Pendiente', Validators.required],
-      prioridad:  ['Media', Validators.required],
+      prioridad: ['Media', Validators.required],
       progreso: [0]
     });
   }
@@ -66,7 +66,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     const tareaId = this.route.snapshot.paramMap.get('id');
     if (tareaId && tareaId !== 'new') {
       console.log('CargarTareaParaEditar()');
-      
+
       this.cargarTareaParaEditar(tareaId);
     } else {
       this.isLoading.set(false);
@@ -82,7 +82,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     this.taskService.getEmpleados().pipe(takeUntil(this.destroy$)).subscribe(emps => {
       this.empleados.set(emps);
       console.log(emps);
-      
+
       this.cdr.detectChanges();
       if (window.HSStaticMethods) {
         window.HSStaticMethods.autoInit();
@@ -216,5 +216,10 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     });
   }
 
+  get titulo() { return this.tareaForm.get('titulo'); }
+  get descripcion() { return this.tareaForm.get('descripcion'); }
+  get asignadoA() { return this.tareaForm.get('asignadoA'); }
+  get prioridad() { return this.tareaForm.get('prioridad'); }
+  get fechaDeVencimiento() { return this.tareaForm.get('fechaDeVencimiento'); }
 
 }

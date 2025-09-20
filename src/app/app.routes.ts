@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
+import { empleadoGuard } from './core/guards/empleado.guard';
 
 export const routes: Routes = [
   {
@@ -50,10 +51,10 @@ export const routes: Routes = [
 
   // Ruta para las tareas de un empleado
   {
-    path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard]
+    path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [authGuard, empleadoGuard]
   },
     {
-    path: 'mis-tareas/:id', loadComponent: () => import('./features/employee/detalle-tarea/detalle-tarea.component').then(m => m.DetalleTareaComponent), canActivate: [authGuard]
+    path: 'mis-tareas/:id', loadComponent: () => import('./features/employee/detalle-tarea/detalle-tarea.component').then(m => m.DetalleTareaComponent), canActivate: [authGuard, empleadoGuard]
   },
 
 
