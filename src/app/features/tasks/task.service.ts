@@ -11,7 +11,7 @@ import { addDoc } from 'firebase/firestore';
   providedIn: 'root'
 })
 export class TaskService {
- private firestore: Firestore = inject(Firestore);
+  private firestore: Firestore = inject(Firestore);
   private firestoreService: FirestoreService = inject(FirestoreService);
   private authService: AuthService = inject(AuthService);
 
@@ -49,6 +49,22 @@ export class TaskService {
     return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
   }
 
+
+  // Método para obtener tareas por empleado y estado (para la lista de Mis Tareas)
+  getTareasByEmpleadoAndEstado(uid: string, estado: EstadoTarea | 'Todas'): Observable<Tarea[]> {
+    const tareasCollection = collection(this.firestore, 'tareas');
+    let q;
+    if (estado === 'Todas') {
+      q = query(tareasCollection, where('asignadoA', '==', uid));
+    } else {
+      q = query(tareasCollection,
+                where('asignadoA', '==', uid),
+                where('estado', '==', estado)); // Usa el estado pasado directamente
+    }
+    return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
+  }
+
+
   getTareaById(id: string): Observable<Tarea | undefined> {
     const tareaDocRef = doc(this.firestore, `tareas/${id}`);
 
@@ -85,7 +101,7 @@ export class TaskService {
     await deleteDoc(tareaDocRef);
 
   }
-    async updateTaskAndLogActivity(
+  async updateTaskAndLogActivity(
     tareaId: string,
     estadoAnterior: EstadoTarea,
     datosNuevos: { titulo: string; estado: EstadoTarea; progreso: number }
@@ -94,7 +110,16 @@ export class TaskService {
     if (!actor) throw new Error("Empleado no autenticado.");
 
     await this.updateTarea(tareaId, { estado: datosNuevos.estado, progreso: datosNuevos.progreso });
-
-
   }
+
+  getTareasPendientesByEmpleado(uid: string): Observable<Tarea[]> {
+    const tareasCollection = collection(this.firestore, 'tareas');
+    const q = query(
+      tareasCollection,
+      where('asignadoA', '==', uid),
+      where('estado', '==', 'Pendiente')
+    );
+    return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
+  }
+
 }

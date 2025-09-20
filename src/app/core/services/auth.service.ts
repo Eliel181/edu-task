@@ -37,7 +37,7 @@ export class AuthService {
         telefono,
         apellido,
         nombre,
-        rol: 'Docente',
+        rol: 'Empleado',
       };
 
       await this.firestoreService.setDocument('usuarios', user.uid, newUser);

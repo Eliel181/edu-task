@@ -10,7 +10,7 @@
           <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Mis Tareas</h1>
           <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Gestiona y organiza tus asignaciones pendientes</p>
         </div>
-        
+      
         <!-- Filtros y Ordenamiento (sin cambios) -->
         <div class="flex items-center gap-2">
           <div class="hs-dropdown relative inline-flex">
@@ -24,17 +24,17 @@
             
             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 mt-2 bg-white shadow-2xl rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700" 
                  aria-labelledby="hs-dropdown-filter">
-              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 cursor-pointer" (click)="filtroEstado.set('todos')">
                 Todas las tareas
               </a>
-              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 cursor-pointer" (click)="filtroEstado.set('Pendiente')">
                 Pendientes
               </a>
-              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 cursor-pointer" (click)="filtroEstado.set('En Proceso')">
                 En progreso
               </a>
-              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
-                Completadas
+              <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 cursor-pointer" (click)="filtroEstado.set('Finalizada')">
+                Finalizadas
               </a>
             </div>
           </div>
@@ -55,7 +55,7 @@
     <!-- Grid de Tareas Mejorado -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      @for (tarea of tareas(); track tarea.id) {
+      @for (tarea of tareasFiltradas(); track tarea.id) {
         <!-- NUEVO DISEÑO DE CARD - Inspirado en las imágenes -->
         <div class="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-xs transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-gray-100 dark:border-gray-700/50 overflow-hidden">
           

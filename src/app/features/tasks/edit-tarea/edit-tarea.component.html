@@ -30,72 +30,95 @@
                                     Tarea</label>
                                 <input id="create-titulo" formControlName="titulo"
                                     class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200">
+                                @if (titulo?.touched && titulo?.invalid) {
+                                <div class="text-sm text-red-600 mt-1">
+                                    @if (titulo?.errors?.['required']) {
+                                    <span>Debe ingresar el nombre de la tarea.</span>
+                                    }
+                                </div>
+                                }
                             </div>
                             <!-- Selector de Prioridad -->
-<div class="space-y-2">
-  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-    Prioridad de la Tarea
-  </label>
-  <div class="flex flex-wrap gap-4">
-    <!-- Prioridad Baja -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Baja" id="prioridad-baja" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-green-600 focus:ring-green-500 
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Prioridad de la Tarea
+                                </label>
+                                <div class="flex flex-wrap gap-4">
+                                    <!-- Prioridad Baja -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Baja" id="prioridad-baja" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-green-600 focus:ring-green-500 
                     checked:border-green-500 dark:checked:border-green-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'" 
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Baja'">
-      <label for="prioridad-baja" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-green-500 me-1"></span> Baja
-      </label>
-    </div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Baja'">
+                                        <label for="prioridad-baja"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-green-500 me-1"></span>
+                                            Baja
+                                        </label>
+                                    </div>
 
-    <!-- Prioridad Media -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Media" id="prioridad-media" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-yellow-600 focus:ring-yellow-500 
+                                    <!-- Prioridad Media -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Media" id="prioridad-media" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-yellow-600 focus:ring-yellow-500 
                     checked:border-yellow-500 dark:checked:border-yellow-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'"
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Media'">
-      <label for="prioridad-media" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-yellow-500 me-1"></span> Media
-      </label>
-    </div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Media'">
+                                        <label for="prioridad-media"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-yellow-500 me-1"></span>
+                                            Media
+                                        </label>
+                                    </div>
 
-    <!-- Prioridad Alta -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Alta" id="prioridad-alta" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-orange-600 focus:ring-orange-500 
+                                    <!-- Prioridad Alta -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Alta" id="prioridad-alta" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-orange-600 focus:ring-orange-500 
                     checked:border-orange-500 dark:checked:border-orange-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'"
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Alta'">
-      <label for="prioridad-alta" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-orange-500 me-1"></span> Alta
-      </label>
-    </div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Alta'">
+                                        <label for="prioridad-alta"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-orange-500 me-1"></span>
+                                            Alta
+                                        </label>
+                                    </div>
 
-    <!-- Prioridad Urgente -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Urgente" id="prioridad-urgente" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-red-600 focus:ring-red-500 
+                                    <!-- Prioridad Urgente -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Urgente" id="prioridad-urgente"
+                                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-red-600 focus:ring-red-500 
                     checked:border-red-500 dark:checked:border-red-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'"
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Urgente'">
-      <label for="prioridad-urgente" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-red-500 me-1"></span> Urgente
-      </label>
-    </div>
-  </div>
-</div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Urgente'">
+                                        <label for="prioridad-urgente"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-red-500 me-1"></span>
+                                            Urgente
+                                        </label>
+
+                                    </div>
+                                    @if (prioridad?.touched && prioridad?.invalid) {
+                                    <div class="text-sm text-red-600 mt-1">
+                                        @if (prioridad?.errors?.['required']) {
+                                        <span>Debe seleccionar la prioridad de la tarea.</span>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
                             <div class="space-y-2">
                                 <label for="create-descripcion"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción
                                     detallada</label>
                                 <textarea id="create-descripcion" formControlName="descripcion" rows="5"
                                     class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200"></textarea>
+                                @if (descripcion?.touched && descripcion?.invalid) {
+                                <div class="text-sm text-red-600 mt-1">
+                                    @if (descripcion?.errors?.['required']) {
+                                    <span>Debe ingresar la descripción de la tarea.</span>
+                                    }
+                                </div>
+                                }
                             </div>
 
                         </div>
@@ -124,6 +147,13 @@
                                 <div
                                     class="py-3 px-4 block w-full border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm text-gray-400 dark:text-gray-500">
                                     Cargando empleados...</div>
+                                }
+                                @if (asignadoA?.touched && asignadoA?.invalid) {
+                                <div class="text-sm text-red-600 mt-1">
+                                    @if (asignadoA?.errors?.['required']) {
+                                    <span>Debe seleccionar un empleado.</span>
+                                    }
+                                </div>
                                 }
                             </div>
                             <div class="space-y-2">
@@ -171,64 +201,65 @@
                                     class="py-2 px-3 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-200">
                             </div>
                             <!-- Selector de Prioridad -->
-<div class="space-y-2">
-  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-    Prioridad de la Tarea
-  </label>
-  <div class="flex flex-wrap gap-4">
-    <!-- Prioridad Baja -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Baja" id="prioridad-baja" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-green-600 focus:ring-green-500 
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Prioridad de la Tarea
+                                </label>
+                                <div class="flex flex-wrap gap-4">
+                                    <!-- Prioridad Baja -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Baja" id="prioridad-baja" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-green-600 focus:ring-green-500 
                     checked:border-green-500 dark:checked:border-green-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'" 
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Baja'">
-      <label for="prioridad-baja" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-green-500 me-1"></span> Baja
-      </label>
-    </div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Baja'">
+                                        <label for="prioridad-baja"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-green-500 me-1"></span>
+                                            Baja
+                                        </label>
+                                    </div>
 
-    <!-- Prioridad Media -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Media" id="prioridad-media" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-yellow-600 focus:ring-yellow-500 
+                                    <!-- Prioridad Media -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Media" id="prioridad-media" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-yellow-600 focus:ring-yellow-500 
                     checked:border-yellow-500 dark:checked:border-yellow-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'"
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Media'">
-      <label for="prioridad-media" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-yellow-500 me-1"></span> Media
-      </label>
-    </div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Media'">
+                                        <label for="prioridad-media"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-yellow-500 me-1"></span>
+                                            Media
+                                        </label>
+                                    </div>
 
-    <!-- Prioridad Alta -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Alta" id="prioridad-alta" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-orange-600 focus:ring-orange-500 
+                                    <!-- Prioridad Alta -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Alta" id="prioridad-alta" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-orange-600 focus:ring-orange-500 
                     checked:border-orange-500 dark:checked:border-orange-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'"
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Alta'">
-      <label for="prioridad-alta" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-orange-500 me-1"></span> Alta
-      </label>
-    </div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Alta'">
+                                        <label for="prioridad-alta"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-orange-500 me-1"></span>
+                                            Alta
+                                        </label>
+                                    </div>
 
-    <!-- Prioridad Urgente -->
-    <div class="flex items-center">
-      <input type="radio" name="prioridad" value="Urgente" id="prioridad-urgente" 
-             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-red-600 focus:ring-red-500 
+                                    <!-- Prioridad Urgente -->
+                                    <div class="flex items-center">
+                                        <input type="radio" name="prioridad" value="Urgente" id="prioridad-urgente"
+                                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-red-600 focus:ring-red-500 
                     checked:border-red-500 dark:checked:border-red-500 dark:bg-gray-800 
-                    dark:border-gray-600" 
-             [formControlName]="'prioridad'"
-             [checked]="tareaFormEdicion.get('prioridad')?.value === 'Urgente'">
-      <label for="prioridad-urgente" class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full bg-red-500 me-1"></span> Urgente
-      </label>
-    </div>
-  </div>
-</div>
+                    dark:border-gray-600" [formControlName]="'prioridad'"
+                                            [checked]="tareaFormEdicion.get('prioridad')?.value === 'Urgente'">
+                                        <label for="prioridad-urgente"
+                                            class="text-sm text-gray-700 dark:text-gray-300 ms-2 flex items-center">
+                                            <span class="inline-block w-3 h-3 rounded-full bg-red-500 me-1"></span>
+                                            Urgente
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="space-y-2">
                                 <label for="edit-descripcion"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción
@@ -274,7 +305,7 @@
                             </div>
 
 
-                                  
+
 
 
                             <div class="grid grid-cols-2 gap-4">
