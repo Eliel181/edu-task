@@ -105,7 +105,7 @@ ng g component features/auth/forgot-password --skip-tests
 
 ```
 
-# Instalación de Dependencias y Librerias:
+Instalación de Dependencias y Librerias:
  
 ```bash
 # Descargar Tailwind
@@ -125,8 +125,9 @@ npm install sweetalert2
 ```
 
 ```bash
-# Instalar preline para el uso de componentes reutilizables en Tailwind
-
+```
+Instalar preline para el uso de componentes reutilizables en Tailwind
+```
 npm i preline
 npm install -D @tailwindcss/forms
 
@@ -137,10 +138,10 @@ npm install -D @tailwindcss/forms
 @import "preline/variants.css";
 @source "../node_modules/preline/dist/*.js";
 
-
-# Crea este archivo en la carpeta raiz de tu proyecto src `global.d.ts` ruta: `projects_root_directory/src/global.d.ts`
-# Pega el siguiente texto
-
+```
+Crea este archivo en la carpeta raiz de tu proyecto src `global.d.ts` ruta: `projects_root_directory/src/global.d.ts`
+Pega el siguiente texto
+```
 import type { IStaticMethods } from "preline/dist";
 
 declare global {
@@ -172,9 +173,9 @@ export {};
 
 # // Preline UI
 "node_modules/preline/dist/index.js"
-
-# Agrega código que reinicialice los componentes cada vez que se actualice la página en la aplicación `projects_root_directory/src/app/app.component.ts`
-
+```
+Agrega código que reinicialice los componentes cada vez que se actualice la página en la aplicación `projects_root_directory/src/app/app.component.ts`
+```
 import { Router, Event, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -194,10 +195,8 @@ export class AppComponent {
     });
   }
 }
-
-# IMORTANTE!!
-# Para mas informacion de como instalar Preline.co para Angular 
-# Te recomiendo que visites esta pagina
-# [Reference](https://preline.co/docs/frameworks-angular.html) pagina
-
+```
+**Nota:** Para mas informacion de como instalar Preline.co para Angular 
+          Te recomiendo que visites esta pagina
+          [Preline With Angular](https://preline.co/docs/frameworks-angular.html)
 ```
