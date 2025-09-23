@@ -3,6 +3,8 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, Googl
 import { FirestoreService } from './firestore.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../interfaces/usuario.model';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { filter, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +15,31 @@ export class AuthService {
   private router: Router = inject(Router);
 
   currentUser: WritableSignal<Usuario | null | undefined> = signal(undefined);
-
+  ready: Promise<Usuario | null>;
   constructor() {
-    onAuthStateChanged(this.auth,
-      async (firebaseUser) => {
+    // onAuthStateChanged(this.auth,
+    //   async (firebaseUser) => {
+    //     if (firebaseUser) {
+    //       console.log('Usuario logeado: ', firebaseUser);
+          
+    //       const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
+    //       this.currentUser.set(user || null);
+    //     } else {
+    //       this.currentUser.set(null);
+    //     }
+    //   });
+        this.ready = new Promise(resolve => {
+      onAuthStateChanged(this.auth, async (firebaseUser) => {
         if (firebaseUser) {
           const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
           this.currentUser.set(user || null);
+          resolve(user || null);
         } else {
           this.currentUser.set(null);
+          resolve(null);
         }
       });
+    });
   }
 
   // Metodo para el Registro
@@ -42,7 +58,7 @@ export class AuthService {
 
       await this.firestoreService.setDocument('usuarios', user.uid, newUser);
       this.currentUser.set(newUser);
-      this.router.navigate(['/']);
+      this.router.navigate(['/verificar-email']);
 
     } catch (error) {
       console.error('Error: en el register() ', error);
@@ -79,8 +95,8 @@ export class AuthService {
       if (!user.emailVerified) {
         throw new Error('Debes verificar tu correo antes de ingresar.');
       }
-
-      this.router.navigate(['']);
+ 
+      this.router.navigate(['/administracion']);
     } catch (error: any) {
       console.error("Error en el login", error);
       throw new Error(error.message || 'Error en el login, revisa tus credenciales.');

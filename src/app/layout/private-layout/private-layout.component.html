@@ -1,0 +1,333 @@
+<!-- Sidebar -->
+<div id="hs-pro-sidebar" class="hs-overlay [--auto-close:md]
+hs-overlay-open:translate-x-0
+-translate-x-full transition-all duration-300 transform
+w-65 hs-overlay-minified:w-13 overflow-hidden
+hidden
+fixed inset-y-0 z-60 start-0
+bg-white border-e border-gray-200
+md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" aria-label="Sidebar">
+  <div class="relative flex flex-col h-full max-h-full">
+    <!-- Header -->
+    <header class="py-2.5 px-4 flex justify-between items-center gap-x-2">
+      <div class="-ms-2 flex items-center gap-x-1">
+        <div class="md:hs-overlay-minified:hidden">
+          <a class="shrink-0 inline-flex justify-center items-center size-9 rounded-lg text-xl font-semibold hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+            href="@@href" aria-label="Preline">
+            <img class="shrink-0 size-5" src="https://images.icon-icons.com/4221/PNG/512/bizum_payment_method_logo_icon_263128.png" width="36" height="36" viewBox="0 0 36 36"alt="Icon de EduTask">
+            <!-- <svg class="shrink-0 size-5 text-cyan-700" width="36" height="36" viewBox="0 0 36 36" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+
+            </svg> -->
+          </a>
+        </div>
+
+        <!-- Sidebar Toggle -->
+        <button type="button"
+          class="hidden md:hs-overlay-minified:flex justify-center items-center flex-none gap-x-3 size-9 text-sm text-gray-500 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+          aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
+          data-hs-overlay-minifier="#hs-pro-sidebar">
+          <svg class="hidden hs-overlay-minified:block shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M15 3v18"></path>
+            <path d="m8 9 3 3-3 3"></path>
+          </svg>
+          <svg class="hs-overlay-minified:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M15 3v18"></path>
+            <path d="m10 15-3-3 3-3"></path>
+          </svg>
+          <span class="sr-only">Sidebar Toggle</span>
+        </button>
+        <!-- End Sidebar Toggle -->
+
+        <div class="hidden sm:block md:hs-overlay-minified:hidden">
+
+        </div>
+      </div>
+
+      <!-- Sidebar Toggle -->
+      <button type="button"
+        class="hidden md:hs-overlay-minified:hidden md:flex justify-center items-center flex-none gap-x-3 size-9 text-sm text-gray-500 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+        aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
+        data-hs-overlay-minifier="#hs-pro-sidebar">
+        <svg class="hidden hs-overlay-minified:block shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+          <path d="M15 3v18"></path>
+          <path d="m8 9 3 3-3 3"></path>
+        </svg>
+        <svg class="hs-overlay-minified:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+          <path d="M15 3v18"></path>
+          <path d="m10 15-3-3 3-3"></path>
+        </svg>
+        <span class="sr-only">Sidebar Toggle</span>
+      </button>
+      <!-- End Sidebar Toggle -->
+
+      <!-- Sidebar Toggle -->
+      <button type="button"
+        class="flex md:hidden justify-center items-center gap-x-3 size-6 bg-white border border-gray-200 text-sm text-gray-600 hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+        data-hs-overlay="#hs-pro-sidebar" aria-expanded="true">
+        <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+        <span class="sr-only">Close</span>
+      </button>
+      <!-- End Sidebar Toggle -->
+    </header>
+    <!-- End Header -->
+
+    <div class="mb-5 px-2 flex flex-col gap-y-5">
+      <!-- List -->
+      <ul class="flex flex-col gap-y-0.5">
+        <li>
+          <a routerLink="gestion-usuarios"
+            class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
+              <!-- <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg> -->
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
+    <path d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="#141B34" stroke-width="1.5" />
+    <path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z" stroke="#141B34" stroke-width="1.5" stroke-linejoin="round" />
+    <path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+            </span>
+            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Usuarios</span>
+          </a>
+        </li>
+        <li>
+          <button routerLink="/administracion/gestion-tareas" type="button"
+            class="group w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 truncate rounded-lg hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-pro-dnsm" data-hs-overlay="#hs-pro-dnsm">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
+              <!-- <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="group-hover:scale-100 group-focus:scale-100 scale-115 transition-transform duration-300"
+                  d="m21 21-4.34-4.34" />
+                <circle cx="11" cy="11" r="8" />
+              </svg> -->
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
+    <path d="M20 16V8C20 5.17157 20 3.75736 19.1213 2.87868C18.2426 2 16.8284 2 14 2H10C7.17157 2 5.75736 2 4.87868 2.87868C4 3.75736 4 5.17157 4 8V16C4 18.8284 4 20.2426 4.87868 21.1213C5.75736 22 7.17157 22 10 22H14C16.8284 22 18.2426 22 19.1213 21.1213C20 20.2426 20 18.8284 20 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M15.5 2H8.5C8.5 3.41421 8.5 4.12132 8.93934 4.56066C9.37868 5 10.0858 5 11.5 5H12.5C13.9142 5 14.6213 5 15.0607 4.56066C15.5 4.12132 15.5 3.41421 15.5 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M8 15H12M8 11H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            </span>
+            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Tareas</span>
+          </button>
+        </li>
+        <li>
+          <a routerLink="/administracion/gestion-escuelas"
+            class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
+              <!-- <svg
+                class="shrink-0 size-4 group-hover:rotate-180 group-focus:rotate-180 transition-transform duration-300"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                <path d="M2 12h20" />
+              </svg> -->
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
+    <path d="M7 22V12.3981C7 11.3299 7 10.7958 7.24458 10.3478C7.48915 9.89983 7.93842 9.61101 8.83697 9.03338L10.9185 7.69526C11.4437 7.35763 11.7063 7.18881 12 7.18881C12.2937 7.18881 12.5563 7.35763 13.0815 7.69526L15.163 9.03338C16.0616 9.61101 16.5108 9.89983 16.7554 10.3478C17 10.7958 17 11.3299 17 12.3981V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M12 13H12.009" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M21 22V16.1623C21 13.8707 19.7408 13.6852 17 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M3 22V16.1623C3 13.8707 4.25916 13.6852 7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M2 22H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M12 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+    <path d="M12 7V4.98221M12 4.98221V2.97035C12 2.49615 12 2.25905 12.1464 2.11173C12.6061 1.64939 14.5 2.74303 15.2203 3.18653C15.8285 3.56105 16 4.30914 16 4.98221H12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            </span>
+            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Escuelas</span>
+          </a>
+        </li>
+        <!-- <li>
+          <a class="group w-full flex items-center gap-1 py-1.5 px-2.5 relative text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 "
+            href="chat-details.html">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="group-hover:scale-110 group-focus:scale-110 transition-transform duration-300"
+                  d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z" />
+                <path class="group-hover:scale-95 group-focus:scale-95 transition-transform duration-300"
+                  d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" />
+              </svg>
+            </span>
+            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Chat details</span>
+          </a>
+        </li> -->
+
+
+      </ul>
+      <!-- End List -->
+    </div>
+  </div>
+</div>
+<!-- End Sidebar -->
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="md:ps-65 md:hs-overlay-minified:ps-13 transition-all duration-300 h-screen flex flex-col bg-white">
+  <!-- ========== HEADER ========== -->
+  <header
+    class="md:ms-65 xl:hs-overlay-layout-open:me-96 md:hs-overlay-minified:ms-13 transition-all duration-300 fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-48 md:z-61 bg-white py-2.5">
+    <nav class="px-4 sm:px-5.5 flex basis-full justify-between items-center w-full mx-auto">
+      <!-- Button Group -->
+      <div class="flex items-center sm:gap-x-1.5 truncate">
+        <!-- Sidebar Toggle -->
+        <button type="button"
+          class="md:hidden flex justify-center items-center flex-none gap-x-3 size-9 text-sm text-gray-500 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+          aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
+          data-hs-overlay="#hs-pro-sidebar">
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M15 3v18"></path>
+            <path d="m8 9 3 3-3 3"></path>
+          </svg>
+          <span class="sr-only">Sidebar Toggle</span>
+        </button>
+        <!-- End Sidebar Toggle -->
+
+        <span class="truncate font-medium text-sm sm:text-base text-gray-800">
+          EduTask
+        </span>
+
+      </div>
+      <!-- End Button Group -->
+
+
+      @if(currentUser()){
+        <!-- Mostrar -->
+               <!-- Button Group -->
+      <div class="flex items-center sm:gap-x-1.5">
+        <div class="h-8">
+          <!-- Account Dropdown -->
+          <div
+            class="hs-dropdown inline-flex [--strategy:absolute] [--auto-close:inside] [--placement:bottom-right] relative text-start">
+            <button id="hs-dnad" type="button"
+              class="hs-dropdown-toggle inline-flex items-center gap-x-2 text-sm font-medium rounded-full p-1 pe-2 bg-gray-50 text-gray-800 hover:bg-gray-100 focus:outline-none cursor-pointer">
+
+              <!-- Avatar -->
+              <img [src]="currentUser()?.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
+                [alt]="currentUser()?.nombre" class="shrink-0 size-8 rounded-full object-cover">
+              <span class="text-gray-600 font-medium hidden sm:block dark:text-gray-400">{{ currentUser()?.nombre
+                }}</span>
+              <!-- Icono v que rota -->
+              <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <!-- Account Dropdown -->
+            <div
+              class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-white border border-gray-200 rounded-xl shadow-xl"
+              role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad">
+              <div class="flex items-center gap-3 py-2 px-3.5">
+                <img [src]="currentUser()?.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
+                  [alt]="currentUser()?.nombre" class="size-12 rounded-full object-cover">
+
+                <div>
+                   <p class="text-sm text-gray-500 dark:text-gray-400">Sesión iniciada como</p>
+                  <p class="text-sm font-medium text-gray-800 dark:text-white">{{ currentUser()?.nombre }} {{
+                    currentUser()?.apellido }}
+                  </p>
+                  <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ currentUser()?.rol }}</p>
+                </div>
+              </div>
+              <div class="px-4 py-2 border-t border-gray-200">
+                <!-- Switch/Toggle -->
+                <div class="flex flex-wrap justify-between items-center gap-2">
+                  <span class="flex-1 cursor-pointer text-sm text-gray-600">Tema</span>
+                  <div class="p-0.5 inline-flex cursor-pointer bg-gray-100 rounded-full">
+                    <button type="button"
+                      class="size-7 flex justify-center items-center bg-white shadow-sm text-gray-800 rounded-full hs-auto-mode-active:bg-transparent hs-auto-mode-active:shadow-none hs-dark-mode-active:bg-transparent hs-dark-mode-active:shadow-none"
+                      data-hs-theme-click-value="default">
+                      <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 3v1" />
+                        <path d="M12 20v1" />
+                        <path d="M3 12h1" />
+                        <path d="M20 12h1" />
+                        <path d="m18.364 5.636-.707.707" />
+                        <path d="m6.343 17.657-.707.707" />
+                        <path d="m5.636 5.636.707.707" />
+                        <path d="m17.657 17.657.707.707" />
+                      </svg>
+                      <span class="sr-only">Default (Light)</span>
+                    </button>
+                    <button type="button"
+                      class="size-7 flex justify-center items-center text-gray-800 rounded-full hs-dark-mode-active:bg-white hs-dark-mode-active:shadow-sm hs-dark-mode-active:text-neutral-800"
+                      data-hs-theme-click-value="dark">
+                      <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                      </svg>
+                      <span class="sr-only">Dark</span>
+                    </button>
+                  </div>
+                </div>
+                <!-- End Switch/Toggle -->
+              </div>
+              <div class="p-1 border-t border-gray-200">
+                <a routerLink="/administracion/mi-perfil" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+                  >
+                  <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  Mi Perfil
+                </a>
+
+                <a (click)="logOut()" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+                >
+                  <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="m16 17 5-5-5-5" />
+                    <path d="M21 12H9" />
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  </svg>
+                  Cerrar sesion
+                </a>
+              </div>
+            </div>
+            <!-- End Account Dropdown -->
+          </div>
+          <!-- End Account Dropdown -->
+        </div>
+      </div>
+      <!-- End Button Group -->
+      }
+
+    </nav>
+  </header>
+  <!-- ========== END HEADER ========== -->
+  <!-- BODY DINÁMICO -->
+  <section class="flex-1 pt-14 px-4 sm:px-6 lg:px-8 overflow-y-auto">
+    <router-outlet />
+  </section>
+  <!-- END BODY -->
+</main>
+<!-- ========== END MAIN CONTENT ========== -->

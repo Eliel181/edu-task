@@ -103,6 +103,13 @@ ng g component features/auth/verificar-email --skip-tests
 # Olvidaste tu contraseña
 ng g component features/auth/forgot-password --skip-tests
 
+# PublicLayout → para login, register, reset-password, verificar-email (pantallas sin sidebar ni header).
+#PrivateLayout → para todo lo que va con sidebar + header + router-outlet.
+
+ng g c layout/public-layout --skip-tests
+ng g c layout/private-layout --skip-tests
+
+
 ```
 
 Instalación de Dependencias y Librerias:

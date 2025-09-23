@@ -11,10 +11,14 @@ export const adminGuard: CanActivateFn = (route, state) => {
   return toObservable(authService.currentUser).pipe(
     map(user => {
       if (user && user.rol === 'Admin') {
-        console.log('Permiso concedido');
         return true;
+      } else if (user) {
+        // Usuario logueado pero no admin -> redirigir a su ruta permitida
+        router.navigate(['/administracion']); // por ejemplo
+        return false;
       } else {
-        router.navigate(['/']);
+        // Usuario no logueado -> ir a login
+        router.navigate(['/login']);
         return false;
       }
     })
