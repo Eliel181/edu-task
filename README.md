@@ -109,6 +109,8 @@ ng g component features/auth/forgot-password --skip-tests
 ng g c layout/public-layout --skip-tests
 ng g c layout/private-layout --skip-tests
 
+# Componente compartido un Spinner
+ng g c shared/spinner-overlay --skip-tests
 
 ```
 

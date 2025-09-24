@@ -3,8 +3,6 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, Googl
 import { FirestoreService } from './firestore.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../interfaces/usuario.model';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { filter, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +13,16 @@ export class AuthService {
   private router: Router = inject(Router);
 
   currentUser: WritableSignal<Usuario | null | undefined> = signal(undefined);
+
+  // Loading para el Spinner-Overlay
+  isLoading = signal(true);
+
   ready: Promise<Usuario | null>;
+
   constructor() {
-    // onAuthStateChanged(this.auth,
-    //   async (firebaseUser) => {
-    //     if (firebaseUser) {
-    //       console.log('Usuario logeado: ', firebaseUser);
-          
-    //       const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
-    //       this.currentUser.set(user || null);
-    //     } else {
-    //       this.currentUser.set(null);
-    //     }
-    //   });
-        this.ready = new Promise(resolve => {
+    this.ready = new Promise(resolve => {
       onAuthStateChanged(this.auth, async (firebaseUser) => {
+        this.isLoading.set(true);
         if (firebaseUser) {
           const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
           this.currentUser.set(user || null);
@@ -38,6 +31,7 @@ export class AuthService {
           this.currentUser.set(null);
           resolve(null);
         }
+        this.isLoading.set(false);
       });
     });
   }
@@ -95,7 +89,7 @@ export class AuthService {
       if (!user.emailVerified) {
         throw new Error('Debes verificar tu correo antes de ingresar.');
       }
- 
+
       this.router.navigate(['/administracion']);
     } catch (error: any) {
       console.error("Error en el login", error);
@@ -157,11 +151,11 @@ export class AuthService {
 
   async resetPassword(email: string): Promise<void> {
     // Metodo para enviar email de recuperacion de la contraseña
-  try {
-    await sendPasswordResetEmail(this.auth, email);
-  } catch (error: any) {
-    console.error("Error al enviar email de recuperación", error);
-    throw new Error(error.message || 'No se pudo enviar el email de recuperación.');
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+    } catch (error: any) {
+      console.error("Error al enviar email de recuperación", error);
+      throw new Error(error.message || 'No se pudo enviar el email de recuperación.');
+    }
   }
-}
 }
