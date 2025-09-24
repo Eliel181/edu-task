@@ -4,17 +4,20 @@ import { adminGuard } from './core/guards/admin.guard';
 import { empleadoGuard } from './core/guards/empleado.guard';
 import { PrivateLayoutComponent } from './layout/private-layout/private-layout.component';
 import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
+import { publicGuard } from './core/guards/public.guard';
 
 export const routes: Routes = [
 
-  { path: '', redirectTo: 'administracion', pathMatch: 'full' },  
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   // Layout público
   {
     path: '',
     component: PublicLayoutComponent,
     children: [
-      { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent) },
-      { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent) },
+      { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent),
+        canActivate: [publicGuard] },
+      { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent),
+        canActivate: [publicGuard] },
       { path: 'verificar-email', loadComponent: () => import('./features/auth/verificar-email/verificar-email.component').then(m => m.VerificarEmailComponent) },
       { path: 'reset-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
     ]
@@ -45,6 +48,5 @@ export const routes: Routes = [
   },
 
   // Redirecciones
-  { path: '**', redirectTo: 'administracion' },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '**', redirectTo: 'login' }
 ];

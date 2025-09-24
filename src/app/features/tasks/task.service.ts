@@ -44,13 +44,12 @@ export class TaskService {
   }
   getTareaByEmpleado(uid: string): Observable<Tarea[]> {
     const tareasCollection = collection(this.firestore, 'tareas');
-    // Tambien filtrar por nombre
+
     const q = query(tareasCollection, where('asignadoA', '==', uid));
     return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
   }
 
 
-  // Método para obtener tareas por empleado y estado (para la lista de Mis Tareas)
   getTareasByEmpleadoAndEstado(uid: string, estado: EstadoTarea | 'Todas'): Observable<Tarea[]> {
     const tareasCollection = collection(this.firestore, 'tareas');
     let q;
@@ -59,7 +58,7 @@ export class TaskService {
     } else {
       q = query(tareasCollection,
                 where('asignadoA', '==', uid),
-                where('estado', '==', estado)); // Usa el estado pasado directamente
+                where('estado', '==', estado)); 
     }
     return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
   }

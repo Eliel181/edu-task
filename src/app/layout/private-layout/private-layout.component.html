@@ -14,7 +14,9 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
         <div class="md:hs-overlay-minified:hidden">
           <a class="shrink-0 inline-flex justify-center items-center size-9 rounded-lg text-xl font-semibold hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
             href="@@href" aria-label="Preline">
-            <img class="shrink-0 size-5" src="https://images.icon-icons.com/4221/PNG/512/bizum_payment_method_logo_icon_263128.png" width="36" height="36" viewBox="0 0 36 36"alt="Icon de EduTask">
+            <img class="shrink-0 size-5"
+              src="https://images.icon-icons.com/4221/PNG/512/bizum_payment_method_logo_icon_263128.png" width="36"
+              height="36" viewBox="0 0 36 36" alt="Icon de EduTask">
             <!-- <svg class="shrink-0 size-5 text-cyan-700" width="36" height="36" viewBox="0 0 36 36" fill="none"
               xmlns="http://www.w3.org/2000/svg">
 
@@ -90,7 +92,10 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
 
     <div class="mb-5 px-2 flex flex-col gap-y-5">
       <!-- List -->
+
       <ul class="flex flex-col gap-y-0.5">
+        @if (currentUser()?.rol === 'Admin') {
+
         <li>
           <a routerLink="gestion-usuarios"
             class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
@@ -102,12 +107,19 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
               </svg> -->
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
-    <path d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="#141B34" stroke-width="1.5" />
-    <path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z" stroke="#141B34" stroke-width="1.5" stroke-linejoin="round" />
-    <path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-</svg>
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                color="#000000" fill="none">
+                <path
+                  d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"
+                  stroke="#141B34" stroke-width="1.5" />
+                <path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="#141B34"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z"
+                  stroke="#141B34" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="#141B34"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </span>
             <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Usuarios</span>
           </a>
@@ -123,11 +135,17 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                   d="m21 21-4.34-4.34" />
                 <circle cx="11" cy="11" r="8" />
               </svg> -->
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
-    <path d="M20 16V8C20 5.17157 20 3.75736 19.1213 2.87868C18.2426 2 16.8284 2 14 2H10C7.17157 2 5.75736 2 4.87868 2.87868C4 3.75736 4 5.17157 4 8V16C4 18.8284 4 20.2426 4.87868 21.1213C5.75736 22 7.17157 22 10 22H14C16.8284 22 18.2426 22 19.1213 21.1213C20 20.2426 20 18.8284 20 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M15.5 2H8.5C8.5 3.41421 8.5 4.12132 8.93934 4.56066C9.37868 5 10.0858 5 11.5 5H12.5C13.9142 5 14.6213 5 15.0607 4.56066C15.5 4.12132 15.5 3.41421 15.5 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M8 15H12M8 11H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                color="#000000" fill="none">
+                <path
+                  d="M20 16V8C20 5.17157 20 3.75736 19.1213 2.87868C18.2426 2 16.8284 2 14 2H10C7.17157 2 5.75736 2 4.87868 2.87868C4 3.75736 4 5.17157 4 8V16C4 18.8284 4 20.2426 4.87868 21.1213C5.75736 22 7.17157 22 10 22H14C16.8284 22 18.2426 22 19.1213 21.1213C20 20.2426 20 18.8284 20 16Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path
+                  d="M15.5 2H8.5C8.5 3.41421 8.5 4.12132 8.93934 4.56066C9.37868 5 10.0858 5 11.5 5H12.5C13.9142 5 14.6213 5 15.0607 4.56066C15.5 4.12132 15.5 3.41421 15.5 2Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M8 15H12M8 11H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
             </span>
             <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Tareas</span>
           </button>
@@ -144,15 +162,24 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                 <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
                 <path d="M2 12h20" />
               </svg> -->
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
-    <path d="M7 22V12.3981C7 11.3299 7 10.7958 7.24458 10.3478C7.48915 9.89983 7.93842 9.61101 8.83697 9.03338L10.9185 7.69526C11.4437 7.35763 11.7063 7.18881 12 7.18881C12.2937 7.18881 12.5563 7.35763 13.0815 7.69526L15.163 9.03338C16.0616 9.61101 16.5108 9.89983 16.7554 10.3478C17 10.7958 17 11.3299 17 12.3981V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M12 13H12.009" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M21 22V16.1623C21 13.8707 19.7408 13.6852 17 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M3 22V16.1623C3 13.8707 4.25916 13.6852 7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M2 22H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M12 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-    <path d="M12 7V4.98221M12 4.98221V2.97035C12 2.49615 12 2.25905 12.1464 2.11173C12.6061 1.64939 14.5 2.74303 15.2203 3.18653C15.8285 3.56105 16 4.30914 16 4.98221H12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                color="#000000" fill="none">
+                <path
+                  d="M7 22V12.3981C7 11.3299 7 10.7958 7.24458 10.3478C7.48915 9.89983 7.93842 9.61101 8.83697 9.03338L10.9185 7.69526C11.4437 7.35763 11.7063 7.18881 12 7.18881C12.2937 7.18881 12.5563 7.35763 13.0815 7.69526L15.163 9.03338C16.0616 9.61101 16.5108 9.89983 16.7554 10.3478C17 10.7958 17 11.3299 17 12.3981V22"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 13H12.009" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+                <path d="M21 22V16.1623C21 13.8707 19.7408 13.6852 17 13" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M3 22V16.1623C3 13.8707 4.25916 13.6852 7 13" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M2 22H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+                <path d="M12 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                <path
+                  d="M12 7V4.98221M12 4.98221V2.97035C12 2.49615 12 2.25905 12.1464 2.11173C12.6061 1.64939 14.5 2.74303 15.2203 3.18653C15.8285 3.56105 16 4.30914 16 4.98221H12Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
             </span>
             <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Escuelas</span>
           </a>
@@ -173,6 +200,29 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
           </a>
         </li> -->
 
+        }
+        @if (currentUser()?.rol === 'Empleado') {
+
+        <li>
+          <a routerLink="/administracion/mis-tareas"
+            class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
+
+              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                color="#000000" fill="none">
+                <path d="M11 6L21 6" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M11 12L21 12" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M11 18L21 18" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4" stroke="#141B34" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15" stroke="#141B34" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Mis Tareas</span>
+          </a>
+        </li>
+        }
 
       </ul>
       <!-- End List -->
@@ -213,8 +263,8 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
 
 
       @if(currentUser()){
-        <!-- Mostrar -->
-               <!-- Button Group -->
+      <!-- Mostrar -->
+      <!-- Button Group -->
       <div class="flex items-center sm:gap-x-1.5">
         <div class="h-8">
           <!-- Account Dropdown -->
@@ -244,7 +294,7 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                   [alt]="currentUser()?.nombre" class="size-12 rounded-full object-cover">
 
                 <div>
-                   <p class="text-sm text-gray-500 dark:text-gray-400">Sesión iniciada como</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Sesión iniciada como</p>
                   <p class="text-sm font-medium text-gray-800 dark:text-white">{{ currentUser()?.nombre }} {{
                     currentUser()?.apellido }}
                   </p>
@@ -289,8 +339,8 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                 <!-- End Switch/Toggle -->
               </div>
               <div class="p-1 border-t border-gray-200">
-                <a routerLink="/administracion/mi-perfil" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
-                  >
+                <a routerLink="/administracion/mi-perfil"
+                  class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100">
                   <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
@@ -300,8 +350,8 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                   Mi Perfil
                 </a>
 
-                <a (click)="logOut()" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
-                >
+                <a (click)="logOut()"
+                  class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100">
                   <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">

@@ -17,13 +17,13 @@ export class VerificarEmailComponent {
     this.email = sessionStorage.getItem('pendingVerificationEmail') || '';
     // si no hay email redirigimos
     if (!this.email) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     }
   }
 
   volverLogin() {
     // Limpiamos el sessionStorage
     sessionStorage.removeItem('pendingVerificationEmail');
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 }

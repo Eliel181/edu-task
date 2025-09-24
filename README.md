@@ -47,7 +47,6 @@ ng g s core/services/firestore --skip-tests
 ng g s core/services/auth --skip-tests
 ng g s core/services/school --skip-tests
 ng g s features/tasks/task --skip-tests
-
 ```
 
 ```bash
@@ -62,7 +61,7 @@ ng g c layout/footer --skip-tests
 ng g guard core/guards/auth --skip-tests
 ng g guard core/guards/admin --skip-tests
 ng g guard core/guards/empleado --skip-tests
-
+ng g guard core/guards/public --skip-tests
 ```
 
 ```bash

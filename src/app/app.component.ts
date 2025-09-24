@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SpinnerOverlayComponent } from "./shared/spinner-overlay/spinner-overlay.component";
+import { Usuario } from './core/interfaces/usuario.model';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -11,8 +12,9 @@ import { AuthService } from './core/services/auth.service';
 })
 export class AppComponent implements OnInit {
   private router: Router = inject(Router);
-  authService: AuthService = inject(AuthService);
-  title = 'edu-task';
+  private authService: AuthService = inject(AuthService);
+  
+  isAuthLoading: Signal<boolean> = this.authService.isAuthStatusLoaded;
 
   ngOnInit() {
     this.router.events.subscribe((event: Event) => {
