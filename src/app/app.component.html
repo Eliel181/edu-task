@@ -1,6 +1,6 @@
-<!-- app.component.html -->
-@if (authService.isLoading()) {
-  <app-spinner-overlay />
-}
 
-<router-outlet />
+@if (!isAuthLoading()) { 
+  <app-spinner-overlay />
+} @else {
+  <router-outlet />
+}

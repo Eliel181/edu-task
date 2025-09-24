@@ -109,7 +109,7 @@ export class DetalleTareaComponent implements OnInit {
       Swal.fire('Error', 'Ocurrió un error al guardar la tarea.', 'error');
     }).finally(() => {
      this.isSubmitting.set(false);
-     this.router.navigate(['/mis-tareas']);
+     this.router.navigate(['/administracion/mis-tareas']);
     });
   }
 }

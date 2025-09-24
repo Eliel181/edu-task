@@ -1,4 +1,4 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification, onAuthStateChanged, signOut, sendPasswordResetEmail } from '@angular/fire/auth';
 import { FirestoreService } from './firestore.service';
 import { Router } from '@angular/router';
@@ -14,27 +14,32 @@ export class AuthService {
 
   currentUser: WritableSignal<Usuario | null | undefined> = signal(undefined);
 
-  // Loading para el Spinner-Overlay
-  isLoading = signal(true);
-
-  ready: Promise<Usuario | null>;
+  isAuthStatusLoaded: WritableSignal<boolean> = signal(false); 
 
   constructor() {
-    this.ready = new Promise(resolve => {
-      onAuthStateChanged(this.auth, async (firebaseUser) => {
-        this.isLoading.set(true);
+    onAuthStateChanged(this.auth,
+      async (firebaseUser) => {
+        // si hay un usuario autenticado voy a buscar el documento con todos los datos del usuario
         if (firebaseUser) {
+          // OBtenemos todos los datos
+          // Llamo al servicio
+          // pongo el path 
+          // y como recibe un tipo
+          // lo especifico aqui
           const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
+          // Si no tiene nada le pasamo un null
+          console.log("Usuario con datos: ", user);
+          
           this.currentUser.set(user || null);
-          resolve(user || null);
         } else {
+          // NO hay un usuario autenticado
           this.currentUser.set(null);
-          resolve(null);
         }
-        this.isLoading.set(false);
+        this.isAuthStatusLoaded.set(true); 
       });
-    });
   }
+
+ 
 
   // Metodo para el Registro
   async register({ email, password, telefono, apellido, nombre }: any) {
@@ -80,6 +85,7 @@ export class AuthService {
   }
 
   async login({ email, password }: any) {
+
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       const user = userCredential.user;
@@ -89,15 +95,19 @@ export class AuthService {
       if (!user.emailVerified) {
         throw new Error('Debes verificar tu correo antes de ingresar.');
       }
-
-      this.router.navigate(['/administracion']);
+      const appUser = await this.firestoreService.getDocument<Usuario>('usuarios', user.uid);
+      // Establecemos la señal currentUser con el usuario autenticado y sus datos
+      this.currentUser.set(appUser || null);
     } catch (error: any) {
       console.error("Error en el login", error);
       throw new Error(error.message || 'Error en el login, revisa tus credenciales.');
+    } finally {
+      this.router.navigate(['/administracion']);
     }
   }
 
   async loginWithGoogle() {
+    // this.isLoading.set(true);
     try {
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(this.auth, provider);
@@ -134,11 +144,14 @@ export class AuthService {
         await this.firestoreService.setDocument('usuarios', user.uid, newUser);
 
         this.currentUser.set(newUser);
-        this.router.navigate(['/']);
+        // this.router.navigate(['/administracion']);
 
       }
+        // this.router.navigate(['/administracion']);
     } catch (error) {
       console.error('Error en login con google', error);
+    } finally {
+      this.router.navigate(['/administracion']);
     }
   }
 
