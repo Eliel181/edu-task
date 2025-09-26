@@ -9,15 +9,31 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
 
-    return toObservable(authService.currentUser).pipe(
+  //   return toObservable(authService.currentUser).pipe(
+  //   filter(user => user !== undefined),
+  //   take(1),
+  //   map(user => {
+  //     if (user) {
+  //       console.log('Usuario Autenticado (después de esperar): ', user);
+  //       return true;
+  //     } else {
+  //       console.log('Usuario NO Autenticado (después de esperar): ', user);
+  //       router.navigate(['/login']);
+  //       return false;
+  //     }
+  //   })
+  // );
+
+  return toObservable(authService.currentUser).pipe(
     filter(user => user !== undefined),
-    take(1),
+    take(1), 
     map(user => {
-      if (user) {
-        console.log('Usuario Autenticado (después de esperar): ', user);
+      // debugger
+      if (user && user.emailVerified) {
+        console.log('Usuario autenticado y verificado: ', user);
         return true;
       } else {
-        console.log('Usuario NO Autenticado (después de esperar): ', user);
+        console.log('Usuario NO Autenticado o NO verificado. Redirigiendo a /login.');
         router.navigate(['/login']);
         return false;
       }

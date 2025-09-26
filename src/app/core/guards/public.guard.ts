@@ -12,7 +12,8 @@ export const publicGuard: CanActivateFn = (route, state) => {
     filter(user => user !== undefined), 
     take(1), 
     map(user => {
-      if (user) {
+      // debugger
+      if (user && user.emailVerified) {
         console.log('PublicGuard: Usuario autenticado, redirigiendo a /administracion');
         router.navigate(['/administracion']);
         return false; 

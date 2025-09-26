@@ -42,9 +42,9 @@ export class RegisterComponent {
     try {
       // Desestructurar para obtener el email
       const { email } = this.registerForm.value;
-      await this.authService.register(this.registerForm.value);
-
-      this.isSubmitting = false;
+      // await this.authService.register(this.registerForm.value);
+      const firebaseUser = await this.authService.register(this.registerForm.value);
+      // this.isSubmitting = false;
       await this.authService.sendEmailVerification();
       
       sessionStorage.setItem('pendingVerificationEmail', email);

@@ -2,37 +2,39 @@
 
 <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <div>
-    <div class="-m-1.5 overflow-x-auto">
-      <div class="p-1.5 min-w-full inline-block align-middle">
-        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden">
+    <!-- <div class="-m-1.5 overflow-x-auto"> -->
+    <div class="p-1.5 min-w-full inline-block align-middle">
+      <div
+        class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden">
 
-          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-end border-b border-gray-200 dark:border-gray-700">
+        <div
+          class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-end border-b border-gray-200 dark:border-gray-700">
 
-            <div class="flex-grow">
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Listado de Tareas</h2>
-              <p class="text-sm text-gray-600 dark:text-gray-400">Filtra y visualiza todas las tareas asignadas.</p>
+          <div class="flex-grow">
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Listado de Tareas</h2>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Filtra y visualiza todas las tareas asignadas.</p>
 
-              <!-- Campo de Búsqueda -->
-              <div class="mt-2 sm:w-80">
-                <label for="task-search-input" class="sr-only">Buscar</label>
-                <div class="relative">
-                  <input type="text" id="task-search-input"
-                    class="py-2 px-3 ps-11 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-300"
-                    placeholder="Buscar por título, descripción..." (input)="onBusquedaChange($event)">
-                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-                    <svg class="size-4 text-gray-400 dark:text-gray-500" viewBox="0 0 16 16" fill="currentColor">
-                      <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                    </svg>
-                  </div>
+            <!-- Campo de Búsqueda -->
+            <div class="mt-2 sm:w-80">
+              <label for="task-search-input" class="sr-only">Buscar</label>
+              <div class="relative">
+                <input type="text" id="task-search-input"
+                  class="py-2 px-3 ps-11 block w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-800 dark:text-gray-300"
+                  placeholder="Buscar por título, descripción..." (input)="onBusquedaChange($event)">
+                <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+                  <svg class="size-4 text-gray-400 dark:text-gray-500" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                  </svg>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="flex flex-col sm:flex-row sm:items-end gap-2">
+          <div class="flex flex-col sm:flex-row sm:items-end gap-2">
 
-              @if (empleados().length > 0) {
-              <select (change)="onFiltroEmpleadoChange($event)" data-hs-select='{
+            @if (empleados().length > 0) {
+            <select (change)="onFiltroEmpleadoChange($event)" data-hs-select='{
                 "placeholder": "Todos los Empleados",
                 "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
                 "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 w-full min-w-[220px] text-nowrap cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-gray-800 dark:text-gray-200",
@@ -41,14 +43,14 @@
                 "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
                 "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
               }' class="hidden">
-                <option value="todos">Todos los Empleados</option>
-                @for (emp of empleados(); track emp.uid) {
-                <option [value]="emp.uid">{{ emp.apellido }} {{ emp.nombre }}</option>
-                }
-              </select>
+              <option value="todos">Todos los Empleados</option>
+              @for (emp of empleados(); track emp.uid) {
+              <option [value]="emp.uid">{{ emp.apellido }} {{ emp.nombre }}</option>
               }
+            </select>
+            }
 
-              <select (change)="onFiltroEstadoChange($event)" data-hs-select='{
+            <select (change)="onFiltroEstadoChange($event)" data-hs-select='{
                 "placeholder": "Todos los Estados",
                 "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
                 "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 w-full min-w-[220px] text-nowrap cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-gray-800 dark:text-gray-300",
@@ -57,22 +59,23 @@
                 "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
                 "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
               }' class="hidden">
-                <option value="todos">Todos los Estados</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="En Proceso">En Proceso</option>
-                <option value="Finalizada">Finalizada</option>
-              </select>
+              <option value="todos">Todos los Estados</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Proceso">En Proceso</option>
+              <option value="Finalizada">Finalizada</option>
+            </select>
 
-              <a routerLink="form-tarea"
-                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
-                Crear Tarea
-              </a>
-            </div>
+            <a routerLink="form-tarea"
+              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
+              Crear Tarea
+            </a>
           </div>
+        </div>
 
-          @if (isLoading()) {
-          <p class="text-center p-10 text-gray-500 dark:text-gray-400">Cargando tareas...</p>
-          } @else {
+        @if (isLoading()) {
+        <p class="text-center p-10 text-gray-500 dark:text-gray-400">Cargando tareas...</p>
+        } @else {
+        <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700">
               <tr>
@@ -80,7 +83,7 @@
                   class="w-2/5 px-6 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
                   Tarea
                 </th>
-                                <th scope="col"
+                <th scope="col"
                   class="px-6 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200 tracking-wider">
                   Prioridad
                 </th>
@@ -103,7 +106,8 @@
 
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-4">
-                    <div class="shrink-0 inline-flex items-center justify-center size-12 rounded-full text-gray-500 dark:text-gray-400"
+                    <div
+                      class="shrink-0 inline-flex items-center justify-center size-12 rounded-full text-gray-500 dark:text-gray-400"
                       [ngClass]="{
                         'bg-blue-100 dark:bg-blue-900/30': tarea.estado === 'Pendiente',
                         'bg-yellow-100 dark:bg-yellow-900/30': tarea.estado === 'En Proceso',
@@ -117,8 +121,8 @@
                     </div>
                     <div class="grow overflow-hidden">
                       <div class="flex items-center gap-x-3">
-                        <p class="text-sm font-semibold text-gray-900 dark:text-gray-200 truncate uppercase"
-                          >{{ tarea.titulo }}</p>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-gray-200 truncate uppercase">{{
+                          tarea.titulo }}</p>
                         <span class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium"
                           [ngClass]="{
                             'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400': tarea.estado === 'Pendiente',
@@ -212,8 +216,7 @@
                                 stroke="currentColor" stroke-width="1.5"></path>
                               <path
                                 d="M14.4039 9.64136L15.8869 11.1244M6 22H7.49759C8.70997 22 9.31617 22 9.86124 21.7742C10.4063 21.5484 10.835 21.1198 11.6923 20.2625L19.8417 12.1131C20.3808 11.574 20.6503 11.3045 20.7944 11.0137C21.0685 10.4605 21.0685 9.81094 20.7944 9.25772C20.6503 8.96695 20.3808 8.69741 19.8417 8.15832C19.3026 7.61924 19.0331 7.3497 18.7423 7.20561C18.1891 6.93146 17.5395 6.93146 16.9863 7.20561C16.6955 7.3497 16.426 7.61924 15.8869 8.15832L7.73749 16.3077C6.8802 17.165 6.45156 17.5937 6.22578 18.1388C6 18.6838 6 19.29 6 20.5024V22Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round">
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                               </path>
                             </svg>
                             Editar
@@ -249,57 +252,59 @@
               </tr>
               } @empty {
               <tr>
-                <td colspan="4" class="text-center p-10 text-gray-500 dark:text-gray-400">No hay tareas que coincidan con
+                <td colspan="4" class="text-center p-10 text-gray-500 dark:text-gray-400">No hay tareas que coincidan
+                  con
                   los filtros.</td>
               </tr>
               }
             </tbody>
           </table>
-          <!-- ================== FOOTER CON PAGINACIÓN AÑADIDO ================== -->
-          <div
-            class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-            <div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Mostrando <span class="font-semibold text-gray-800 dark:text-gray-200">{{ tareasPaginadas().length
-                  }}</span> de <span class="font-semibold text-gray-800 dark:text-gray-200">{{
-                  tareasFiltradas().length }}</span> resultados
-              </p>
+        </div>
+        <!-- ================== FOOTER CON PAGINACIÓN AÑADIDO ================== -->
+        <div
+          class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Mostrando <span class="font-semibold text-gray-800 dark:text-gray-200">{{ tareasPaginadas().length
+                }}</span> de <span class="font-semibold text-gray-800 dark:text-gray-200">{{
+                tareasFiltradas().length }}</span> resultados
+            </p>
+          </div>
+
+          <nav class="flex justify-center items-center gap-x-1" aria-label="Pagination">
+            <button type="button"
+              class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none"
+              [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
+              <svg class="shrink-0 size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+            </button>
+
+            <div class="flex items-center gap-x-1">
+              @for (pagina of paginasDisponibles(); track pagina) {
+              <button type="button"
+                class="min-h-9.5 min-w-9.5 flex justify-center items-center py-2 px-3 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none text-gray-800 dark:text-gray-200"
+                [class.bg-gray-200]="pagina === paginaActual()" [class.dark:bg-gray-600]="pagina === paginaActual()"
+                [class.hover:bg-gray-100]="pagina !== paginaActual()"
+                [class.dark:hover:bg-gray-700]="pagina !== paginaActual()"
+                [attr.aria-current]="pagina === paginaActual() ? 'page' : null" (click)="irAPagina(pagina)">
+                {{ pagina }}
+              </button>
+              }
             </div>
 
-            <nav class="flex justify-center items-center gap-x-1" aria-label="Pagination">
-              <button type="button"
-                class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none"
-                [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
-                <svg class="shrink-0 size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="m15 18-6-6 6-6"></path>
-                </svg>
-              </button>
-
-              <div class="flex items-center gap-x-1">
-                @for (pagina of paginasDisponibles(); track pagina) {
-                <button type="button"
-                  class="min-h-9.5 min-w-9.5 flex justify-center items-center py-2 px-3 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none text-gray-800 dark:text-gray-200"
-                  [class.bg-gray-200]="pagina === paginaActual()" [class.dark:bg-gray-600]="pagina === paginaActual()"
-                  [class.hover:bg-gray-100]="pagina !== paginaActual()"
-                  [class.dark:hover:bg-gray-700]="pagina !== paginaActual()"
-                  [attr.aria-current]="pagina === paginaActual() ? 'page' : null" (click)="irAPagina(pagina)">
-                  {{ pagina }}
-                </button>
-                }
-              </div>
-
-              <button type="button"
-                class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none"
-                [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
-                <svg class="shrink-0 size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
-              </button>
-            </nav>
-          </div>
-          }
+            <button type="button"
+              class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none"
+              [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
+              <svg class="shrink-0 size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+          </nav>
         </div>
+        }
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </div>

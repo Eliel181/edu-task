@@ -7,5 +7,6 @@ export interface Usuario {
   apellido: string;
   nombre: string;
   rol: RolUsuario;
-  perfil?: string;
+  perfil?: string;  
+  emailVerified?: boolean;
 }
