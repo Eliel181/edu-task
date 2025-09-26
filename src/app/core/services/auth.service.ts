@@ -14,54 +14,55 @@ export class AuthService {
 
   currentUser: WritableSignal<Usuario | null | undefined> = signal(undefined);
 
-  isAuthStatusLoaded: WritableSignal<boolean> = signal(false); 
+  isAuthStatusLoaded: WritableSignal<boolean> = signal(false);
 
   constructor() {
     onAuthStateChanged(this.auth,
       async (firebaseUser) => {
-        // si hay un usuario autenticado voy a buscar el documento con todos los datos del usuario
         if (firebaseUser) {
-          // OBtenemos todos los datos
-          // Llamo al servicio
-          // pongo el path 
-          // y como recibe un tipo
-          // lo especifico aqui
           const user = await this.firestoreService.getDocument<Usuario>('usuarios', firebaseUser.uid);
-          // Si no tiene nada le pasamo un null
-          console.log("Usuario con datos: ", user);
-          
-          this.currentUser.set(user || null);
+          const userWithVerificationStatus: Usuario = {
+            ...user!,
+            emailVerified: firebaseUser.emailVerified
+          };
+          console.log("Usuario con datos (y verificación): ", userWithVerificationStatus);
+          this.currentUser.set(userWithVerificationStatus || null);
         } else {
-          // NO hay un usuario autenticado
           this.currentUser.set(null);
         }
-        this.isAuthStatusLoaded.set(true); 
+        this.isAuthStatusLoaded.set(true);
       });
   }
 
- 
 
   // Metodo para el Registro
   async register({ email, password, telefono, apellido, nombre }: any) {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      const { user } = userCredential;
+      const firebaseUser = userCredential.user;
+
       const newUser: Usuario = {
-        uid: user.uid,
-        email: user.email!,
+        uid: firebaseUser.uid,
+        email: firebaseUser.email!,
         telefono,
         apellido,
         nombre,
         rol: 'Empleado',
       };
 
-      await this.firestoreService.setDocument('usuarios', user.uid, newUser);
-      this.currentUser.set(newUser);
-      this.router.navigate(['/verificar-email']);
+      await this.firestoreService.setDocument('usuarios', firebaseUser.uid, newUser);
+
+      // await signOut(this.auth);
+
+      // this.currentUser.set(newUser);
+      // this.currentUser.set(null);
+      // this.router.navigate(['/verificar-email']);
+      return firebaseUser;
 
     } catch (error) {
       console.error('Error: en el register() ', error);
       alert('No se pudo completar el registro, es posble que el correo este en uso');
+      throw error;
     }
   }
 
@@ -97,7 +98,13 @@ export class AuthService {
       }
       const appUser = await this.firestoreService.getDocument<Usuario>('usuarios', user.uid);
       // Establecemos la señal currentUser con el usuario autenticado y sus datos
-      this.currentUser.set(appUser || null);
+      // this.currentUser.set(appUser || null);
+      const userWithVerificationStatus: Usuario = {
+        ...appUser!,
+        emailVerified: user.emailVerified
+      };
+      // console.log("Usuario con datos (y verificación): ", userWithVerificationStatus);
+      this.currentUser.set(userWithVerificationStatus || null);
     } catch (error: any) {
       console.error("Error en el login", error);
       throw new Error(error.message || 'Error en el login, revisa tus credenciales.');
@@ -147,7 +154,7 @@ export class AuthService {
         // this.router.navigate(['/administracion']);
 
       }
-        // this.router.navigate(['/administracion']);
+      // this.router.navigate(['/administracion']);
     } catch (error) {
       console.error('Error en login con google', error);
     } finally {
