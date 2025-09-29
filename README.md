@@ -47,6 +47,7 @@ ng g s core/services/firestore --skip-tests
 ng g s core/services/auth --skip-tests
 ng g s core/services/school --skip-tests
 ng g s features/tasks/task --skip-tests
+ng g s core/services/visita --skip-tests
 ```
 
 ```bash
@@ -69,6 +70,7 @@ ng g guard core/guards/public --skip-tests
 ng g i core/interfaces/usuario --type=model
 ng g i core/interfaces/escuela --type=model
 ng g i core/interfaces/tarea --type=model
+ng g i core/interfaces/visita --type=model
 
 ```
 ```bash
@@ -87,6 +89,9 @@ ng g component features/tasks/edit-tarea --skip-tests
 # Employee
 ng g component features/employee/mis-tareas --skip-tests
 ng g component features/employee/detalle-tarea --skip-tests
+
+#Referents
+ng g c features/referents/calendario --skip-tests
 
 # Public
 ng g c features/auth/login --skip-tests

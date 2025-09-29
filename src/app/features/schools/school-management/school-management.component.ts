@@ -74,9 +74,6 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
       })
     }
 
-    // debugger
-    //obtengo la inf del campo "sku"
-    //pipe me permite concatenar varias operadores, cons esa operadores podremos manipular el dato del campo "sku"
     this.escuelaForm.get('cue')?.valueChanges
       .pipe(
         skip(1),
@@ -110,10 +107,10 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
   cargarDatos() {
   this.escuelaService.getDirectores()
     .pipe(takeUntil(this.destroy$))
-    .subscribe(direct => 
+    .subscribe(direct =>
       this.directores.set(direct)
     );
-      
+
   }
 
   guardarCambios(): void {

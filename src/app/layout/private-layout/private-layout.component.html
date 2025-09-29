@@ -2,7 +2,7 @@
 hs-overlay-open:translate-x-0
 -translate-x-full transition-all duration-500 ease-out transform
 w-65 hs-overlay-minified:w-13 overflow-hidden
-hidden  
+hidden
 fixed inset-y-0 z-60 start-0 bg-[#fff]
 md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" aria-label="Sidebar">
 
@@ -14,10 +14,10 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
           class="md:hs-overlay-minified:hidden flex items-center gap-x-4 min-h-[40px] transition-all duration-400 ease-out">
           <!-- Icono con fondo redondeado -->
           <a class="shrink-0 bg-[#f9f9fe] inline-flex justify-center items-center p-2.5 py-2.5 rounded-xl focus:outline-none
-          shadow-[0_8px_25px_rgba(0,0,0,0.04)]  
-          shadow-[#e2e3fa]                    
-          hover:shadow-xl                     
-          hover:shadow-[#e2e3fa]              
+          shadow-[0_8px_25px_rgba(0,0,0,0.04)]
+          shadow-[#e2e3fa]
+          hover:shadow-xl
+          hover:shadow-[#e2e3fa]
           transition-all duration-300 ease-in-out hover:scale-105" href="https://github.com/Eliel181/edu-task"
             target="_blank" rel="noopener noreferrer" aria-label="EduTask">
             <img class="w-5 h-4 md:w-6 md:h-5 transition-transform duration-300 hover:scale-110"
@@ -182,7 +182,18 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
           </a>
         </li>
         }
+        @if (currentUser()?.rol === 'RTE') {
 
+        <li>
+          <a routerLink="/administracion/calendario" routerLinkActive="active"
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-5">
+              <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+            </span>
+            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Calendario</span>
+          </a>
+        </li>
+        }
       </ul>
       <!-- End List -->
     </div>
@@ -267,7 +278,7 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
             </button>
 
             <!-- Account Dropdown -->
-            <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 hs-dropdown-open:scale-100 w-72  duration-300 opacity-0 hidden z-20 bg-white rounded-3xl shadow-[0_8px_25px_rgba(0,0,0,0.04)]  
+            <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 hs-dropdown-open:scale-100 w-72  duration-300 opacity-0 hidden z-20 bg-white rounded-3xl shadow-[0_8px_25px_rgba(0,0,0,0.04)]
           shadow-[#e2e3fa] " role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad">
 
               <!-- Header con gradiente sutil -->
