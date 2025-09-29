@@ -29,15 +29,15 @@ export const routes: Routes = [
     component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
-    { 
-      path: '', 
+    {
+      path: '',
       pathMatch: 'full',
       // usar un guard que espere currentUser
       loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component')
         .then(m => m.DashboardComponent)
     },
       // { path: 'dashboard', loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [adminGuard] },
-      
+
       { path: 'gestion-usuarios', loadComponent: () => import('./features/admin/gestion-usuarios/gestion-usuarios.component').then(m => m.GestionUsuariosComponent), canActivate: [adminGuard] },
       { path: 'gestion-usuarios/edicion-usuario/:id', loadComponent: () => import('./features/admin/edit-usuario/edit-usuario.component').then(m => m.EditUsuarioComponent), canActivate: [adminGuard] },
 
@@ -53,6 +53,8 @@ export const routes: Routes = [
 
       { path: 'mis-tareas', loadComponent: () => import('./features/employee/mis-tareas/mis-tareas.component').then(m => m.MisTareasComponent), canActivate: [empleadoGuard] },
       { path: 'mis-tareas/:id', loadComponent: () => import('./features/employee/detalle-tarea/detalle-tarea.component').then(m => m.DetalleTareaComponent), canActivate: [empleadoGuard] },
+
+      { path: 'calendario', loadComponent: () => import('./features/referents/calendario/calendario.component').then(m => m.CalendarioComponent), canActivate: [authGuard] },
     ]
   },
 
