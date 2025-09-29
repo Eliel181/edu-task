@@ -20,7 +20,8 @@ export class SchoolListComponent implements OnInit {
   private escuelasOriginales: WritableSignal<Escuela[]> = signal([]);
   public isLoading = signal(true);
 
-  directorData: Usuario | null = null;
+directoresMap: Record<string, Usuario> = {}; // o Map<string, Usuario>
+
 
   public terminoBusqueda = signal('');
   public paginaActual = signal(1);
@@ -69,16 +70,16 @@ export class SchoolListComponent implements OnInit {
     this.cargarEscuelas();
   }
 
-  cargarDirector(uidDirector: string): void {
+async cargarDirector(uidDirector: string): Promise<void> {
+  // Si ya lo cargaste, no vuelvas a pedirlo
+  if (this.directoresMap[uidDirector]) return;
 
-    this.firestoreService.getDocumentById<Usuario>('usuarios', uidDirector).then(
-      data => {
-        if (data) {
-          this.directorData = data;
-        }
-      }
-    );
+  const data = await this.firestoreService.getDocumentById<Usuario>('usuarios', uidDirector);
+  if (data) {
+    this.directoresMap[uidDirector] = data;
   }
+}
+
   cargarEscuelas(): void {
     this.escuelaService.getAllEscuelas().subscribe({
       next: (data) => {

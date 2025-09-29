@@ -249,9 +249,6 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                 <p class="text-sm font-medium text-[#2d2c63] font_outfit">
                   {{ currentUser()?.nombre }} {{ currentUser()?.apellido }}
                 </p>
-                <p class="text-xs text-[#9291aa] font_outfit">
-                  Administrador
-                </p>
               </div>
 
               <!-- Icono v con animación mejorada -->
@@ -275,22 +272,31 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
 
               <!-- Header con gradiente sutil -->
               <div class="flex items-center gap-4 py-5 px-4 border-b border-[#f0f1f8]">
-                <img [src]="currentUser()?.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
-                  [alt]="currentUser()?.nombre" class="size-12 rounded-full object-cover">
+                @if (currentUser()?.perfil) {
+                <!-- Tiene foto -->
+                <img [src]="currentUser()?.perfil" [alt]="currentUser()?.nombre"
+                  class="size-12 rounded-full object-cover">
+                } @else {
+                <!-- Sin foto: mostrar iniciales -->
+                <div class="size-12 rounded-xl flex items-center justify-center text-white font-semibold"
+                  style="background-color: #5956e9;">
+                  {{ (currentUser()?.nombre?.[0] || '') + (currentUser()?.apellido?.[0] || '') }}
+                </div>
+                }
 
                 <div>
                   <p class="outfit-2 text-[#9291aa] font_outfit">Sesión iniciada como</p>
-                  <p class="text-sm font-[450] text-[#4e3e76] font_outfit leading-tight mt-1">{{ currentUser()?.nombre
-                    }} {{ currentUser()?.apellido }}
+                  <p class="text-sm font-[450] text-[#4e3e76] font_outfit leading-tight mt-1">
+                    {{ currentUser()?.nombre }} {{ currentUser()?.apellido }}
                   </p>
 
                   <p
                     class="outfit-2 font-medium text-[#524380] font_outfit mt-1 px-2 py-0.5 border border-[#e2e3fa] rounded-lg bg-gradient-to-r from-[#f9f9fe] to-[#f0f1f8] inline-block">
                     {{ currentUser()?.rol }}
                   </p>
-
                 </div>
               </div>
+
 
               <div class="p-2">
                 <!-- Opción de Tema -->

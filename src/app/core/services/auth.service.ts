@@ -48,6 +48,7 @@ export class AuthService {
         apellido,
         nombre,
         rol: 'Empleado',
+        emailVerified: firebaseUser.emailVerified
       };
 
       await this.firestoreService.setDocument('usuarios', firebaseUser.uid, newUser);
@@ -97,6 +98,13 @@ export class AuthService {
         throw new Error('Debes verificar tu correo antes de ingresar.');
       }
       const appUser = await this.firestoreService.getDocument<Usuario>('usuarios', user.uid);
+
+      if (!appUser) {
+        throw new Error('No se encontraron datos del usuario en la base de datos.');
+      }
+      if (user.emailVerified && appUser.emailVerified !== true) {
+        await this.firestoreService.updateDocument('usuarios', user.uid, { emailVerified: true });
+      }
       // Establecemos la señal currentUser con el usuario autenticado y sus datos
       // this.currentUser.set(appUser || null);
       const userWithVerificationStatus: Usuario = {

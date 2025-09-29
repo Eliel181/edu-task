@@ -19,7 +19,6 @@ declare const HSStaticMethods: any;
 })
 export class SchoolManagementComponent implements OnInit, OnDestroy {
 
-
   private escuelaService: SchoolService = inject(SchoolService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
