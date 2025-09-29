@@ -29,6 +29,15 @@ export const routes: Routes = [
     component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
+    { 
+      path: '', 
+      pathMatch: 'full',
+      // usar un guard que espere currentUser
+      loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component')
+        .then(m => m.DashboardComponent)
+    },
+      // { path: 'dashboard', loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [adminGuard] },
+      
       { path: 'gestion-usuarios', loadComponent: () => import('./features/admin/gestion-usuarios/gestion-usuarios.component').then(m => m.GestionUsuariosComponent), canActivate: [adminGuard] },
       { path: 'gestion-usuarios/edicion-usuario/:id', loadComponent: () => import('./features/admin/edit-usuario/edit-usuario.component').then(m => m.EditUsuarioComponent), canActivate: [adminGuard] },
 

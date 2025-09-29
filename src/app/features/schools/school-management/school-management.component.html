@@ -1,287 +1,356 @@
-<!-- Card Section -->
-<div class="max-w-7xl px-4 py-10 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
+<!-- Formulario de Escuela -->
+<div class="min-h-screen bg-[#fcfdfe] p-6 font_outfit">
+    <div class="mx-auto px-1 py-10 max-w-6xl">
+        
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-semibold text-[#2d2c63] mb-2">
+                {{ isEditMode ? 'Editar Escuela' : 'Nueva Escuela' }}
+            </h1>
+            <p class="text-sm text-[#9291aa]">
+                {{ isEditMode ? 'Modifica los detalles de la escuela según sea necesario.' : 'Completa la información para registrar una nueva escuela.' }}
+            </p>
+        </div>
 
-  <div class="bg-white rounded-xl shadow-xs p-4 sm:p-7">
-    <div class="mb-8">
-      <h2 class="text-xl font-bold text-gray-800">
-        Formulario Escuela
-      </h2>
-      <p class="text-sm text-gray-600">
-        Administra Escuelas.
-      </p>
+        <form [formGroup]="escuelaForm" (ngSubmit)="guardarCambios()" class="space-y-6">
 
+            <!-- Card Información Básica -->
+            <div class="bg-white rounded-3xl shadow-2xs p-6">
+                <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                    <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Información Básica
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Columna Izquierda -->
+                    <div class="space-y-6">
+                        <!-- Nombre Completo -->
+                        <div class="space-y-3">
+                            <label for="nombreCompleto" class="block text-sm font-medium text-[#524380]">
+                                Nombre Completo *
+                            </label>
+                            <input id="nombreCompleto" formControlName="nombreCompleto" type="text"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (nombreCompleto?.touched && nombreCompleto?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (nombreCompleto?.errors?.['required']) {
+                                <span>El nombre completo es obligatorio.</span>
+                                }
+                                @if (nombreCompleto?.errors?.['minlength']) {
+                                <span>El nombre completo debe tener al menos 3 caracteres.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- CUE -->
+                        <div class="space-y-3">
+                            <label for="cue" class="block text-sm font-medium text-[#524380]">
+                                CUE *
+                            </label>
+                            <input id="cue" formControlName="cue" type="text"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (cue?.touched && cue?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (cue?.errors?.['required']) {
+                                <span>El CUE es obligatorio.</span>
+                                }
+                                @if (cue?.errors?.['pattern']) {
+                                <span>El CUE debe tener el siguiente formato. Ej. 123456-78</span>
+                                }
+                                @if (escuelaForm.get('cue')?.hasError('cueDuplicado')) {
+                                <span>Este CUE ya está registrado en otra escuela.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Nivel Educativo -->
+                        <div class="space-y-3">
+                            <label for="nivel" class="block text-sm font-medium text-[#524380]">
+                                Nivel Educativo *
+                            </label>
+                            <!-- <select id="nivel" name="nivel" formControlName="nivel" data-hs-select='{
+  "placeholder": "Seleccione un nivel...",
+  "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[160px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+}' class="hidden"> 
+                                <option value="Primario">Primario</option>
+                                <option value="Secundario">Secundario</option>
+                                <option value="Terciario">Terciario</option>
+                                <option value="Universitario">Universitario</option>
+                            </select> -->
+                            <select id="nivel" name="nivel" formControlName="nivel">
+  <option value="Primario">Primario</option>
+  <option value="Secundario">Secundario</option>
+  <option value="Terciario">Terciario</option>
+  <option value="Universitario">Universitario</option>
+</select>
+                            @if (nivel?.touched && nivel?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (nivel?.errors?.['required']) {
+                                <span>El nivel educativo es obligatorio.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha -->
+                    <div class="space-y-6">
+                        <!-- Nombre Corto -->
+                        <div class="space-y-3">
+                            <label for="nombreCorto" class="block text-sm font-medium text-[#524380]">
+                                Nombre Corto *
+                            </label>
+                            <input id="nombreCorto" formControlName="nombreCorto" type="text"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (nombreCorto?.touched && nombreCorto?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (nombreCorto?.errors?.['required']) {
+                                <span>El nombre corto es obligatorio.</span>
+                                }
+                                @if (nombreCorto?.errors?.['minlength']) {
+                                <span>El nombre corto debe tener al menos 3 caracteres.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Director -->
+                        <div class="space-y-3">
+                            <label for="director" class="block text-sm font-medium text-[#524380]">
+                                Director *
+                            </label>
+                            @if (directores().length > 0) {
+                            <select id="director" formControlName="director" data-hs-select='{
+                                "placeholder": "Seleccione un director...",
+                                "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078] min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+                                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+                                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+                                "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078] w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600\" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+                                "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+                            }' class="hidden">
+                                <option value="" disabled selected>Seleccione un director...</option>
+                                @for (direct of directores(); track direct.uid) {
+                                <option [value]="direct.uid">{{direct.nombre}} {{direct.apellido}}</option>
+                                }
+                            </select>
+                            } @else {
+                            <div class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#9291aa] shadow-2xs">
+                                Cargando directores...
+                            </div>
+                            }
+                            @if (director?.touched && director?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (director?.errors?.['required']) {
+                                <span>El director es obligatorio.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Matrícula Total -->
+                        <div class="space-y-3">
+                            <label for="matriculaTotal" class="block text-sm font-medium text-[#524380]">
+                                Matrícula Total *
+                            </label>
+                            <input id="matriculaTotal" formControlName="matriculaTotal" type="text"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (matriculaTotal?.touched && matriculaTotal?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (matriculaTotal?.errors?.['required']) {
+                                <span>La matrícula total es obligatoria.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Información de Contacto -->
+            <div class="bg-white rounded-3xl shadow-2xs p-6">
+                <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                    <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Información de Contacto
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Columna Izquierda -->
+                    <div class="space-y-6">
+                        <!-- Dirección -->
+                        <div class="space-y-3">
+                            <label for="direccion" class="block text-sm font-medium text-[#524380]">
+                                Dirección *
+                            </label>
+                            <input id="direccion" formControlName="direccion" type="text"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (direccion?.touched && direccion?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (direccion?.errors?.['required']) {
+                                <span>La dirección es obligatoria.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="space-y-3">
+                            <label for="telefono" class="block text-sm font-medium text-[#524380]">
+                                Teléfono *
+                            </label>
+                            <input id="telefono" formControlName="telefono" type="number"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (telefono?.touched && telefono?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (telefono?.errors?.['required']) {
+                                <span>El teléfono es obligatorio.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha -->
+                    <div class="space-y-6">
+                        <!-- Email -->
+                        <div class="space-y-3">
+                            <label for="email" class="block text-sm font-medium text-[#524380]">
+                                Email *
+                            </label>
+                            <input id="email" formControlName="email" type="email"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (email?.touched && email?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (email?.errors?.['required']) {
+                                <span>El correo es obligatorio.</span>
+                                }
+                                @if (email?.errors?.['email']) {
+                                <span>Debe ingresar un correo válido.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Sitio Web -->
+                        <div class="space-y-3">
+                            <label for="paginaWeb" class="block text-sm font-medium text-[#524380]">
+                                Sitio Web (Opcional)
+                            </label>
+                            <input id="paginaWeb" formControlName="paginaWeb" type="text"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Estadísticas -->
+            <div class="bg-white rounded-3xl shadow-2xs p-6">
+                <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                    <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Estadísticas
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Columna Izquierda -->
+                    <div class="space-y-6">
+                        <!-- Alumnos -->
+                        <div class="space-y-3">
+                            <label for="cantAlumnos" class="block text-sm font-medium text-[#524380]">
+                                Cantidad de Alumnos *
+                            </label>
+                            <input id="cantAlumnos" formControlName="cantAlumnos" type="number"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (cantAlumnos?.touched && cantAlumnos?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (cantAlumnos?.errors?.['required']) {
+                                <span>La cantidad de alumnos es obligatoria.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Docentes -->
+                        <div class="space-y-3">
+                            <label for="cantDocentes" class="block text-sm font-medium text-[#524380]">
+                                Cantidad de Docentes *
+                            </label>
+                            <input id="cantDocentes" formControlName="cantDocentes" type="number"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (cantDocentes?.touched && cantDocentes?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (cantDocentes?.errors?.['required']) {
+                                <span>La cantidad de docentes es obligatoria.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha -->
+                    <div class="space-y-6">
+                        <!-- Administrativos -->
+                        <div class="space-y-3">
+                            <label for="cantAdministrativos" class="block text-sm font-medium text-[#524380]">
+                                Cantidad de Administrativos *
+                            </label>
+                            <input id="cantAdministrativos" formControlName="cantAdministrativos" type="number"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (cantAdministrativos?.touched && cantAdministrativos?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (cantAdministrativos?.errors?.['required']) {
+                                <span>La cantidad de administrativos es obligatoria.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Empleados -->
+                        <div class="space-y-3">
+                            <label for="cantEmpleados" class="block text-sm font-medium text-[#524380]">
+                                Total de Empleados *
+                            </label>
+                            <input id="cantEmpleados" formControlName="cantEmpleados" type="number"
+                                class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                            @if (cantEmpleados?.touched && cantEmpleados?.invalid) {
+                            <div class="text-sm text-[#fb3640] mt-2">
+                                @if (cantEmpleados?.errors?.['required']) {
+                                <span>La cantidad de empleados es obligatoria.</span>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Acciones -->
+            <div class="bg-white rounded-3xl shadow-2xs p-6">
+                <div class="flex justify-end gap-3">
+                    <a routerLink="/administracion/gestion-escuelas"
+                        class="py-2.5 px-6 inline-flex items-center justify-center text-sm font-medium rounded-xl border border-transparent text-[#707078] hover:bg-[#fafbfe] transition-colors duration-200">
+                        Cancelar
+                    </a>
+                    <button type="submit" [disabled]="escuelaForm.invalid || isSubmitting"
+                        class="py-2.5 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#5956e9] text-white hover:bg-[#4a47d8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-w-[140px]">
+                        @if(isSubmitting) {
+                        <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
+                        <span>Guardando...</span>
+                        } @else {
+                        <span>{{ isEditMode ? 'Guardar Cambios' : 'Crear Escuela' }}</span>
+                        }
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form [formGroup]="escuelaForm" (ngSubmit)="guardarCambios()">
-
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-6">
-        <!-- NOMBRE COMPLETO -->
-        <div class="col-span-1 md:col-span-3">
-          <div class="inputGroup">
-            <input name="nombreCompleto" formControlName="nombreCompleto" id="nombreCompleto" type="text" required>
-            <label for="nombreCompleto">Nombre Completo</label>
-
-            @if (nombreCompleto?.touched && nombreCompleto?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (nombreCompleto?.errors?.['required']) {
-              <span>El nombre completo es obligatorio.</span>
-              }
-              @if (nombreCompleto?.errors?.['minlength']) {
-              <span>El nombre completo debe tener al menos 3 caracteres.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- NOMBRE CORTO -->
-        <div class="col-span-1 md:col-span-3 md:col-start-4">
-          <div class="inputGroup">
-            <input name="nombreCorto" formControlName="nombreCorto" id="nombreCorto" type="text" required>
-            <label for="nombreCorto">Nombre Corto</label>
-
-            @if (nombreCorto?.touched && nombreCorto?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (nombreCorto?.errors?.['required']) {
-              <span>El nombre corto es obligatorio.</span>
-              }
-              @if (nombreCorto?.errors?.['minlength']) {
-              <span>El nombre corto debe tener al menos 3 caracteres.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- CUE -->
-        <div class="col-span-1 md:col-span-2 md:row-start-2">
-          <div class="inputGroup">
-            <input name="cue" formControlName="cue" id="cue" type="text" required
-              [class.error]="escuelaForm.get('cue')?.hasError('cueDuplicado')">
-            <label for="cue">CUE</label>
-
-            @if (cue?.touched && cue?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (cue?.errors?.['required']) {
-              <span>El CUE es obligatorio. </span>
-              }
-              @if (cue?.errors?.['pattern']) {
-              <span>El CUE debe tener el siguiente formato. Ej. 123456-78</span>
-              }
-              @if (escuelaForm.get('cue')?.hasError('cueDuplicado')) {
-              <span>Este CUE ya esta registrado en otra escuela.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- DIRECCIÓN -->
-        <div class="col-span-1 md:col-span-4 md:col-start-3 md:row-start-2">
-          <div class="inputGroup">
-            <input name="direccion" formControlName="direccion" type="text" id="direccion" required>
-            <label for="direccion">Dirección</label>
-
-            @if (direccion?.touched && direccion?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (direccion?.errors?.['required']) {
-              <span>La dirección es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- TELÉFONO -->
-        <div class="col-span-1 md:col-span-2 md:row-start-3">
-          <div class="inputGroup">
-            <input name="telefono" formControlName="telefono" id="telefono" type="number" required>
-            <label for="telefono">Teléfono</label>
-
-            @if (telefono?.touched && telefono?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (telefono?.errors?.['required']) {
-              <span>El telefono es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- EMAIL -->
-        <div class="col-span-1 md:col-span-2 md:col-start-3 md:row-start-3">
-          <div class="inputGroup">
-            <input name="email" formControlName="email" id="email" required>
-            <label for="email">Email</label>
-            @if (email?.touched && email?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (email?.errors?.['required']) {
-              <span>El correo es obligatorio.</span>
-              }
-              @if (email?.errors?.['email']) {
-              <span>Debe ingresar un correo válido.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- PAGINA WEB -->
-        <div class="col-span-1 md:col-span-2 md:col-start-5 md:row-start-3">
-          <div class="inputGroup">
-            <input name="paginaWeb" formControlName="paginaWeb" id="paginaWeb" type="text">
-            <label for="paginaWeb">Sitio Web (Opcional)</label>
-          </div>
-        </div>
-
-        <!-- DIRECTOR -->
-        <div class="col-span-1 md:col-span-2 md:row-start-4">
-          <div class="selectGroup">
-            <select name="director" formControlName="director" id="director" required>
-              <option value="" disabled selected></option>
-              @for (direct of directores(); track direct.uid) {
-              <option [value]="direct.uid">{{direct.nombre}} {{direct.apellido}}</option>
-              }
-            </select>
-            <label for="director">Director</label>
-
-            @if (director?.touched && director?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (director?.errors?.['required']) {
-              <span>El Director es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- MATRICULA TOTAL -->
-        <div class="col-span-1 md:col-span-4 md:col-start-3 md:row-start-4">
-          <div class="inputGroup">
-            <input name="matriculaTotal" formControlName="matriculaTotal" id="matriculaTotal" type="text" required>
-            <label for="matriculaTotal">Matrícula Total</label>
-
-            @if (matriculaTotal?.touched && matriculaTotal?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (matriculaTotal?.errors?.['required']) {
-              <span>La Matricula Total es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- NIVEL EDUCATIVO -->
-        <div class="col-span-1 md:col-span-5 md:row-start-5">
-          <div class="selectGroup">
-            <select name="nivel" formControlName="nivel" id="nivel" required>
-              <option value="" disabled selected></option>
-              <option value="Primario">Primario</option>
-              <option value="Secundario">Secundario</option>
-              <option value="Terciario">Terciario</option>
-              <option value="Universitario">Universitario</option>
-            </select>
-            <label for="nivel">Nivel Educativo</label>
-
-            @if (nivel?.touched && nivel?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (nivel?.errors?.['required']) {
-              <span>El nivel educativo es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- CANTIDAD EMPLEADOS -->
-        <div class="col-span-1 md:col-start-6 md:row-start-5">
-          <div class="inputGroup">
-            <input name="cantEmpleados" formControlName="cantEmpleados" id="cantEmpleados" type="number" required>
-            <label for="cantEmpleados">Empleados</label>
-
-            @if (cantEmpleados?.touched && cantEmpleados?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (cantEmpleados?.errors?.['required']) {
-              <span>La cantidad de empleados es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- CANTIDAD ALUMNOS -->
-        <div class="col-span-1 md:col-span-2 md:row-start-6">
-          <div class="inputGroup">
-            <input name="cantAlumnos" formControlName="cantAlumnos" id="cantAlumnos" type="number" required>
-            <label for="cantAlumnos">Alumnos</label>
-
-            @if (cantAlumnos?.touched && cantAlumnos?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (cantAlumnos?.errors?.['required']) {
-              <span>La cantidad de alumnos es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- CANTIDAD DOCENTES -->
-        <div class="col-span-1 md:col-span-2 md:col-start-3 md:row-start-6">
-          <div class="inputGroup">
-            <input name="cantDocentes" formControlName="cantDocentes" id="cantDocentes" type="number" required>
-            <label for="cantDocentes">Docentes</label>
-
-            @if (cantDocentes?.touched && cantDocentes?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (cantDocentes?.errors?.['required']) {
-              <span>La cantidad de docentes es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-
-        <!-- CANTIDAD ADMINISTRATIVOS -->
-        <div class="col-span-1 md:col-span-2 md:col-start-5 md:row-start-6">
-          <div class="inputGroup">
-            <input name="cantAdministrativos" formControlName="cantAdministrativos" id="cantAdministrativos"
-              type="number" required>
-            <label for="cantAdministrativos">Administrativos</label>
-
-            @if (cantAdministrativos?.touched && cantAdministrativos?.invalid) {
-            <div class="text-sm text-red-600 mt-1">
-              @if (cantAdministrativos?.errors?.['required']) {
-              <span>La cantidad de administrativos es obligatorio.</span>
-              }
-            </div>
-            }
-          </div>
-        </div>
-      </div>
-
-
-      <div class="mt-5 flex justify-end gap-x-2">
-        <button type="button" [disabled]="isSubmitting" routerLink="/administracion/gestion-escuelas"
-          class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50">
-          Cancelar
-        </button>
-        <button type="submit" [disabled]="escuelaForm.invalid"
-          class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none min-w-[140px]">
-
-          @if (isSubmitting) {
-          <div
-            class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full text-white"
-            role="status" aria-label="loading"></div>
-          } @else {
-          <span>Guardar Cambios</span>
-          }
-
-        </button>
-
-      </div>
-    </form>
-  </div>
-  <!-- End Card -->
-
 </div>
-<!-- End Card Section -->

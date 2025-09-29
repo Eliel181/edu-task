@@ -1,141 +1,180 @@
 <!-- Card Section -->
-<div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
-    @if (currentUser(); as user) {
-    <div class="bg-white rounded-xl shadow-xs p-4 sm:p-7">
+<div class="max-w-8xl px-4 py-10 sm:px-6 lg:px-8 mx-auto font_outfit">
+    <!-- Card -->
+    @if (usuarioData; as user) {
+    <div class="bg-[#fcfdfe] rounded-3xl p-4 sm:p-7 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+
         <div class="mb-8">
-            <h2 class="text-xl font-bold text-gray-800">
-                Gestión Usuario
+            <h2 class="text-xl font-semibold text-[#2d2c63]">
+                Editar Usuario
             </h2>
-            <p class="text-sm text-gray-600">
-                Administra el Rol de los usuarios del sistema.
+            <p class="text-sm text-[#9291aa] mt-1">
+                Gestiona el rol y permisos del usuario en el sistema.
             </p>
-
         </div>
-        <form [formGroup]="profileForm" (ngSubmit)="actualizarUsuario()">
-            <!-- Grid -->
-            <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
-                <div class="sm:col-span-3">
-                    <label class="inline-block text-sm text-gray-800 mt-2.5">
-                        Foto de perfil
-                    </label>
-                </div>
-                <!-- End Col -->
 
-                <div class="sm:col-span-9">
-                    <div class="flex items-center gap-5">
-                        <!-- Contenedor de imagen -->
-                        <div class="relative">
-                            <div class="relative">
-                                <img class="inline-block size-16 rounded-full ring-2 ring-white object-cover"
-                                    [src]="imagenBase64Preview() || user.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'">
-                                <!-- Botón para cancelar la nueva imagen -->
-                            </div>
+        <form [formGroup]="profileForm" (ngSubmit)="actualizarUsuario()">
+
+            <!-- Información del Usuario (Solo Lectura) -->
+            <div class="grid grid-cols-12 gap-y-4 sm:gap-y-6 pb-8 border-b border-[#f0f1f8]">
+                <div class="col-span-12">
+                    <div class="flex items-center gap-x-5">
+                        <!-- Avatar -->
+                        <div
+                            class="relative size-20 rounded-full bg-[#f9f9fe] flex items-center justify-center border-2 border-[#e2e3fa]">
+                            <img class="inline-block size-20 rounded-full object-cover"
+                                [src]="imagenBase64Preview() || user.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
+                                alt="User Profile Picture">
                         </div>
 
-
+                        <!-- Información Básica -->
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-[#2d2c63]">{{ user.nombre }} {{ user.apellido }}</h3>
+                            <p class="text-sm text-[#9291aa]">{{ user.email }}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#f0f1f8] text-[#524380] border border-[#e2e3fa]">
+                                    {{ user.rol }}
+                                </span>
+                                <span class="text-xs text-[#9291aa]">ID: {{ route.snapshot.paramMap.get('id') }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-3">
-                    <label for="full-name" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Nombre Completo
-                    </label>
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-9">
-                    <div class="sm:flex">
-                        <input id="nombre" name="nombre" formControlName="nombre" type="text"
-                            class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg sm:text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <input type="text" name="apellido" formControlName="apellido"
-                            class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg sm:text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    </div>
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-3">
-                    <label for="email" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Email
-                    </label>
-                    <div class="hs-tooltip inline-block">
-                        <svg class="hs-tooltip-toggle ms-1 inline-block size-3 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path
-                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                        </svg>
-                        <span
-                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs"
-                            role="tooltip">
-                            Por el momento no podes cambiar el email.
-                        </span>
-                    </div>
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-9">
-                    <input id="email" type="email" name="email" formControlName="email"
-                        class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs sm:text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-3">
-                    <label for="telefono" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Teléfono
-                    </label>
-                </div>
-                <!-- End Col -->
-                <div class="sm:col-span-9">
-                    <input id="telefono" type="text" name="telefono" formControlName="telefono"
-                        class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs sm:text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                </div>
-
-                <div class="sm:col-span-3">
-                    <label for="rol" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Rol
-                    </label>
-                </div>
-                <!-- End Col -->
-                <div class="sm:col-span-9">
-                    <select id="rol" name="rol" formControlName="rol"
-                      class="bg-white border rounded-lg focus:ring-primary-600 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-black black:text-white">
-                      <option Value="Admin">Administrador</option>
-                      <option value="Director">Director</option>
-                      <option value="RTE">RTE</option>
-                      <option value="Docente">Docente</option>
-                      <option value="Empleado">Empleado</option>
-                    </select>
-                </div>
-
-
             </div>
-            <!-- End Grid -->
 
-            <div class="mt-5 flex justify-end gap-x-2">
-                <button routerLink="/administracion/gestion-usuarios" type="button" [disabled]="isSubmitting"
-                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50">
-                    Cancelar
-                </button>
-                <button type="submit" [disabled]="isSubmitting || !profileForm.dirty"
-                    class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none min-w-[140px]">
+            <!-- Detalles de Información (Solo Lectura) -->
+            <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 py-6 border-b border-[#f0f1f8]">
+                <!-- Información Personal -->
+                <div class="space-y-4">
+                    <h4 class="text-sm font-semibold text-[#524380] uppercase tracking-wide">Información Personal</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-[#9291aa] mb-1">Nombre Completo</label>
+                            <div class="py-2 px-3 bg-[#f9f9fe] rounded-lg border border-[#e2e3fa]">
+                                <span class="text-sm text-[#2d2c63]">{{ user.nombre }} {{ user.apellido }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-[#9291aa] mb-1">Teléfono</label>
+                            <div class="py-2 px-3 bg-[#f9f9fe] rounded-lg border border-[#e2e3fa]">
+                                <span class="text-sm text-[#2d2c63]">{{ user.telefono || 'No especificado' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    @if (isSubmitting) {
-                    <div class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full text-white"
-                        role="status" aria-label="loading"></div>
-                    } @else {
-                    <span>Guardar Cambios</span>
-                    }
+                <!-- Información de Cuenta -->
+                <div class="space-y-4">
+                    <h4 class="text-sm font-semibold text-[#524380] uppercase tracking-wide">Información de Cuenta</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-[#9291aa] mb-1">Email</label>
+                            <div class="py-2 px-3 bg-[#f9f9fe] rounded-lg border border-[#e2e3fa]">
+                                <span class="text-sm text-[#2d2c63]">{{ user.email }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-[#9291aa] mb-1">Estado de Verificación</label>
+                            <div class="py-2 px-3 bg-[#f9f9fe] rounded-lg border border-[#e2e3fa]">
+                                <span class="text-sm flex items-center gap-1"
+                                    [class.text-green-600]="user.emailVerified"
+                                    [class.text-[#e77833]]="!user.emailVerified">
+                                    <svg class="size-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    {{ user.emailVerified ? 'Email verificado' : 'Email pendiente de verificación' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                </button>
+            <!-- Sección Editable - Rol -->
+            <div class="py-6">
+                <div class="max-w-md">
+                    <h4 class="text-sm font-semibold text-[#524380] uppercase tracking-wide mb-4">Configuración de Rol
+                    </h4>
 
+                    <div class="space-y-3">
+                        <div>
+                            <label for="rol" class="block text-sm font-medium text-[#4e3e76] mb-2">Asignar Rol</label>
+
+                            <!-- Select -->
+                            <select id="rol" name="rol" formControlName="rol"
+                                class="py-2.5 px-4 block w-full border border-[#e2e3fa] rounded-xl shadow-sm focus:border-[#524380] focus:ring-2 focus:ring-[#524380]/20 transition-all duration-300 font_outfit bg-white"
+                                data-hs-select='{
+  "placeholder": "Select option...",
+  "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+}' class="hidden">
+                                <option value="Admin">Administrador</option>
+                                <option value="Director">Director</option>
+                                <option value="RTE">RTE</option>
+                                <option value="Docente">Docente</option>
+                                <option value="Empleado">Empleado</option>
+                            </select>
+                            <!-- End Select -->
+                        </div>
+
+                        <p class="text-xs text-[#9291aa]">
+                            El rol determina los permisos y acceso del usuario en el sistema.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Botones -->
+            <div class="mt-8 pt-8 border-t border-[#f0f1f8]">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <!-- Información de estado -->
+                    <div class="text-sm text-[#9291aa] font_outfit">
+                        @if (profileForm.dirty) {
+                        <span class="inline-flex items-center gap-1 text-[#524380]">
+                            <svg class="size-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Cambios pendientes en el rol
+                        </span>
+                        } @else {
+                        <span>El rol está actualizado</span>
+                        }
+                    </div>
+
+                    <!-- Contenedor de Botones -->
+                    <div class="flex gap-3">
+                        <!-- Botón Volver -->
+                        <button routerLink="/administracion/gestion-usuarios" type="button" [disabled]="isSubmitting"
+                            class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs">
+                            Volver a Usuarios
+                        </button>
+
+                        <!-- Botón Guardar Cambios -->
+                        <button type="submit" [disabled]="isSubmitting || !profileForm.dirty"
+                            class="py-2 px-5 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+
+                            @if (isSubmitting) {
+                            <div class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"
+                                role="status" aria-label="loading"></div>
+                            <span>Actualizando...</span>
+                            } @else {
+                            <span>Actualizar Rol</span>
+                            }
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
     <!-- End Card -->
     }
-
 </div>
-<!-- End Card Section -->
-

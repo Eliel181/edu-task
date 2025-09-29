@@ -1,0 +1,29 @@
+.font_outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+}
+.letter {
+  display: inline-block;
+  animation: bouncePause 1.4s infinite ease-in-out;
+}
+.outfit {
+  font-weight: 500;
+  font-size: 1.2rem; /* antes 1.3rem */
+}
+/* Ola en "edu" */
+.edu .letter:nth-child(1) { animation-delay: 0s; }
+.edu .letter:nth-child(2) { animation-delay: 0.12s; }
+.edu .letter:nth-child(3) { animation-delay: 0.24s; }
+
+/* Ola en "task" empieza después de "edu" */
+.task .letter:nth-child(1) { animation-delay: 0.6s; }
+.task .letter:nth-child(2) { animation-delay: 0.72s; }
+.task .letter:nth-child(3) { animation-delay: 0.84s; }
+.task .letter:nth-child(4) { animation-delay: 0.96s; }
+
+@keyframes bouncePause {
+  0%   { transform: translateY(0); }
+  20%  { transform: translateY(-10px); }
+  40%  { transform: translateY(0); }
+  100% { transform: translateY(0); }
+}

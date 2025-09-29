@@ -1,4 +1,4 @@
-.shadow__btn {
+/* .shadow__btn {
   padding: 10px 20px;
   border: none;
   font-size: 17px;
@@ -9,7 +9,7 @@
   transition: 0.5s;
   transition-property: box-shadow;
 
-  background: rgb(68, 121, 216); /* Azul */
+  background: rgb(68, 121, 216); 
   box-shadow: 0 0 25px rgb(68, 121, 216);
 }
 
@@ -19,4 +19,9 @@
     0 0 25px rgb(68, 121, 216),
     0 0 50px rgb(68, 121, 216),
     0 0 100px rgb(68, 121, 216);
+} */
+
+.font_outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
 }

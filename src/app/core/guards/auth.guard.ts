@@ -23,20 +23,21 @@ export const authGuard: CanActivateFn = (route, state) => {
   //     }
   //   })
   // );
-
-  return toObservable(authService.currentUser).pipe(
-    filter(user => user !== undefined),
-    take(1), 
-    map(user => {
-      // debugger
+  
+  return toObservable(authService.isAuthStatusLoaded).pipe(
+    filter(loaded => loaded === true), // Espera a que Firebase cargue
+    take(1),
+    map(() => {
+      const user = authService.currentUser();
       if (user && user.emailVerified) {
         console.log('Usuario autenticado y verificado: ', user);
         return true;
       } else {
-        console.log('Usuario NO Autenticado o NO verificado. Redirigiendo a /login.');
+        console.log('Usuario NO autenticado o NO verificado. Redirigiendo a /login.');
         router.navigate(['/login']);
         return false;
       }
     })
   );
+
 };

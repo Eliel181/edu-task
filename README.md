@@ -111,6 +111,8 @@ ng g c layout/private-layout --skip-tests
 # Componente compartido un Spinner
 ng g c shared/spinner-overlay --skip-tests
 
+# Dashboards
+ng g c dashboards/dashboard-admin/dashboard --skip-tests
 ```
 
 Instalación de Dependencias y Librerias:
