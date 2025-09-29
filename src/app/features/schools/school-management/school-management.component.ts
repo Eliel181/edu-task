@@ -68,9 +68,6 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
       })
     }
 
-    debugger
-    //obtengo la inf del campo "sku"
-    //pipe me permite concatenar varias operadores, cons esa operadores podremos manipular el dato del campo "sku"
     this.escuelaForm.get('cue')?.valueChanges
     .pipe(
       skip(1),
