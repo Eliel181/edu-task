@@ -13,86 +13,116 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class GestionUsuariosComponent implements OnInit{
 
-  private firestoreService: FirestoreService = inject(FirestoreService);
-  private usuariosOriginales: WritableSignal<Usuario[]> = signal([]);
-  isLoading = signal(true)
+  private firestoreService = inject(FirestoreService);
 
+  // Datos y estado
+  usuariosOriginales: WritableSignal<Usuario[]> = signal([]);
+  isLoading = signal(true);
+
+  // Búsqueda y paginación
   terminoBusqueda = signal('');
   paginaActual = signal(1);
-  usuariosPorPagina = signal(8);
+  usuariosPorPagina = signal(3); // cambialo si querés más por página
 
-  private normalizarTexto(texto: string): string {
-    return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    //normalize: convierte un carácter combinado en dos
+  // Normalizar texto (para búsquedas)
+  private normalizarTexto(texto?: string): string {
+    if (!texto) return '';
+    return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
-  usuariosPaginados: Signal<Usuario[]> = computed(() => {
+  // Filtrado por término de búsqueda
+  filteredUsers: Signal<Usuario[]> = computed(() => {
     const todos = this.usuariosOriginales();
-    const terminoNormalizado = this.normalizarTexto(this.terminoBusqueda());
+    const termino = this.normalizarTexto(this.terminoBusqueda());
 
-    if (!terminoNormalizado) {
-      //si no hay búsqueda retorno todos los libros
-      return todos;
-    }
+    if (!termino) return todos;
 
-    return todos.filter(usuario => {
-      return this.normalizarTexto(usuario.nombre).includes(terminoNormalizado) ||
-        this.normalizarTexto(usuario.apellido).includes(terminoNormalizado) ||
-        this.normalizarTexto(usuario.rol).includes(terminoNormalizado);
-    })
+    return todos.filter(u => {
+      const nombreCompleto = `${u.nombre} ${u.apellido}`;
+      return this.normalizarTexto(nombreCompleto).includes(termino) ||
+             this.normalizarTexto(u.email).includes(termino) ||
+             this.normalizarTexto(u.rol).includes(termino) ||
+             this.normalizarTexto(u.telefono || '').includes(termino);
+    });
   });
 
+  // Total de páginas (reactivo)
   totalPaginas = computed(() => {
-    return Math.ceil(this.usuariosPaginados().length / this.usuariosPorPagina())
+    const total = this.filteredUsers().length;
+    return Math.max(1, Math.ceil(total / this.usuariosPorPagina()));
+  });
+
+  // Array simple de páginas (1..N). NO hay lógica de "..." — lista completa.
+  paginasDisponibles = computed(() =>
+    Array.from({ length: this.totalPaginas() }, (_, i) => i + 1)
+  );
+
+  // Usuarios para la página actual
+  usuariosPaginados: Signal<Usuario[]> = computed(() => {
+    const inicio = (this.paginaActual() - 1) * this.usuariosPorPagina();
+    const fin = inicio + this.usuariosPorPagina();
+    return this.filteredUsers().slice(inicio, fin);
   });
 
   ngOnInit(): void {
-    this.firestoreService.getCollection<Usuario>('usuarios').subscribe(
-      data => {
-        this.usuariosOriginales.set(data);
-        this.isLoading.set(false);
-      }
-    )
+    this.cargarUsuarios();
   }
 
+  private cargarUsuarios(): void {
+    this.isLoading.set(true);
+    this.firestoreService.getCollection<Usuario>('usuarios').subscribe(
+      data => {
+        this.usuariosOriginales.set(data || []);
+        this.isLoading.set(false);
+        this.paginaActual.set(1);
+      },
+      err => {
+        console.error('Error cargando usuarios', err);
+        this.isLoading.set(false);
+        Swal.fire('Error', 'No se pudieron cargar los usuarios.', 'error');
+      }
+    );
+  }
+
+  // Eventos
   onBusquedaChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.terminoBusqueda.set(input.value);
-    this.paginaActual.set(1)
+    this.paginaActual.set(1); // volver a la primera página al buscar
   }
 
-  irAPagina(numeroPagina: number): void {
-    if (numeroPagina >= 1 && numeroPagina <= this.totalPaginas()) {
-      this.paginaActual.set(numeroPagina);
+  irAPagina(numero: number): void {
+    if (numero >= 1 && numero <= this.totalPaginas()) {
+      this.paginaActual.set(numero);
     }
   }
 
+  // Eliminar usuario (opcional; lo dejé igual que antes)
   async eliminarUsuario(uid: string): Promise<void> {
-    await Swal.fire({
-      title: "¿Estas Seguro?",
-      text: "Esta solo eliminara el registro no la Autenticación!",
-      icon: "warning",
+    const result = await Swal.fire({
+      title: '¿Estás Seguro?',
+      text: 'Esta acción eliminará el registro del usuario.',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Si, deseo borrarlo!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        try {
-          this.firestoreService.deleteDocument('usuarios', uid);
-          Swal.fire({
-            title: '¡Eliminado!',
-            text: 'Registro Eliminada Correctamente',
-            icon: 'success'
-          });
-        } catch (error) {
-          console.error('Erro al eliminar el registro', error);
-
-          Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error al Eliminar el Registro',
-            icon: 'error',
-          });
-        }
-      }
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+      buttonsStyling: false
     });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await this.firestoreService.deleteDocument('usuarios', uid);
+      this.usuariosOriginales.set(this.usuariosOriginales().filter(u => u.uid !== uid));
+      // Ajustar página si quedó fuera de rango
+      if (this.paginaActual() > this.totalPaginas()) {
+        this.paginaActual.set(this.totalPaginas());
+      }
+      Swal.fire('Eliminado', 'Usuario eliminado correctamente.', 'success');
+    } catch (error) {
+      console.error('Error eliminando usuario', error);
+      Swal.fire('Error', 'No se pudo eliminar el usuario.', 'error');
+    }
   }
 }

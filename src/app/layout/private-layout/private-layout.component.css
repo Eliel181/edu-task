@@ -1,0 +1,19 @@
+.outfit {
+  font-weight: 500;
+  font-size: 1.2rem; /* antes 1.3rem */
+}
+.font_outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+}
+.outfit-2 {
+  font-weight: 450;
+  font-size: 0.86rem; /* antes 1rem */
+}
+.active {
+  @apply text-[#5956e9] before:opacity-100;
+}
+
+
+
+

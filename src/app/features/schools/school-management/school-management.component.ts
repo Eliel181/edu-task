@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../../core/interfaces/usuario.model';
 import { SchoolService } from '../../../core/services/school.service';
 import { distinctUntilChanged, skip, Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
+import { FirestoreService } from '../../../core/services/firestore.service';
+import { Escuela } from '../../../core/interfaces/escuela.model';
 
+
+declare const HSStaticMethods: any;
 @Component({
   selector: 'app-school-management',
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -14,10 +18,13 @@ import Swal from 'sweetalert2';
   styleUrl: './school-management.component.css'
 })
 export class SchoolManagementComponent implements OnInit, OnDestroy {
+
+
   private escuelaService: SchoolService = inject(SchoolService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
 
+  private firestoreService: FirestoreService = inject(FirestoreService);
   directores = signal<Usuario[]>([]);
 
   router: Router = inject(Router);
@@ -62,36 +69,38 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
       this.escuelaService.getEscuelaById(this.escuelaId).subscribe({
         next: (escuela) => {
           if (escuela) {
-            this.escuelaForm.patchValue(escuela);
+            this.escuelaForm.patchValue(escuela);    setTimeout(() => HSStaticMethods?.autoInit());
           }
         }
       })
     }
 
-    debugger
+    // debugger
     //obtengo la inf del campo "sku"
     //pipe me permite concatenar varias operadores, cons esa operadores podremos manipular el dato del campo "sku"
     this.escuelaForm.get('cue')?.valueChanges
-    .pipe(
-      skip(1),
-      distinctUntilChanged()
-    ).subscribe(async (cue)=>{
-      if(cue && cue.length>=9){
-        const idActual = this.escuelaId;
+      .pipe(
+        skip(1),
+        distinctUntilChanged()
+      ).subscribe(async (cue) => {
+        if (cue && cue.length >= 9) {
+          const idActual = this.escuelaId;
 
-        const existe = await this.escuelaService.cueExists(cue, idActual!);
-        const existeNuevo = await this.escuelaService.cueExists(cue);
+          const existe = await this.escuelaService.cueExists(cue, idActual!);
+          const existeNuevo = await this.escuelaService.cueExists(cue);
 
-        if(existe || existeNuevo){
-          this.escuelaForm.get('cue')?.setErrors({cueDuplicado:true})
-        }else{
-          this.escuelaForm.get('cue')?.setErrors(null);
+          if (existe || existeNuevo) {
+            this.escuelaForm.get('cue')?.setErrors({ cueDuplicado: true })
+          } else {
+            this.escuelaForm.get('cue')?.setErrors(null);
+          }
         }
-      }
-    });
+      });
 
     this.cargarDatos();
   }
+
+
 
   ngOnDestroy(): void {
     //aqui podemos limpiar las subscriptions
@@ -100,13 +109,16 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
   }
 
   cargarDatos() {
-    this.escuelaService.getDirectores()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(direct => this.directores.set(direct))
+  this.escuelaService.getDirectores()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(direct => 
+      this.directores.set(direct)
+    );
+      
   }
 
   guardarCambios(): void {
-    debugger
+    // debugger
     if (this.escuelaForm.invalid) {
       this.escuelaForm.markAllAsTouched();
       return;
@@ -125,7 +137,7 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
           icon: 'success'
         })
 
-        this.router.navigate(['/gestion-escuelas']);
+        this.router.navigate(['administracion/gestion-escuelas']);
 
       }).catch(err => {
         Swal.fire({
@@ -134,16 +146,16 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
           text: 'Error al Actualizar los datos'
         })
       })
-    }else{
+    } else {
 
       //modo nueva escuela
-      this.escuelaService.crearEscuela(escuelaData).then(res =>{
+      this.escuelaService.crearEscuela(escuelaData).then(res => {
         Swal.fire({
           icon: 'success',
           title: 'Creado Exitosamente',
           text: 'Escuela Creada Exitosamente'
         })
-        this.router.navigate(['/gestion-escuelas']);
+        this.router.navigate(['administracion/gestion-escuelas']);
       }).catch(err => {
         Swal.fire({
           icon: 'error',

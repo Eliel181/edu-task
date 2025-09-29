@@ -80,6 +80,7 @@ export class PerfilComponent implements OnInit {
 
 
       await this.firestoreService.updateDocument('usuarios', user.uid, dataToUpdate);
+      
       alert('Perfil actualizado');
 
       this.profileForm.markAsPristine();
@@ -90,4 +91,7 @@ export class PerfilComponent implements OnInit {
       this.isSubmitting = false;
     }
   }
+  eliminarFoto() {
+    this.imagenBase64Preview.set(null);
+}
 }

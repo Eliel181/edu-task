@@ -24,7 +24,7 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
 
-  public filtroEmpleado = signal<string>('todos'); 
+  public filtroEmpleado = signal<string>('todos');
   public filtroEstado = signal<EstadoTarea | 'todos'>('todos');
 
   terminoBusqueda = signal('');
@@ -55,7 +55,7 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
 
 
   paginaActual = signal(1);
-  tareasPorPagina = signal(6);
+  tareasPorPagina = signal(3);
 
   totalPaginas = computed(() => {
     return Math.ceil(this.tareasFiltradas().length / this.tareasPorPagina());
@@ -66,7 +66,7 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
   });
 
   tareasPaginadas: Signal<Tarea[]> = computed(() => {
-    const filtradas = this.tareasFiltradas(); 
+    const filtradas = this.tareasFiltradas();
     const pagina = this.paginaActual();
     const porPagina = this.tareasPorPagina();
 
@@ -123,9 +123,9 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
   onBusquedaChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.terminoBusqueda.set(input.value);
-    this.paginaActual.set(1); 
+    this.paginaActual.set(1);
   }
-  
+
   irAPagina(numeroPagina: number): void {
     if (numeroPagina >= 1 && numeroPagina <= this.totalPaginas()) {
       this.paginaActual.set(numeroPagina);
@@ -153,5 +153,31 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
   formatDate(timestamp: Timestamp): Date {
     return timestamp.toDate();
   }
-  
+
+  // Métodos auxiliares para las columnas
+  esTareaVencida(tarea: Tarea): boolean {
+    if (!tarea.fechaDeVencimiento) return false;
+    const fechaVencimiento = this.formatDate(tarea.fechaDeVencimiento);
+    return new Date(fechaVencimiento) < new Date();
+  }
+
+  esTareaPorVencer(tarea: Tarea): boolean {
+    if (!tarea.fechaDeVencimiento) return false;
+    const fechaVencimiento = this.formatDate(tarea.fechaDeVencimiento);
+    const hoy = new Date();
+    const vencimiento = new Date(fechaVencimiento);
+    const diffTime = vencimiento.getTime() - hoy.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= 7 && diffDays >= 0;
+  }
+
+  diasRestantes(tarea: Tarea): number {
+    if (!tarea.fechaDeVencimiento) return 0;
+    const fechaVencimiento = this.formatDate(tarea.fechaDeVencimiento);
+    const hoy = new Date();
+    const vencimiento = new Date(fechaVencimiento);
+    const diffTime = vencimiento.getTime() - hoy.getTime();
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
 }
