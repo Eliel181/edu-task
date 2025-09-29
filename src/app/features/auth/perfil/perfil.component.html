@@ -1,161 +1,187 @@
 <!-- Card Section -->
-<div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
+<div class="max-w-8xl px-4 py-10 sm:px-6 lg:px-8 mx-auto font_outfit">
+    <!-- Card -->
     @if (currentUser(); as user) {
-    <div class="bg-white rounded-xl shadow-xs p-4 sm:p-7">
+    <div class="bg-[#fcfdfe] rounded-3xl p-4 sm:p-7 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+
         <div class="mb-8">
-            <h2 class="text-xl font-bold text-gray-800">
+            <h2 class="text-xl font-semibold text-[#2d2c63]">
                 Mi Perfil
             </h2>
-            <p class="text-sm text-gray-600">
-                Administra tu nombre, informacion y configuracion de cuenta.
+            <p class="text-sm text-[#9291aa] mt-1">
+                Administra tu nombre, información y configuración de cuenta.
             </p>
-
         </div>
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-            <!-- Grid -->
-            <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
-                <div class="sm:col-span-3">
-                    <label class="inline-block text-sm text-gray-800 mt-2.5">
-                        Foto de perfil
-                    </label>
-                </div>
-                <!-- End Col -->
 
-                <div class="sm:col-span-9">
-                    <div class="flex items-center gap-5">
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <!-- Profile Picture Section -->
+            <div class="grid grid-cols-12 gap-y-4 sm:gap-y-7 pb-8 border-b border-[#f0f1f8]">
+                <div class="col-span-12">
+                    <div class="flex items-center gap-x-5">
                         <!-- Contenedor de imagen -->
-                        <div class="relative">
-                            <div class="relative">
-                                <img class="inline-block size-16 rounded-full ring-2 ring-white object-cover"
-                                    [src]="imagenBase64Preview() || user.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'">
-                                <!-- Botón para cancelar la nueva imagen -->
-                            </div>
+                        <div
+                            class="relative size-32 rounded-full bg-[#f9f9fe] flex items-center justify-center border-2 border-[#e2e3fa]">
+                            <img class="inline-block size-32 rounded-full object-cover"
+                                [src]="imagenBase64Preview() || user.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
+                                alt="User Profile Picture">
+
                         </div>
 
-                        <!-- Botón para subir foto -->
-                        <div class="flex gap-x-2">
-                            <div>
+                        <!-- Información de ayuda -->
+                        <div class="flex-1">
+                            <p class="text-sm text-[#524380] font-medium font_outfit mb-1">Foto de perfil</p>
+                            <p class="text-xs text-[#9291aa] font_outfit">
+                                Formatos: JPG, PNG (Max. 2MB)
+                            </p>
+                            <div class="flex gap-3 mt-4">
                                 <label
-                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 cursor-pointer">
-                                    <input type="file" class="hidden" (change)="onFileSelected($event)"
-                                        accept="image/*">
-                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="17 8 12 3 7 8" />
-                                        <line x1="12" x2="12" y1="3" y2="15" />
+                                    class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg  bg-white text-[#796ffc] shadow-2xs hover:shadow-md hover:bg-[#f9f9fe] transition-all duration-300 cursor-pointer font_outfit">
+                                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="24" height="24" fill="none">
+                                        <path
+                                            d="M3 16L7.46967 11.5303C7.80923 11.1908 8.26978 11 8.75 11C9.23022 11 9.69077 11.1908 10.0303 11.5303L14 15.5M15.5 17L14 15.5M21 16L18.5303 13.5303C18.1908 13.1908 17.7302 13 17.25 13C16.7698 13 16.3092 13.1908 15.9697 13.5303L14 15.5"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M15.5 8C15.7761 8 16 7.77614 16 7.5C16 7.22386 15.7761 7 15.5 7M15.5 8C15.2239 8 15 7.77614 15 7.5C15 7.22386 15.2239 7 15.5 7M15.5 8V7"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M3.69797 19.7472C2.5 18.3446 2.5 16.2297 2.5 12C2.5 7.77027 2.5 5.6554 3.69797 4.25276C3.86808 4.05358 4.05358 3.86808 4.25276 3.69797C5.6554 2.5 7.77027 2.5 12 2.5C16.2297 2.5 18.3446 2.5 19.7472 3.69797C19.9464 3.86808 20.1319 4.05358 20.302 4.25276C21.5 5.6554 21.5 7.77027 21.5 12C21.5 16.2297 21.5 18.3446 20.302 19.7472C20.1319 19.9464 19.9464 20.1319 19.7472 20.302C18.3446 21.5 16.2297 21.5 12 21.5C7.77027 21.5 5.6554 21.5 4.25276 20.302C4.05358 20.1319 3.86808 19.9464 3.69797 19.7472Z"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
                                     </svg>
                                     Subir foto
+                                    <input type="file" class="hidden" (change)="onFileSelected($event)"
+                                        accept="image/*">
                                 </label>
+
+                                @if (imagenBase64Preview() || user.perfil) {
+                                <button type="button" (click)="eliminarFoto()"
+                                    class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg bg-[#fffcff] text-[#e77833] shadow-2xs hover:shadow-md hover:bg-[#faf1fe] transition-all duration-300 font_outfit cursor-pointer">
+                                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="24" height="24" fill="none">
+                                        <path
+                                            d="M3 16L7.46967 11.5303C7.80923 11.1908 8.26978 11 8.75 11C9.23022 11 9.69077 11.1908 10.0303 11.5303L14 15.5M15.5 17L14 15.5M21 16L18.5303 13.5303C18.1908 13.1908 17.7302 13 17.25 13C16.7698 13 16.3092 13.1908 15.9697 13.5303L14 15.5"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M12 2.5C7.77027 2.5 5.6554 2.5 4.25276 3.69797C4.05358 3.86808 3.86808 4.05358 3.69797 4.25276C2.5 5.6554 2.5 7.77027 2.5 12C2.5 16.2297 2.5 18.3446 3.69797 19.7472C3.86808 19.9464 4.05358 20.1319 4.25276 20.302C5.6554 21.5 7.77027 21.5 12 21.5C16.2297 21.5 18.3446 21.5 19.7472 20.302C19.9464 20.1319 20.1319 19.9464 20.302 19.7472C21.5 18.3446 21.5 16.2297 21.5 12"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M21.5 8.5L18.5 5.5M18.5 5.5L15.5 2.5M18.5 5.5L21.5 2.5M18.5 5.5L15.5 8.5"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg>
+                                    Eliminar
+                                </button>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-3">
-                    <label for="full-name" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Nombre Completo
-                    </label>
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-9">
-                    <div class="sm:flex">
-                        <input id="nombre" name="nombre" formControlName="nombre" type="text"
-                            class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg sm:text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <input type="text" name="apellido" formControlName="apellido"
-                            class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg sm:text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    </div>
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-3">
-                    <label for="email" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Email
-                    </label>
-                    <div class="hs-tooltip inline-block">
-                        <svg class="hs-tooltip-toggle ms-1 inline-block size-3 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path
-                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                        </svg>
-                        <span
-                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs"
-                            role="tooltip">
-                            Por el momento no podes cambiar el email.
-                        </span>
-                    </div>
-                </div>
-                <!-- End Col -->
-
-                <div class="sm:col-span-9">
-                    <input id="email" type="email" name="email" formControlName="email"
-                        class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs sm:text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                </div>
-                <!-- End Col -->
-
-                <!-- <div class="sm:col-span-3">
-                    <label for="af-account-password" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Rol
-                    </label>
-                    <div class="hs-tooltip inline-block">
-                        <svg class="hs-tooltip-toggle ms-1 inline-block size-3 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path
-                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                        </svg>
-                        <span
-                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs"
-                            role="tooltip">
-                            No podes cambiar el rol
-                        </span>
-                    </div>
-                </div>
-                <div class="sm:col-span-9">
-                    <input id="rol" type="text" name="rol" formControlName="rol"
-                        class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs sm:text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                </div> -->
-
-                <!-- End Col -->
-
-                <div class="sm:col-span-3">
-                    <label for="telefono" class="inline-block text-sm text-gray-800 mt-2.5">
-                        Teléfono
-                    </label>
-                </div>
-                <!-- End Col -->
-                <div class="sm:col-span-9">
-                    <input id="telefono" type="text" name="telefono" formControlName="telefono"
-                        class="py-1.5 sm:py-2 px-3 pe-11 block w-full border-gray-200 shadow-2xs sm:text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                </div>
-
             </div>
-            <!-- End Grid -->
+            <!-- End Profile Picture Section -->
 
-            <div class="mt-5 flex justify-end gap-x-2">
-                <button routerLink="/administracion" type="button" [disabled]="isSubmitting"
-                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50">
-                    Cancelar
-                </button>
-                <button type="submit" [disabled]="isSubmitting || !profileForm.dirty"
-                    class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none min-w-[140px]">
+            <!-- Contact Details Section -->
+            <div class="pt-8">
+                <!-- <h3 class="text-xl font-semibold text-gray-800 mb-6">
+                    Detalles de Contacto
+                </h3> -->
+                <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                    <!-- First Name -->
+                    <div>
+                        <label for="first-name" class="block text-sm font-medium text-[#4e3e76] mb-2">Nombre</label>
+                        <input type="text" id="first-name" name="nombre" formControlName="nombre"
+                            class="py-2 px-4 block w-full text-[#707078] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                    </div>
+                    <!-- End First Name -->
 
-                    @if (isSubmitting) {
-                    <div class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full text-white"
-                        role="status" aria-label="loading"></div>
-                    } @else {
-                    <span>Guardar Cambios</span>
-                    }
+                    <!-- Last Name -->
+                    <div>
+                        <label for="last-name" class="block text-sm font-medium text-[#4e3e76] mb-2">Apellido</label>
+                        <input type="text" id="last-name" name="apellido" formControlName="apellido"
+                            class="py-2 px-4 block w-full text-[#707078] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                    </div>
+                    <!-- End Last Name -->
 
-                </button>
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="phone-number" class="block text-sm font-medium text-[#4e3e76] mb-2">Número de
+                            Teléfono</label>
 
+                        <input type="text" id="phone-number" name="telefono" formControlName="telefono"
+                            class="py-2 px-4 text-[#8276a2]  block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+
+                    </div>
+                    <!-- End Phone Number -->
+
+                    <div>
+                        <label for="email" class="inline-block text-sm font-medium text-[#4e3e76] mb-2">Email</label>
+                        <div class="hs-tooltip inline-block">
+                            <svg class="hs-tooltip-toggle ms-1 inline-block size-2.5 -mt-3 text-gray-400"
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path
+                                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            <span
+                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs"
+                                role="tooltip">
+                                Por el momento no podes cambiar el email.
+                            </span>
+                        </div>
+                        <input type="email" id="email" name="email" formControlName="email"
+                            class="py-2 px-4 block w-full text-[#707078] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                    </div>
+                </div>
+
+                <!-- Sección de Botones - Nueva ubicación más prominente -->
+                <div class="mt-10 pt-8 border-t border-[#f0f1f8]">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <!-- Información de estado -->
+                        <div class="text-sm text-[#9291aa] font_outfit">
+                            @if (profileForm.dirty) {
+                            <span class="inline-flex items-center gap-1 text-[#524380]">
+                                <svg class="size-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                Tienes cambios sin guardar
+                            </span>
+                            } @else {
+                            <span>Todos los cambios están guardados</span>
+                            }
+                        </div>
+
+                        <!-- Contenedor de Botones -->
+                        <div class="flex gap-3">
+                            <!-- Botón Cancelar -->
+                            <button routerLink="/administracion/dashboard" type="button" [disabled]="isSubmitting"
+                                class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] hover:border-[#d0d0e0] transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs">
+                                Volver
+                            </button>
+
+                            <!-- Botón Guardar Cambios -->
+                            <button type="submit" [disabled]="isSubmitting || !profileForm.dirty"
+                                class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+
+                                @if (isSubmitting) {
+                                <div class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"
+                                    role="status" aria-label="loading"></div>
+                                <span>Guardando...</span>
+                                } @else {
+                                <span>Guardar Cambios</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- End Contact Details Section -->
         </form>
     </div>
     <!-- End Card -->
@@ -163,40 +189,3 @@
 
 </div>
 <!-- End Card Section -->
-<!-- Sección de Desactivación de Cuenta - Versión Simplificada -->
-<!-- @if (editingUser?.activo) { -->
-<div class="max-w-4xl px-4 pb-10 sm:px-6 lg:px-8 mx-auto mt-8">
-    <div class="bg-white rounded-xl shadow-xs p-4 sm:p-7">
-        <div class="mb-4">
-            <h2 class="text-xl font-bold text-gray-800">Deshabilitar cuenta</h2>
-            <p class="text-sm text-gray-600 mt-1">
-                Esta acción desactivará tu cuenta temporalmente. Podrás reactivarla iniciando sesión nuevamente.
-            </p>
-        </div>
-
-        <div class="bg-red-50 p-4 rounded-lg">
-            <div class="flex items-start">
-                <svg class="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                        clip-rule="evenodd" />
-                </svg>
-                <p class="text-sm text-red-700 ml-3">
-                    Al deshabilitar tu cuenta:<br>
-                    • No podrás iniciar sesión temporalmente<br>
-                    • Tus datos permanecerán guardados<br>
-                    • Podrás reactivarla cuando lo desees
-                </p>
-            </div>
-        </div>
-
-        <div class="mt-4 flex justify-end">
-            <button type="button" class="px-4 py-2 text-sm font-medium rounded-md  focus:ring-red-500
-                     bg-red-50 text-red-600 hover:bg-red-100 " [disabled]="isSubmitting"
-                data-hs-overlay="#hs-danger-alert">
-                Deshabilitar mi cuenta
-            </button>
-        </div>
-    </div>
-</div>

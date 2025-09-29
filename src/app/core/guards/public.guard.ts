@@ -8,19 +8,21 @@ export const publicGuard: CanActivateFn = (route, state) => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
 
-  return toObservable(authService.currentUser).pipe(
-    filter(user => user !== undefined), 
-    take(1), 
-    map(user => {
-      // debugger
+
+  return toObservable(authService.isAuthStatusLoaded).pipe(
+    filter(loaded => loaded === true),
+    take(1),
+    map(() => {
+      const user = authService.currentUser();
       if (user && user.emailVerified) {
         console.log('PublicGuard: Usuario autenticado, redirigiendo a /administracion');
         router.navigate(['/administracion']);
-        return false; 
+        return false;
       } else {
         console.log('PublicGuard: Usuario NO autenticado, permitiendo acceso a ruta pública.');
-        return true; 
+        return true;
       }
     })
   );
+
 };

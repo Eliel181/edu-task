@@ -1,86 +1,84 @@
-<!-- Sidebar -->
 <div id="hs-pro-sidebar" class="hs-overlay [--auto-close:md]
 hs-overlay-open:translate-x-0
--translate-x-full transition-all duration-300 transform
+-translate-x-full transition-all duration-500 ease-out transform
 w-65 hs-overlay-minified:w-13 overflow-hidden
-hidden
-fixed inset-y-0 z-60 start-0
-bg-white border-e border-gray-200
+hidden  
+fixed inset-y-0 z-60 start-0 bg-[#fff]
 md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" aria-label="Sidebar">
-  <div class="relative flex flex-col h-full max-h-full">
-    <!-- Header -->
-    <header class="py-2.5 px-4 flex justify-between items-center gap-x-2">
-      <div class="-ms-2 flex items-center gap-x-1">
-        <div class="md:hs-overlay-minified:hidden">
-          <a class="shrink-0 inline-flex justify-center items-center size-9 rounded-lg text-xl font-semibold hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
-            href="@@href" aria-label="Preline">
-            <img class="shrink-0 size-5"
-              src="https://images.icon-icons.com/4221/PNG/512/bizum_payment_method_logo_icon_263128.png" width="36"
-              height="36" viewBox="0 0 36 36" alt="Icon de EduTask">
-            <!-- <svg class="shrink-0 size-5 text-cyan-700" width="36" height="36" viewBox="0 0 36 36" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
 
-            </svg> -->
+  <div class="relative flex flex-col h-full max-h-full font_outfit">
+    <!-- Header -->
+    <header class="py-4 px-4 pb-4 flex justify-between items-center gap-x-2">
+      <div class="-ms-2 flex items-center gap-x-1">
+        <div
+          class="md:hs-overlay-minified:hidden flex items-center gap-x-4 min-h-[40px] transition-all duration-400 ease-out">
+          <!-- Icono con fondo redondeado -->
+          <a class="shrink-0 bg-[#f9f9fe] inline-flex justify-center items-center p-2.5 py-2.5 rounded-xl focus:outline-none
+          shadow-[0_8px_25px_rgba(0,0,0,0.04)]  
+          shadow-[#e2e3fa]                    
+          hover:shadow-xl                     
+          hover:shadow-[#e2e3fa]              
+          transition-all duration-300 ease-in-out hover:scale-105" href="https://github.com/Eliel181/edu-task"
+            target="_blank" rel="noopener noreferrer" aria-label="EduTask">
+            <img class="w-5 h-4 md:w-6 md:h-5 transition-transform duration-300 hover:scale-110"
+              src="https://res.cloudinary.com/mrpotato/image/upload/v1758856602/Icon_EduTask_nggv11.webp"
+              alt="Icon de EduTask" />
           </a>
+
+          <!-- Título separado -->
+          <p
+            class="text-[#5956e9] outfit text-nowrap transition-all duration-500 ease-out opacity-100 hs-overlay-minified:opacity-0 hs-overlay-minified:scale-95">
+            edu task
+          </p>
         </div>
 
-        <!-- Sidebar Toggle -->
-        <button type="button"
-          class="hidden md:hs-overlay-minified:flex justify-center items-center flex-none gap-x-3 size-9 text-sm text-gray-500 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
-          aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
-          data-hs-overlay-minifier="#hs-pro-sidebar">
-          <svg class="hidden hs-overlay-minified:block shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-            <path d="M15 3v18"></path>
-            <path d="m8 9 3 3-3 3"></path>
-          </svg>
-          <svg class="hs-overlay-minified:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-            <path d="M15 3v18"></path>
-            <path d="m10 15-3-3 3-3"></path>
-          </svg>
-          <span class="sr-only">Sidebar Toggle</span>
-        </button>
-        <!-- End Sidebar Toggle -->
+        <div
+          class="hidden md:hs-overlay-minified:flex items-center justify-center min-h-[40px] transition-all duration-400 ease-out opacity-0 hs-overlay-minified:opacity-100 hs-overlay-minified:scale-100 scale-90">
 
-        <div class="hidden sm:block md:hs-overlay-minified:hidden">
-
+          <!-- Sidebar Toggle -->
+          <button type="button"
+            class="hidden md:hs-overlay-minified:flex justify-center items-center flex-none gap-x-3 p-1.5 outfit-2 text-[#5956e9] rounded-xl hover:bg-[#eeeefb] disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 transition-all duration-300 ease-out hover:scale-105"
+            aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
+            data-hs-overlay-minifier="#hs-pro-sidebar">
+            <svg class="w-5 h-5 transition-transform duration-300 hover:rotate-12" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" viewBox="0 0 24 24">
+              <g fill="currentColor">
+                <path d="M13 21h6a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-6z" />
+                <path fill-rule="evenodd"
+                  d="M11 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6zm-5.707 7.707a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1 0 1.414l-2 2a1 1 0 0 1-1.414-1.414L6.586 12z"
+                  clip-rule="evenodd" />
+              </g>
+            </svg>
+            <span class="sr-only">Sidebar Toggle</span>
+          </button>
+          <!-- End Sidebar Toggle -->
         </div>
       </div>
 
       <!-- Sidebar Toggle -->
       <button type="button"
-        class="hidden md:hs-overlay-minified:hidden md:flex justify-center items-center flex-none gap-x-3 size-9 text-sm text-gray-500 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+        class="hidden md:hs-overlay-minified:hidden md:flex justify-center items-center flex-none gap-x-3 p-1.5 outfit-2 text-[#9897c9] rounded-xl hover:bg-[#eeeefb] disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-[#eeeefb] transition-all duration-300 ease-out hover:scale-105"
         aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
         data-hs-overlay-minifier="#hs-pro-sidebar">
-        <svg class="hidden hs-overlay-minified:block shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round">
-          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-          <path d="M15 3v18"></path>
-          <path d="m8 9 3 3-3 3"></path>
-        </svg>
-        <svg class="hs-overlay-minified:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round">
-          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-          <path d="M15 3v18"></path>
-          <path d="m10 15-3-3 3-3"></path>
+        <svg class="w-5 h-5 transition-transform duration-300 hover:rotate-180" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24">
+          <g fill="currentColor">
+            <path d="M13 21h6a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-6z" />
+            <path fill-rule="evenodd"
+              d="M11 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6zm-2.293 7.707a1 1 0 0 0-1.414-1.414l-2 2a1 1 0 0 0 0 1.414l2 2a1 1 0 0 0 1.414-1.414L7.414 12z"
+              clip-rule="evenodd" />
+          </g>
         </svg>
         <span class="sr-only">Sidebar Toggle</span>
       </button>
       <!-- End Sidebar Toggle -->
-
-      <!-- Sidebar Toggle -->
+      <!-- Sidebar Toggle - Botón Close -->
       <button type="button"
-        class="flex md:hidden justify-center items-center gap-x-3 size-6 bg-white border border-gray-200 text-sm text-gray-600 hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+        class="flex md:hidden justify-center items-center gap-x-3 size-7 bg-[#ededfb] text-xs text-[#9998c5] hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 rounded-xl transition-all duration-300 ease-out hover:scale-105"
         data-hs-overlay="#hs-pro-sidebar" aria-expanded="true">
-        <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="shrink-0 size-3.5 transition-transform duration-300 hover:rotate-90"
+          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6 6 18" />
           <path d="m6 6 12 12" />
         </svg>
@@ -90,123 +88,84 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
     </header>
     <!-- End Header -->
 
-    <div class="mb-5 px-2 flex flex-col gap-y-5">
+    <div class="mb-5 px-2.5 mt-3 flex flex-col gap-y-5">
       <!-- List -->
 
       <ul class="flex flex-col gap-y-0.5">
+
         @if (currentUser()?.rol === 'Admin') {
+        <li>
+          <a routerLink="/administracion" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-all before:duration-300 hover:before:opacity-100 transition-all duration-300 ease-out hover:translate-x-1 hover:bg-[#f9f9fe]">
+            <span
+              class="-ms-[5px] flex shrink-0 justify-center items-center size-5 transition-all duration-300 group-hover:scale-110 group-hover:text-[#5956e9]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M2.335 7.875c-.54 1.127-.35 2.446.03 5.083l.278 1.937c.487 3.388.731 5.081 1.906 6.093S7.447 22 10.894 22h2.212c3.447 0 5.17 0 6.345-1.012s1.419-2.705 1.906-6.093l.279-1.937c.38-2.637.57-3.956.029-5.083s-1.691-1.813-3.992-3.183l-1.385-.825C14.2 2.622 13.154 2 12 2s-2.199.622-4.288 1.867l-1.385.825c-2.3 1.37-3.451 2.056-3.992 3.183M8.25 18a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+            <span
+              class="truncate hs-overlay-minified:opacity-0 transition-all duration-500 ease-out opacity-100 group-hover:translate-x-1">Dashboard</span>
+          </a>
+        </li>
 
         <li>
-          <a routerLink="gestion-usuarios"
-            class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
-            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
-              <!-- <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg> -->
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                color="#000000" fill="none">
-                <path
-                  d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"
-                  stroke="#141B34" stroke-width="1.5" />
-                <path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="#141B34"
-                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                  d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z"
-                  stroke="#141B34" stroke-width="1.5" stroke-linejoin="round" />
-                <path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="#141B34"
-                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <a routerLink="gestion-usuarios" routerLinkActive="active"
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-all before:duration-300 hover:before:opacity-100 transition-all duration-300 ease-out hover:translate-x-1 hover:bg-[#f9f9fe]">
+            <span
+              class="-ms-[5px] flex shrink-0 justify-center items-center size-5 transition-all duration-300 group-hover:scale-110 group-hover:text-[#5956e9]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M9 13c-1.915 0-3.603.965-4.792 2.245c-1.182 1.273-1.958 2.948-1.958 4.505c0 .414.336.75.75.75h12a.75.75 0 0 0 .75-.75c0-1.558-.775-3.232-1.958-4.505C12.602 13.965 10.915 13 9 13m8.204.301a.75.75 0 0 0-.408 1.444c.933.264 1.801 1.019 2.45 2.014c.647.995 1.004 2.122 1.004 2.99a.75.75 0 0 0 1.5 0c0-1.22-.478-2.627-1.248-3.808c-.769-1.181-1.9-2.244-3.298-2.64M9 3.5A3.75 3.75 0 1 0 9 11a3.75 3.75 0 0 0 0-7.5m6 0a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75a3.75 3.75 0 1 0 0-7.5" />
               </svg>
             </span>
-            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Usuarios</span>
+            <span
+              class="truncate hs-overlay-minified:opacity-0 transition-all duration-500 ease-out opacity-100 group-hover:translate-x-1">Usuarios</span>
           </a>
         </li>
         <li>
-          <button routerLink="/administracion/gestion-tareas" type="button"
-            class="group w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 truncate rounded-lg hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70"
-            aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-pro-dnsm" data-hs-overlay="#hs-pro-dnsm">
-            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
-              <!-- <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path class="group-hover:scale-100 group-focus:scale-100 scale-115 transition-transform duration-300"
-                  d="m21 21-4.34-4.34" />
-                <circle cx="11" cy="11" r="8" />
-              </svg> -->
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                color="#000000" fill="none">
-                <path
-                  d="M20 16V8C20 5.17157 20 3.75736 19.1213 2.87868C18.2426 2 16.8284 2 14 2H10C7.17157 2 5.75736 2 4.87868 2.87868C4 3.75736 4 5.17157 4 8V16C4 18.8284 4 20.2426 4.87868 21.1213C5.75736 22 7.17157 22 10 22H14C16.8284 22 18.2426 22 19.1213 21.1213C20 20.2426 20 18.8284 20 16Z"
-                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path
-                  d="M15.5 2H8.5C8.5 3.41421 8.5 4.12132 8.93934 4.56066C9.37868 5 10.0858 5 11.5 5H12.5C13.9142 5 14.6213 5 15.0607 4.56066C15.5 4.12132 15.5 3.41421 15.5 2Z"
-                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M8 15H12M8 11H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
+          <a routerLink="/administracion/gestion-tareas" routerLinkActive="active"
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-all before:duration-300 hover:before:opacity-100 transition-all duration-300 ease-out hover:translate-x-1 hover:bg-[#f9f9fe]">
+            <span
+              class="-ms-[5px] flex shrink-0 justify-center items-center size-5 transition-all duration-300 group-hover:scale-110 group-hover:text-[#5956e9]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 24 24">
+                <path fill="currentColor"
+                  d="M6 0h8a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6H6a6 6 0 0 1-6-6V6a6 6 0 0 1 6-6m6 9a1 1 0 0 0 0 2h3a1 1 0 1 0 0-2zm-2 4a1 1 0 0 0 0 2h5a1 1 0 1 0 0-2zm0-8a1 1 0 1 0 0 2h5a1 1 0 0 0 0-2zm-4.172 5.243l-.707-.707a1 1 0 1 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.415 0l2.828-2.828A1 1 0 0 0 7.95 8.12l-2.122 2.122z" />
               </svg>
             </span>
-            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Tareas</span>
-          </button>
+            <span
+              class="truncate hs-overlay-minified:opacity-0 transition-all duration-500 ease-out opacity-100 group-hover:translate-x-1">Tareas</span>
+          </a>
         </li>
         <li>
-          <a routerLink="/administracion/gestion-escuelas"
-            class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
-            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
-              <!-- <svg
-                class="shrink-0 size-4 group-hover:rotate-180 group-focus:rotate-180 transition-transform duration-300"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                <path d="M2 12h20" />
-              </svg> -->
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                color="#000000" fill="none">
-                <path
-                  d="M7 22V12.3981C7 11.3299 7 10.7958 7.24458 10.3478C7.48915 9.89983 7.93842 9.61101 8.83697 9.03338L10.9185 7.69526C11.4437 7.35763 11.7063 7.18881 12 7.18881C12.2937 7.18881 12.5563 7.35763 13.0815 7.69526L15.163 9.03338C16.0616 9.61101 16.5108 9.89983 16.7554 10.3478C17 10.7958 17 11.3299 17 12.3981V22"
-                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12 13H12.009" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M21 22V16.1623C21 13.8707 19.7408 13.6852 17 13" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M3 22V16.1623C3 13.8707 4.25916 13.6852 7 13" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M2 22H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M12 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                <path
-                  d="M12 7V4.98221M12 4.98221V2.97035C12 2.49615 12 2.25905 12.1464 2.11173C12.6061 1.64939 14.5 2.74303 15.2203 3.18653C15.8285 3.56105 16 4.30914 16 4.98221H12Z"
-                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <a routerLink="/administracion/gestion-escuelas" routerLinkActive="active"
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-all before:duration-300 hover:before:opacity-100 transition-all duration-300 ease-out hover:translate-x-1 hover:bg-[#f9f9fe]">
+            <span
+              class="-ms-[5px] flex shrink-0 justify-center items-center size-5 transition-all duration-300 group-hover:scale-110 group-hover:text-[#5956e9]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M13.463 21.674a3.45 3.45 0 0 1-2.926 0C6.553 19.812 4 14.606 4 10.144C4 5.645 7.582 2 12 2s8 3.646 8 8.143c0 4.462-2.553 9.67-6.537 11.531M10.967 5.932a3.03 3.03 0 0 1 2.066 0l2.342.855c.541.198.875.68.875 1.213s-.334 1.015-.875 1.213l-.125.045V11.7c0 .673-.394 1.329-1.08 1.582c-.526.194-1.391.468-2.17.468s-1.644-.274-2.17-.468c-.686-.253-1.08-.909-1.08-1.582V9.258l-.125-.045C8.084 9.015 7.75 8.533 7.75 8s.334-1.015.875-1.213z"
+                  clip-rule="evenodd" />
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M11.481 7.34a1.53 1.53 0 0 1 1.038 0l1.804.66l-1.804.66a1.53 1.53 0 0 1-1.038 0L9.677 8z"
+                  clip-rule="evenodd" />
+                <path fill="currentColor"
+                  d="M10.25 11.7V9.806l.717.262a3.03 3.03 0 0 0 2.066 0l.717-.262V11.7c0 .105-.057.159-.1.175c-.501.185-1.154.375-1.65.375s-1.149-.19-1.65-.375c-.043-.016-.1-.07-.1-.175" />
               </svg>
             </span>
-            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Escuelas</span>
+            <span
+              class="truncate hs-overlay-minified:opacity-0 transition-all duration-500 ease-out opacity-100 group-hover:translate-x-1">Escuelas</span>
           </a>
         </li>
-        <!-- <li>
-          <a class="group w-full flex items-center gap-1 py-1.5 px-2.5 relative text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 "
-            href="chat-details.html">
-            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path class="group-hover:scale-110 group-focus:scale-110 transition-transform duration-300"
-                  d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z" />
-                <path class="group-hover:scale-95 group-focus:scale-95 transition-transform duration-300"
-                  d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" />
-              </svg>
-            </span>
-            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Chat details</span>
-          </a>
-        </li> -->
 
         }
         @if (currentUser()?.rol === 'Empleado') {
 
         <li>
-          <a routerLink="/administracion/mis-tareas"
-            class="group relative w-full flex items-center gap-1 py-1.5 px-2.5 text-sm text-gray-800 rounded-lg before:absolute before:inset-y-0 before:-start-2 before:rounded-e-full before:w-1 before:h-full hover:bg-gray-100/70 focus:outline-hidden focus:bg-gray-100/70 ">
-            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-6">
+          <a routerLink="/administracion/mis-tareas" routerLinkActive="active"
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100">
+            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-5">
 
               <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                 color="#000000" fill="none">
@@ -233,7 +192,8 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
 
 <!-- ========== MAIN CONTENT ========== -->
 <main class="md:ps-65 md:hs-overlay-minified:ps-13 transition-all duration-300 h-screen flex flex-col bg-white">
-  <!-- ========== HEADER ========== -->
+
+  <!-- ========== HEADER ==========  -->
   <header
     class="md:ms-65 xl:hs-overlay-layout-open:me-96 md:hs-overlay-minified:ms-13 transition-all duration-300 fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-48 md:z-61 bg-white py-2.5">
     <nav class="px-4 sm:px-5.5 flex basis-full justify-between items-center w-full mx-auto">
@@ -244,19 +204,18 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
           class="md:hidden flex justify-center items-center flex-none gap-x-3 size-9 text-sm text-gray-500 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
           aria-haspopup="dialog" aria-expanded="true" aria-controls="hs-pro-sidebar" aria-label="Minify navigation"
           data-hs-overlay="#hs-pro-sidebar">
-          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-            <path d="M15 3v18"></path>
-            <path d="m8 9 3 3-3 3"></path>
+          <svg class="w-5 h-5 transition-transform duration-300 hover:rotate-180" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24">
+            <g fill="currentColor">
+              <path d="M13 21h6a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-6z" />
+              <path fill-rule="evenodd"
+                d="M11 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6zm-2.293 7.707a1 1 0 0 0-1.414-1.414l-2 2a1 1 0 0 0 0 1.414l2 2a1 1 0 0 0 1.414-1.414L7.414 12z"
+                clip-rule="evenodd" />
+            </g>
           </svg>
           <span class="sr-only">Sidebar Toggle</span>
         </button>
         <!-- End Sidebar Toggle -->
-
-        <span class="truncate font-medium text-sm sm:text-base text-gray-800">
-          EduTask
-        </span>
 
       </div>
       <!-- End Button Group -->
@@ -266,50 +225,97 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
       <!-- Mostrar -->
       <!-- Button Group -->
       <div class="flex items-center sm:gap-x-1.5">
-        <div class="h-8">
+        <div class="h-10">
           <!-- Account Dropdown -->
           <div
             class="hs-dropdown inline-flex [--strategy:absolute] [--auto-close:inside] [--placement:bottom-right] relative text-start">
             <button id="hs-dnad" type="button"
-              class="hs-dropdown-toggle inline-flex items-center gap-x-2 text-sm font-medium rounded-full p-1 pe-2 bg-gray-50 text-gray-800 hover:bg-gray-100 focus:outline-none cursor-pointer">
+              class="hs-dropdown-toggle group inline-flex items-center gap-x-3 text-sm font-medium rounded-xl px-1 py-1 bg-white text-[#2d2c63] focus:outline-none cursor-pointer transition-all duration-300 ease-out h-10 shadow-2xs">
+              <!-- Avatar / Iniciales -->
+              <div
+                class="size-10 rounded-xl bg-[#5956e9] flex items-center justify-center text-white font-semibold overflow-hidden">
 
-              <!-- Avatar -->
-              <img [src]="currentUser()?.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
-                [alt]="currentUser()?.nombre" class="shrink-0 size-8 rounded-full object-cover">
-              <span class="text-gray-600 font-medium hidden sm:block dark:text-gray-400">{{ currentUser()?.nombre
-                }}</span>
-              <!-- Icono v que rota -->
-              <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
+                @if (currentUser()?.perfil) {
+                <img [src]="currentUser()?.perfil" [alt]="currentUser()?.nombre" class="w-full h-full object-cover" />
+                } @else {
+                <span>
+                  {{ (currentUser()?.nombre?.[0] || '') + (currentUser()?.apellido?.[0] || '') }}
+                </span>
+                }
+              </div>
+
+              <!-- Nombre y Rol -->
+              <div class="hidden sm:block">
+                <p class="text-sm font-medium text-[#2d2c63] font_outfit">
+                  {{ currentUser()?.nombre }} {{ currentUser()?.apellido }}
+                </p>
+                <p class="text-xs text-[#9291aa] font_outfit">
+                  Administrador
+                </p>
+              </div>
+
+              <!-- Icono v con animación mejorada -->
+              <div class="relative">
+                <svg
+                  class="hs-dropdown-open:rotate-180 size-4 transition-transform duration-500 ease-out text-[#9291aa] group-hover:text-[#524380] group-hover:scale-110"
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6" class="transition-all duration-300" />
+                </svg>
+                <!-- Efecto de brillo sutil -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full">
+                </div>
+              </div>
             </button>
+
             <!-- Account Dropdown -->
-            <div
-              class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-white border border-gray-200 rounded-xl shadow-xl"
-              role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad">
-              <div class="flex items-center gap-3 py-2 px-3.5">
+            <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 hs-dropdown-open:scale-100 w-72  duration-300 opacity-0 hidden z-20 bg-white rounded-3xl shadow-[0_8px_25px_rgba(0,0,0,0.04)]  
+          shadow-[#e2e3fa] " role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad">
+
+              <!-- Header con gradiente sutil -->
+              <div class="flex items-center gap-4 py-5 px-4 border-b border-[#f0f1f8]">
                 <img [src]="currentUser()?.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
                   [alt]="currentUser()?.nombre" class="size-12 rounded-full object-cover">
 
                 <div>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">Sesión iniciada como</p>
-                  <p class="text-sm font-medium text-gray-800 dark:text-white">{{ currentUser()?.nombre }} {{
-                    currentUser()?.apellido }}
+                  <p class="outfit-2 text-[#9291aa] font_outfit">Sesión iniciada como</p>
+                  <p class="text-sm font-[450] text-[#4e3e76] font_outfit leading-tight mt-1">{{ currentUser()?.nombre
+                    }} {{ currentUser()?.apellido }}
                   </p>
-                  <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ currentUser()?.rol }}</p>
+
+                  <p
+                    class="outfit-2 font-medium text-[#524380] font_outfit mt-1 px-2 py-0.5 border border-[#e2e3fa] rounded-lg bg-gradient-to-r from-[#f9f9fe] to-[#f0f1f8] inline-block">
+                    {{ currentUser()?.rol }}
+                  </p>
+
                 </div>
               </div>
-              <div class="px-4 py-2 border-t border-gray-200">
-                <!-- Switch/Toggle -->
-                <div class="flex flex-wrap justify-between items-center gap-2">
-                  <span class="flex-1 cursor-pointer text-sm text-gray-600">Tema</span>
-                  <div class="p-0.5 inline-flex cursor-pointer bg-gray-100 rounded-full">
+
+              <div class="p-2">
+                <!-- Opción de Tema -->
+                <div
+                  class="flex items-center justify-between gap-x-3 py-2 px-3 rounded-lg text-sm text-[#8276a2] hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 font_outfit cursor-pointer">
+                  <div class="flex items-center gap-x-3 flex-1">
+                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                      height="24" fill="none">
+
+                      <path
+                        d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C12.8417 22 14 22.1163 14 21C14 20.391 13.6832 19.9212 13.3686 19.4544C12.9082 18.7715 12.4523 18.0953 13 17C13.6667 15.6667 14.7778 15.6667 16.4815 15.6667C17.3334 15.6667 18.3334 15.6667 19.5 15.5C21.601 15.1999 22 13.9084 22 12Z"
+                        stroke="currentColor" stroke-width="1.5"></path>
+                      <path d="M7 15.002L7.00868 14.9996" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                      <circle cx="9.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"></circle>
+                      <circle cx="16.5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1.5"></circle>
+
+                    </svg>
+                    <span class="font_outfit">Tema</span>
+                  </div>
+                  <div class="p-0.5 inline-flex cursor-pointer bg-[#e6e7f0] rounded-full shadow-inner">
                     <button type="button"
-                      class="size-7 flex justify-center items-center bg-white shadow-sm text-gray-800 rounded-full hs-auto-mode-active:bg-transparent hs-auto-mode-active:shadow-none hs-dark-mode-active:bg-transparent hs-dark-mode-active:shadow-none"
-                      data-hs-theme-click-value="default">
-                      <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                      class="size-6 flex justify-center items-center rounded-full shadow-sm transition-all duration-200 ease-out hover:scale-105 hs-dark-mode-active:bg-[#e6e7f0] hs-dark-mode-active:text-[#9291aa] hs-light-mode-active:bg-[#5956e9] hs-light-mode-active:text-white"
+                      data-hs-theme-click-value="light">
+                      <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4" />
@@ -322,26 +328,26 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                         <path d="m5.636 5.636.707.707" />
                         <path d="m17.657 17.657.707.707" />
                       </svg>
-                      <span class="sr-only">Default (Light)</span>
+                      <span class="sr-only font_outfit">Light</span>
                     </button>
+                    <div class="w-1"></div>
                     <button type="button"
-                      class="size-7 flex justify-center items-center text-gray-800 rounded-full hs-dark-mode-active:bg-white hs-dark-mode-active:shadow-sm hs-dark-mode-active:text-neutral-800"
+                      class="size-6 flex justify-center items-center rounded-full transition-all duration-200 ease-out hover:scale-105 hs-light-mode-active:bg-[#e6e7f0] hs-light-mode-active:text-[#9291aa] hs-dark-mode-active:bg-[#292929] hs-dark-mode-active:text-white"
                       data-hs-theme-click-value="dark">
-                      <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                      <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
                       </svg>
-                      <span class="sr-only">Dark</span>
+                      <span class="sr-only font_outfit">Dark</span>
                     </button>
                   </div>
                 </div>
-                <!-- End Switch/Toggle -->
-              </div>
-              <div class="p-1 border-t border-gray-200">
+
+                <!-- Mi Perfil -->
                 <a routerLink="/administracion/mi-perfil"
-                  class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100">
-                  <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#8276a2] hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 font_outfit">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -350,9 +356,10 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                   Mi Perfil
                 </a>
 
+                <!-- Cerrar sesión -->
                 <a (click)="logOut()"
-                  class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100">
-                  <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#8276a2] hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 font_outfit cursor-pointer">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path d="m16 17 5-5-5-5" />
@@ -361,6 +368,11 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                   </svg>
                   Cerrar sesion
                 </a>
+              </div>
+
+              <!-- Footer sutil -->
+              <div class="px-4 py-2 bg-[#6985fd] rounded-b-2xl">
+                <p class="outfit-2 text-white text-center font_outfit">EduTask v1.0</p>
               </div>
             </div>
             <!-- End Account Dropdown -->
@@ -375,7 +387,7 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
   </header>
   <!-- ========== END HEADER ========== -->
   <!-- BODY DINÁMICO -->
-  <section class="flex-1 pt-14 px-4 sm:px-6 lg:px-8 overflow-y-auto">
+  <section class="flex-1 pt-14 px-4 sm:px-6 lg:px-8 overflow-y-auto bg-[#fbfcfd]">
     <router-outlet />
   </section>
   <!-- END BODY -->

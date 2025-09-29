@@ -116,6 +116,7 @@ export class AuthService {
   async loginWithGoogle() {
     // this.isLoading.set(true);
     try {
+      // debugger
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(this.auth, provider);
       const { user } = userCredential;
@@ -145,20 +146,23 @@ export class AuthService {
           apellido: apellido,
           nombre: nombre,
           rol: 'Empleado',
-          perfil: user.photoURL || ''
+          perfil: user.photoURL || '',
+          emailVerified: user.emailVerified
         };
 
         await this.firestoreService.setDocument('usuarios', user.uid, newUser);
-
-        this.currentUser.set(newUser);
-        // this.router.navigate(['/administracion']);
-
+        appUser = newUser;
       }
-      // this.router.navigate(['/administracion']);
+      // **Actualizar siempre currentUser**
+      this.currentUser.set({
+        ...appUser,
+        emailVerified: user.emailVerified
+      });
+
+      // Luego redirigir
+      this.router.navigate(['/administracion']);
     } catch (error) {
       console.error('Error en login con google', error);
-    } finally {
-      this.router.navigate(['/administracion']);
     }
   }
 

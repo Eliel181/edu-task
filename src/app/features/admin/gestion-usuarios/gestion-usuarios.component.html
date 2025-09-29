@@ -1,191 +1,227 @@
-<!-- Table Section -->
-<div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-  <div class="flex flex-col">
-    <div class="-m-1.5 overflow-x-auto">
-      <div class="p-1.5 min-w-full inline-block align-middle">
-        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xs overflow-hidden">
-          <!-- Header -->
-          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-end border-b border-gray-200 dark:border-gray-700">
+<div class="max-w-8xl px-1 py-10 sm:px-2 lg:px-4 mx-auto font_outfit">
+  <div class="bg-[#fcfdfe] rounded-3xl p-4 sm:p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+    <!-- Header de la sección de usuarios -->
+    <div class="mb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-y-4">
+      <div>
+        <h2 class="text-xl font-semibold text-[#2d2c63]">Gestión de Usuarios</h2>
+        <p class="text-sm text-[#9291aa] mt-2">
+          Administra de forma eficiente los usuarios de tu plataforma.
+        </p>
+      </div>
 
-            <div class="flex-grow">
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Usuarios</h2>
-              <p class="text-sm text-gray-600 dark:text-gray-400">Administra los usuarios, edita, elimina y más.</p>
-
-              <div class="mt-2 sm:w-80">
-                <label for="user-search-input" class="sr-only">Buscar</label>
-                <div class="relative">
-                  <input type="text" id="user-search-input"
-                    class="py-2 px-3 ps-11 block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-800 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Buscar por nombre, email..." (input)="onBusquedaChange($event)">
-                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-                    <svg class="size-4 text-gray-400 dark:text-gray-500" viewBox="0 0 16 16" fill="currentColor">
-                      <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-
-          @if(isLoading()) {
-            <p class="text-center p-10 text-gray-500 dark:text-gray-400">Cargando usuarios...</p>
-            <!-- Spinner de Carga -->
-            <div class="flex items-center justify-center h-80">
-              <div class="relative">
-                <div class="relative w-32 h-32">
-                  <div
-                    class="absolute w-full h-full rounded-full border-[3px] border-gray-100/10 border-r-[#3b82f6] border-b-[#3b82f6] animate-spin"
-                    style="animation-duration: 3s;"></div>
-
-                  <div
-                    class="absolute w-full h-full rounded-full border-[3px] border-gray-100/10 border-t-[#3b82f6] animate-spin"
-                    style="animation-duration: 2s; animation-direction: reverse;"></div>
-                </div>
-
-                <div
-                  class="absolute inset-0 bg-gradient-to-tr from-[#3b82f6]/10 via-transparent to-[#3b82f6]/5 animate-pulse rounded-full blur-sm">
-                </div>
-              </div>
-            </div>
-
-          } @else {
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead class="bg-gray-50 dark:bg-gray-700">
-                <tr>
-                  <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">Imagen</th>
-                  <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">Nombre Completo</th>
-                  <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">Email</th>
-                  <th scope="col" class="hidden lg:table-cell px-4 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">Teléfono</th>
-                  <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">Rol</th>
-                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">Acciones</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                @for (usuario of usuariosPaginados(); track usuario.uid) {
-                <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-
-                  <td class="align-middle">
-                    <div class="p-4">
-                      @if (usuario.perfil) {
-                      <img class="inline-block size-10 rounded-lg object-cover" [src]="usuario.perfil" [alt]="usuario.nombre + ' ' + usuario.apellido">
-                      } @else {
-                      <div class="inline-flex items-center justify-center size-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      </div>
-                      }
-                    </div>
-                  </td>
-
-                  <td class="py-4 align-top">
-                    <div class="px-4">
-                      <div class="text-sm font-medium text-gray-800 dark:text-gray-200">{{usuario.nombre}} {{usuario.apellido}}</div>
-                    </div>
-                  </td>
-
-                  <td class="py-4 align-top">
-                    <div class="px-4">
-                      <div class="text-sm text-gray-800 dark:text-gray-200 truncate">{{usuario.email}}</div>
-                    </div>
-                  </td>
-
-                  <td class="hidden lg:table-cell py-4 align-top">
-                    <div class="px-4">
-                      <span class="text-sm text-gray-500 dark:text-gray-400">{{usuario.telefono || 'N/A'}}</span>
-                    </div>
-                  </td>
-
-                  <td class="py-4 align-top">
-                    <div class="px-4">
-                      @if (usuario.rol === 'Admin') {
-                      <span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-lg text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400">{{usuario.rol}}</span>
-                      } @else if (usuario.rol === 'RTE') {
-                      <span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-lg text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400">{{usuario.rol}}</span>
-                      } @else {
-                      <span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-lg text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">{{usuario.rol}}</span>
-                      }
-                    </div>
-                  </td>
-
-                  <td class="py-4 align-top">
-                    <div class="px-6 text-center">
-                      <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
-                        <button type="button" class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center gap-2 rounded-full text-gray-700 dark:text-gray-200 align-middle hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:ring-blue-600 dark:focus:ring-blue-500">
-                          <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                          </svg>
-                        </button>
-                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 dark:divide-gray-700 min-w-40 z-10 bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-2 mt-2">
-                          <div class="py-2 first:pt-0 last:pb-0">
-                            <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-gray-500">Acciones</span>
-                            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" [routerLink]="['edicion-usuario', usuario.uid]">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="19" height="19" class="text-gray-800 dark:text-gray-200" fill="none">
-                                <path d="M6.53792 2.32172C6.69664 1.89276 7.30336 1.89276 7.46208 2.32172L8.1735 4.2443C8.27331 4.51403 8.48597 4.72669 8.7557 4.8265L10.6783 5.53792C11.1072 5.69664 11.1072 6.30336 10.6783 6.46208L8.7557 7.1735C8.48597 7.27331 8.27331 7.48597 8.1735 7.7557L7.46208 9.67828C7.30336 10.1072 6.69665 10.1072 6.53792 9.67828L5.8265 7.7557C5.72669 7.48597 5.51403 7.27331 5.2443 7.1735L3.32172 6.46208C2.89276 6.30336 2.89276 5.69665 3.32172 5.53792L5.2443 4.8265C5.51403 4.72669 5.72669 4.51403 5.8265 4.2443L6.53792 2.32172Z" stroke="currentColor" stroke-width="1.5"></path>
-                                <path d="M14.4039 9.64136L15.8869 11.1244M6 22H7.49759C8.70997 22 9.31617 22 9.86124 21.7742C10.4063 21.5484 10.835 21.1198 11.6923 20.2625L19.8417 12.1131C20.3808 11.574 20.6503 11.3045 20.7944 11.0137C21.0685 10.4605 21.0685 9.81094 20.7944 9.25772C20.6503 8.96695 20.3808 8.69741 19.8417 8.15832C19.3026 7.61924 19.0331 7.3497 18.7423 7.20561C18.1891 6.93146 17.5395 6.93146 16.9863 7.20561C16.6955 7.3497 16.426 7.61924 15.8869 8.15832L7.73749 16.3077C6.8802 17.165 6.45156 17.5937 6.22578 18.1388C6 18.6838 6 19.29 6 20.5024V22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              Editar
-                            </a>
-                          </div>
-                          <div class="py-2 first:pt-0 last:pb-0">
-                            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer" (click)="eliminarUsuario(usuario.uid)">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="19" height="19" fill="none">
-                                <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                              </svg>
-                              Eliminar
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                } @empty {
-                <tr>
-                  <td colspan="6" class="text-center p-10 text-gray-500 dark:text-gray-400">No se encontraron usuarios con los filtros seleccionados.</td>
-                </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-            <div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                <!-- Mostrando <span class="font-semibold text-gray-800 dark:text-gray-200">{{ usuariosPaginados().length }}</span> de <span class="font-semibold text-gray-800 dark:text-gray-200">{{ filteredUsers().length }}</span> resultados -->
-              </p>
-            </div>
-            <div class="flex items-center justify-center w-full text-dark dark:text-white font-medium gap-10">
-              <button class="rounded-full border border-black dark:border-gray-300 cursor-pointer z-10" [disabled]="paginaActual() === 1"
-                (click)="irAPagina(paginaActual() - 1)">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M22.499 12.85a.9.9 0 0 1 .57.205l.067.06a.9.9 0 0 1 .06 1.206l-.06.066-5.585 5.586-.028.027.028.027 5.585 5.587a.9.9 0 0 1 .06 1.207l-.06.066a.9.9 0 0 1-1.207.06l-.066-.06-6.25-6.25a1 1 0 0 1-.158-.212l-.038-.08a.9.9 0 0 1-.03-.606l.03-.083a1 1 0 0 1 .137-.226l.06-.066 6.25-6.25a.9.9 0 0 1 .635-.263Z"
-                    fill="currentColor" stroke="currentColor" stroke-width=".078" />
-                </svg>
-              </button>
-
-              <span>Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
-
-              <button class="rounded-full border border-black dark:border-gray-300 cursor-pointer" [disabled]="paginaActual() === totalPaginas()"
-                (click)="irAPagina(paginaActual() + 1)">
-                <svg class="rotate-180" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M22.499 12.85a.9.9 0 0 1 .57.205l.067.06a.9.9 0 0 1 .06 1.206l-.06.066-5.585 5.586-.028.027.028.027 5.585 5.587a.9.9 0 0 1 .06 1.207l-.06.066a.9.9 0 0 1-1.207.06l-.066-.06-6.25-6.25a1 1 0 0 1-.158-.212l-.038-.08a.9.9 0 0 1-.03-.606l.03-.083a1 1 0 0 1 .137-.226l.06-.066 6.25-6.25a.9.9 0 0 1 .635-.263Z"
-                    fill="currentColor" stroke="currentColor" stroke-width=".078" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          }
+      <!-- Barra de búsqueda mejorada -->
+      <div class="relative sm:w-80">
+        <input type="text" id="user-search-input" (input)="onBusquedaChange($event)"
+          class="py-2.5 px-4 ps-11 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs"
+          placeholder="Buscar usuarios...">
+        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+          <svg class="size-4 text-[#9291aa]" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
         </div>
       </div>
     </div>
+
+    @if(isLoading()) {
+    <div class="flex items-center justify-center h-80">
+      <div class="relative">
+        <div class="relative w-32 h-32">
+          <div
+            class="absolute w-full h-full rounded-full border-[3px] border-gray-100/10 border-r-[#5956e9] border-b-[#5956e9] animate-spin"
+            style="animation-duration: 3s;"></div>
+          <div
+            class="absolute w-full h-full rounded-full border-[3px] border-gray-100/10 border-t-[#5956e9] animate-spin"
+            style="animation-duration: 2s; animation-direction: reverse;"></div>
+        </div>
+        <div
+          class="absolute inset-0 bg-gradient-to-tr from-[#5956e9]/10 via-transparent to-[#5956e9]/5 animate-pulse rounded-full blur-sm">
+        </div>
+      </div>
+    </div>
+    } @else {
+    <!-- Tabla de Usuarios -->
+    <div class="overflow-x-auto rounded-3xl shadow-[0_2px_6px_rgba(0,0,0,0.02)]">
+      <table class="min-w-full divide-y divide-[#f0f1f8]">
+        <thead class="bg-[#fafbfe]">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+              Usuario
+            </th>
+            <th scope="col"
+              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider hidden sm:table-cell">
+              Contacto
+            </th>
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+              Rol
+            </th>
+            <th scope="col" class="px-2 py-3 text-center text-xs font-semibold uppercase text-[#524380] tracking-wider
+         sm:static sticky right-0 bg-[#f9f9fe] z-30 w-16 min-w-[4rem]">
+              Acciones
+            </th>
+
+
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#f0f1f8]">
+          @for (usuario of usuariosPaginados(); track usuario.uid) {
+          <tr class="bg-white hover:bg-[#fcfdfe] transition-colors duration-200">
+            <td class="px-4 py-3 whitespace-nowrap">
+              <div class="flex items-center">
+                <div
+                  class="shrink-0 size-10 rounded-full overflow-hidden flex items-center justify-center shadow-2xs">
+                  @if (usuario.perfil) {
+                  <img class="size-full object-cover" [src]="usuario.perfil"
+                    [alt]="usuario.nombre + ' ' + usuario.apellido">
+                  } @else {
+                  <svg class="size-5 text-[#9291aa]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  }
+                </div>
+                <div class="ms-3">
+                  <p class="text-sm font-medium text-[#4e3e76]">{{usuario.nombre}} {{usuario.apellido}}
+                    @if(usuario.emailVerified){
+                    <span class="ms-1 text-green-500" title="Email verificado">
+                      <svg class="inline-block size-4" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
+                        viewBox="0 0 256 256">
+                        <g fill="currentColor">
+                          <path
+                            d="M232 128c0 12.51-17.82 21.95-22.68 33.69c-4.68 11.32 1.42 30.65-7.78 39.85s-28.53 3.1-39.85 7.78C150 214.18 140.5 232 128 232s-22-17.82-33.69-22.68c-11.32-4.68-30.65 1.42-39.85-7.78s-3.1-28.53-7.78-39.85C41.82 150 24 140.5 24 128s17.82-22 22.68-33.69c4.68-11.31-1.42-30.65 7.78-39.85s28.54-3.1 39.85-7.78C106.05 41.82 115.5 24 128 24s22 17.82 33.69 22.68c11.32 4.68 30.65-1.42 39.85 7.78s3.1 28.53 7.78 39.85C214.18 106.05 232 115.5 232 128"
+                            opacity="0.2" />
+                          <path
+                            d="M225.86 102.82c-3.77-3.94-7.67-8-9.14-11.57c-1.36-3.27-1.44-8.69-1.52-13.94c-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52c-3.56-1.47-7.63-5.37-11.57-9.14C146.28 23.51 138.44 16 128 16s-18.27 7.51-25.18 14.14c-3.94 3.77-8 7.67-11.57 9.14c-3.25 1.36-8.69 1.44-13.94 1.52c-9.76.15-20.82.31-28.51 8s-7.8 18.75-8 28.51c-.08 5.25-.16 10.67-1.52 13.94c-1.47 3.56-5.37 7.63-9.14 11.57C23.51 109.72 16 117.56 16 128s7.51 18.27 14.14 25.18c3.77 3.94 7.67 8 9.14 11.57c1.36 3.27 1.44 8.69 1.52 13.94c.15 9.76.31 20.82 8 28.51s18.75 7.85 28.51 8c5.25.08 10.67.16 13.94 1.52c3.56 1.47 7.63 5.37 11.57 9.14c6.9 6.63 14.74 14.14 25.18 14.14s18.27-7.51 25.18-14.14c3.94-3.77 8-7.67 11.57-9.14c3.27-1.36 8.69-1.44 13.94-1.52c9.76-.15 20.82-.31 28.51-8s7.85-18.75 8-28.51c.08-5.25.16-10.67 1.52-13.94c1.47-3.56 5.37-7.63 9.14-11.57c6.63-6.9 14.14-14.74 14.14-25.18s-7.51-18.27-14.14-25.18m-11.55 39.29c-4.79 5-9.75 10.17-12.38 16.52c-2.52 6.1-2.63 13.07-2.73 19.82c-.1 7-.21 14.33-3.32 17.43s-10.39 3.22-17.43 3.32c-6.75.1-13.72.21-19.82 2.73c-6.35 2.63-11.52 7.59-16.52 12.38S132 224 128 224s-9.15-4.92-14.11-9.69s-10.17-9.75-16.52-12.38c-6.1-2.52-13.07-2.63-19.82-2.73c-7-.1-14.33-.21-17.43-3.32s-3.22-10.39-3.32-17.43c-.1-6.75-.21-13.72-2.73-19.82c-2.63-6.35-7.59-11.52-12.38-16.52S32 132 32 128s4.92-9.15 9.69-14.11s9.75-10.17 12.38-16.52c2.52-6.1 2.63-13.07 2.73-19.82c.1-7 .21-14.33 3.32-17.43s10.39-3.22 17.43-3.32c6.75-.1 13.72-.21 19.82-2.73c6.35-2.63 11.52-7.59 16.52-12.38S124 32 128 32s9.15 4.92 14.11 9.69s10.17 9.75 16.52 12.38c6.1 2.52 13.07 2.63 19.82 2.73c7 .1 14.33.21 17.43 3.32s3.22 10.39 3.32 17.43c.1 6.75.21 13.72 2.73 19.82c2.63 6.35 7.59 11.52 12.38 16.52S224 124 224 128s-4.92 9.15-9.69 14.11m-40.65-43.77a8 8 0 0 1 0 11.32l-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 0" />
+                        </g>
+                      </svg>
+                    </span>
+                    } @else {
+                    <span class="ms-1 text-red-400" title="Email no verificado">
+                      <svg class="inline-block size-4" xmlns="http://www.w3.org/2000/svg" width="128" height="128"
+                        viewBox="0 0 256 256">
+                        <path fill="currentColor"
+                          d="M225.86 102.82c-3.77-3.94-7.67-8-9.14-11.57c-1.36-3.27-1.44-8.69-1.52-13.94c-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52c-3.56-1.47-7.63-5.37-11.57-9.14C146.28 23.51 138.44 16 128 16s-18.27 7.51-25.18 14.14c-3.94 3.77-8 7.67-11.57 9.14c-3.25 1.36-8.69 1.44-13.94 1.52c-9.76.15-20.82.31-28.51 8s-7.8 18.75-8 28.51c-.08 5.25-.16 10.67-1.52 13.94c-1.47 3.56-5.37 7.63-9.14 11.57C23.51 109.72 16 117.56 16 128s7.51 18.27 14.14 25.18c3.77 3.94 7.67 8 9.14 11.57c1.36 3.27 1.44 8.69 1.52 13.94c.15 9.76.31 20.82 8 28.51s18.75 7.85 28.51 8c5.25.08 10.67.16 13.94 1.52c3.56 1.47 7.63 5.37 11.57 9.14c6.9 6.63 14.74 14.14 25.18 14.14s18.27-7.51 25.18-14.14c3.94-3.77 8-7.67 11.57-9.14c3.27-1.36 8.69-1.44 13.94-1.52c9.76-.15 20.82-.31 28.51-8s7.85-18.75 8-28.51c.08-5.25.16-10.67 1.52-13.94c1.47-3.56 5.37-7.63 9.14-11.57c6.63-6.9 14.14-14.74 14.14-25.18s-7.51-18.27-14.14-25.18M120 80a8 8 0 0 1 16 0v56a8 8 0 0 1-16 0Zm8 104a12 12 0 1 1 12-12a12 12 0 0 1-12 12" />
+                      </svg>
+                    </span>
+                    }
+                  </p>
+                  <p class="text-xs text-[#9291aa] truncate w-48 sm:w-auto">{{usuario.email}}
+
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap hidden sm:table-cell">
+              <p class="text-sm text-[#707078]">{{usuario.telefono || 'N/A'}}</p>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap">
+              @if (usuario.rol === 'Admin') {
+              <span
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#f0e7fa] text-[#8e44ad] shadow-sm">
+                {{usuario.rol}}
+              </span>
+              } @else if (usuario.rol === 'RTE') {
+              <span
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#e7f0fa] text-[#3498db] shadow-sm">
+                {{usuario.rol}}
+              </span>
+              } @else if (usuario.rol === 'Docente') {
+              <span
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#fae7e7] text-[#e74c3c] shadow-sm">
+                {{usuario.rol}}
+              </span>
+              } @else {
+              <span
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#e7faed] text-[#2ecc71] shadow-sm">
+                {{usuario.rol}}
+              </span>
+              }
+            </td>
+            <td
+              class="px-2 py-3 whitespace-nowrap text-center sm:static sticky right-0 bg-white z-40 w-16 min-w-[4rem]">
+              <div class="relative">
+                <div class="hs-dropdown [--placement:bottom-right] inline-block">
+                  <button type="button"
+                    class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center rounded-full text-[#9291aa] hover:bg-[#f0f1f8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#5956e9] transition-all duration-200 ease-out">
+                    <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                    </svg>
+                  </button>
+
+                  <!-- Menú desplegable -->
+                  <div
+                    class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-[9999] bg-white shadow-[0_2px_6px_rgba(0,0,0,0.05)] rounded-2xl p-2 mt-2">
+                    <div class="first:pt-0 last:pb-0">
+                      <span class="block py-2 px-3 mb-2 text-xs font-medium uppercase text-[#9291aa]">Acciones</span>
+                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#796ffc] hover:bg-[#f9f9fe] transition-colors duration-200"
+                        [routerLink]="['edicion-usuario', usuario.uid]">
+                        <svg class="size-[18px]" xmlns="http://www.w3.org/2000/svg"  width="128" height="128" viewBox="0 0 24 24"><g fill="currentColor"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M19 19a1 1 0 0 1 .117 1.993L19 21h-7a1 1 0 0 1-.117-1.993L12 19zm.631-14.632a2.5 2.5 0 0 1 0 3.536L8.735 18.8a1.5 1.5 0 0 1-.44.305l-3.804 1.729c-.842.383-1.708-.484-1.325-1.326l1.73-3.804a1.5 1.5 0 0 1 .304-.44L16.096 4.368a2.5 2.5 0 0 1 3.535 0M6 1a1 1 0 0 1 .946.677l.13.378a3 3 0 0 0 1.869 1.87l.378.129a1 1 0 0 1 0 1.892l-.378.13a3 3 0 0 0-1.87 1.869l-.129.378a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.869-1.87l-.378-.129a1 1 0 0 1 0-1.892l.378-.13a3 3 0 0 0 1.87-1.869l.129-.378A1 1 0 0 1 6 1"/></g></svg>
+                        Editar
+                      </a>
+                    </div>
+                    <div class="first:pt-0 last:pb-0">
+                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#e77833] hover:bg-[#fef9f9] transition-colors duration-200 cursor-pointer"
+                        (click)="eliminarUsuario(usuario.uid)">
+<svg class="size-[18px]" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 48 48"><path fill="currentColor" fill-rule="evenodd" d="M3.842 27.88a7.92 7.92 0 0 1 0-8.76c3.23-4.872 7.107-8.528 9.356-10.443c1.452-1.237 3.258-1.857 5.087-1.931C20.838 6.642 25.196 6.5 30 6.5c3.443 0 6.764.073 9.364.152c3.76.115 6.808 3.052 6.956 6.846A258 258 0 0 1 46.5 23.5c0 4.158-.083 7.51-.18 10.002c-.148 3.794-3.196 6.73-6.956 6.846c-2.6.08-5.921.152-9.364.152c-4.804 0-9.162-.142-11.715-.246c-1.829-.074-3.635-.695-5.087-1.931c-2.249-1.916-6.125-5.57-9.356-10.443m33.54-7.851c.67-.724.86-1.742.26-2.526c-.251-.33-.58-.712-1.005-1.137A11.5 11.5 0 0 0 35.5 15.36c-.784-.599-1.802-.409-2.526.261a187 187 0 0 0-3.969 3.813a186 186 0 0 0-3.967-3.81c-.724-.671-1.742-.861-2.526-.262c-.33.252-.711.58-1.137 1.005c-.425.426-.753.808-1.005 1.137c-.6.784-.41 1.802.261 2.526a186 186 0 0 0 3.811 3.967c-1.868 1.9-3.073 3.17-3.817 3.973c-.67.724-.86 1.742-.26 2.526c.251.33.579.712 1.005 1.137s.807.754 1.136 1.005c.785.6 1.802.41 2.526-.26c.804-.744 2.074-1.95 3.973-3.818c1.9 1.87 3.171 3.075 3.975 3.819c.724.67 1.742.86 2.526.261c.33-.252.711-.58 1.137-1.005c.425-.426.753-.808 1.005-1.137c.6-.784.41-1.802-.261-2.526c-.744-.803-1.95-2.075-3.819-3.975a187 187 0 0 0 3.813-3.968Z" clip-rule="evenodd"/></svg>
+                        Eliminar
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="4" class="text-center p-10 text-[#9291aa]">
+              No se encontraron usuarios con los filtros seleccionados.
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="mt-8 flex justify-center">
+      <nav class="flex justify-center items-center gap-x-1" aria-label="Pagination">
+        <button type="button"
+          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] hover:bg-[#f0f1f8] focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+          aria-label="Previous" [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
+          <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+          <span class="sr-only">Previous</span>
+        </button>
+
+        <div class="flex items-center gap-x-1">
+          @for (page of paginasDisponibles(); track page) {
+          <button type="button" (click)="irAPagina(page)"
+            [ngClass]="{'bg-[#5956e9] text-white shadow-sm': paginaActual() === page, 'text-[#707078] hover:bg-[#f0f1f8]': paginaActual() !== page}"
+            class="min-h-9.5 min-w-9.5 flex justify-center items-center py-2 px-3 text-sm rounded-lg focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+            [attr.aria-current]="paginaActual() === page ? 'page' : null">
+            {{ page }}
+          </button>
+          }
+        </div>
+
+        <button type="button"
+          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] hover:bg-[#f0f1f8] focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+          aria-label="Next" [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
+          <span class="sr-only">Next</span>
+          <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    }
   </div>
 </div>

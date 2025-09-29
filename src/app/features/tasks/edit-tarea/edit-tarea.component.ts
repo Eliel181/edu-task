@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, MinLengthValidator, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Timestamp } from '@angular/fire/firestore';
 import { TaskService } from '../task.service';
@@ -9,13 +9,12 @@ import { Usuario } from '../../../core/interfaces/usuario.model';
 import { Tarea } from '../../../core/interfaces/tarea.model';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
+import { SpinnerOverlayComponent } from "../../../shared/spinner-overlay/spinner-overlay.component";
 
-
-declare const HSStaticMethods: any;
 
 @Component({
   selector: 'app-edit-tarea',
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, SpinnerOverlayComponent],
   templateUrl: './edit-tarea.component.html',
   styleUrl: './edit-tarea.component.css'
 })
@@ -43,7 +42,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
   constructor() {
     this.tareaForm = this.formBuilder.group({
       titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
+      descripcion: ['', [Validators.required, Validators.minLength(10)]],
       asignadoA: ['', Validators.required],
       prioridad: ['', Validators.required],
       fechaDeVencimiento: ['']
@@ -110,7 +109,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
         this.tareaFormEdicion.markAsPristine();
       } else {
         console.error('Tarea no encontrada con ID:', id);
-        this.router.navigate(['/gestion-tareas']); // Ajusta a tu ruta de listado
+        this.router.navigate(['administracion/gestion-tareas']); // Ajusta a tu ruta de listado
       }
       this.isLoading.set(false);
     });
@@ -134,11 +133,13 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     }
     const nombreCompleto = `${empleadoSeleccionado.apellido} ${empleadoSeleccionado.nombre}`;
     const formValue = this.tareaForm.value;
-    const nuevaTarea: any = {
+    debugger
+    const nuevaTarea: Partial<Tarea> = {
       titulo: formValue.titulo,
       descripcion: formValue.descripcion,
       asignadoA: formValue.asignadoA,
       asignadoPor: admin.uid,
+      fotoEmpleadoAsignado: empleadoSeleccionado.perfil!,
       nombreEmpleadoAsignado: nombreCompleto,
       estado: 'Pendiente',
       prioridad: formValue.prioridad,
@@ -155,7 +156,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
         title: 'Tarea creada!!', icon: 'success', text: 'La tarea se ha creado exitosamente',
         timer: 2000, showConfirmButton: false
       });
-      this.router.navigate(['/gestion-tareas']);
+      this.router.navigate(['administracion/gestion-tareas']);
     }).catch(error => {
       Swal.fire({ title: 'Error', icon: 'error', text: 'No se pudo crear la tarea' });
     }).finally(() => {
@@ -192,6 +193,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     const empleadoSeleccionado = this.empleados().find(e => e.uid === formValue.asignadoA);
     if (empleadoSeleccionado) {
       datosParaActualizar.nombreEmpleadoAsignado = `${empleadoSeleccionado.apellido} ${empleadoSeleccionado.nombre}`;
+      datosParaActualizar.fotoEmpleadoAsignado = empleadoSeleccionado.perfil;
     }
 
 
@@ -208,7 +210,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
         title: 'Tarea actualizada!!', icon: 'success', text: 'La tarea se ha actualizado exitosamente',
         timer: 2000, showConfirmButton: false
       });
-      this.router.navigate(['/gestion-tareas']);
+      this.router.navigate(['administracion/gestion-tareas']);
     }).catch(error => {
       Swal.fire({ title: 'Error', icon: 'error', text: 'No se pudo actualizar la tarea' });
     }).finally(() => {
@@ -222,4 +224,10 @@ export class EditTareaComponent implements OnInit, OnDestroy {
   get prioridad() { return this.tareaForm.get('prioridad'); }
   get fechaDeVencimiento() { return this.tareaForm.get('fechaDeVencimiento'); }
 
+  prioridades = [
+  { value: 'Baja', label: 'Baja', colorClass: 'bg-[#2ecc71]' },
+  { value: 'Media', label: 'Media', colorClass: 'bg-[#f39c12]' },
+  { value: 'Alta', label: 'Alta', colorClass: 'bg-[#e74c3c]' },
+  { value: 'Urgente', label: 'Urgente', colorClass: 'bg-[#e91e63]' }
+];
 }

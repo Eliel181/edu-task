@@ -7,7 +7,7 @@ export interface Escuela {
   cue:string;
   direccion:string;
   telefono:number;
-  email:number;
+  email:string;
   paginaWeb:string;
   director:string; //uid de un usuario con el rol de "Director"
   matriculaTotal:string;
