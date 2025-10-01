@@ -9,4 +9,7 @@ export interface Usuario {
   rol: RolUsuario;
   perfil?: string;  
   emailVerified?: boolean;
+
+  online?: boolean;
+  lastSeen?: any; 
 }

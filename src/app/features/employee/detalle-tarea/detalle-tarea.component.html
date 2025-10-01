@@ -47,46 +47,59 @@
 
                         <!-- Cambiar Estado -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cambiar
-                                Estado</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Cambiar Estado
+                            </label>
+
                             <div class="flex flex-wrap gap-3">
+                                <!-- Pendiente -->
                                 <button (click)="actualizarEstado('Pendiente')"
-                                    class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
-    'bg-blue-50 border-blue-300 text-blue-800 shadow-inner dark:bg-blue-900/30 dark:border-blue-700 dark:text-blue-400': tarea.estado === 'Pendiente', 
-    'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'Pendiente' 
-  }">
+                                    [disabled]="tarea.progreso > 0 || tarea.estado === 'Finalizada' || isSubmitting()"
+                                    class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{
+        'bg-gray-200 text-gray-400 cursor-not-allowed': tarea.progreso > 0 || tarea.estado === 'Finalizada',
+        'bg-blue-50 border-blue-300 text-blue-800 shadow-inner dark:bg-blue-900/30 dark:border-blue-700 dark:text-blue-400': tarea.estado === 'Pendiente' && !(tarea.progreso > 0),
+        'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'Pendiente' && !(tarea.progreso > 0)
+    }">
                                     Pendiente
                                 </button>
 
-                                <button (click)="actualizarEstado('En Proceso')"
-                                    class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
+
+                                <!-- En Proceso -->
+<!-- En Proceso -->
+<button (click)="actualizarEstado('En Proceso')"
+        [disabled]="isSubmitting() || tarea.estado === 'Finalizada'"
+        class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
     'bg-gray-50 border-gray-300 text-gray-800 shadow-inner dark:bg-gray-700/50 dark:border-gray-600 dark:text-gray-200': tarea.estado === 'En Proceso', 
     'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'En Proceso' 
   }">
-                                    En Proceso
-                                </button>
+    En Proceso
+</button>
 
-                                <button (click)="actualizarEstado('Finalizada')"
-                                    class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
+<!-- Finalizada -->
+<button (click)="actualizarEstado('Finalizada')"
+        [disabled]="isSubmitting() || tarea.estado === 'Finalizada'"
+        class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
     'bg-teal-50 border-teal-300 text-teal-800 shadow-inner dark:bg-teal-900/30 dark:border-teal-700 dark:text-teal-400': tarea.estado === 'Finalizada', 
     'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'Finalizada' 
   }">
-                                    Finalizada
-                                </button>
+    Finalizada
+</button>
                             </div>
                         </div>
 
-                        <!-- Ajustar Progreso -->
                         @if (tarea.estado === 'En Proceso') {
                         <div class="pt-2">
                             <label for="progreso"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ajustar
-                                Progreso: <span class="font-bold">{{ progresoActual }}%</span></label>
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Ajustar Progreso: <span class="font-bold">{{ progresoActual }}%</span>
+                            </label>
                             <input type="range" id="progreso"
                                 class="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
-                                min="1" max="99" [(ngModel)]="progresoActual" (change)="actualizarProgreso()">
+                                min="1" max="99" [(ngModel)]="progresoActual" (change)="actualizarProgreso()"
+                                [disabled]="isSubmitting() || estadoOriginal === 'Finalizada'">
                         </div>
                         }
+
                     </div>
                 </div>
             </div>
@@ -177,22 +190,19 @@
                     </ul>
                 </div>
 
-                <!-- Botón de Actualizar Tarea -->
                 <div class="pt-4">
-                    <button (click)="guardarCambios()" [disabled]="isSubmitting()"
+                    <button (click)="guardarCambios()" [disabled]="!pendingChanges() || isSubmitting()"
                         class="w-full px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center">
-
                         @if (isSubmitting()) {
-                        <!-- Spinner -->
                         <span
                             class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full mr-2"></span>
                         <span>Actualizando...</span>
                         } @else {
-                        <!-- Texto normal -->
                         <span>Actualizar Tarea</span>
                         }
                     </button>
                 </div>
+
 
             </div>
         </div>

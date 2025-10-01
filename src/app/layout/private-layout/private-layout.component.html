@@ -286,11 +286,10 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
                 @if (currentUser()?.perfil) {
                 <!-- Tiene foto -->
                 <img [src]="currentUser()?.perfil" [alt]="currentUser()?.nombre"
-                  class="size-12 rounded-full object-cover">
+                  class="size-14 rounded-xl object-cover">
                 } @else {
                 <!-- Sin foto: mostrar iniciales -->
-                <div class="size-12 rounded-xl flex items-center justify-center text-white font-semibold"
-                  style="background-color: #5956e9;">
+                <div class="size-14 bg-[#5956e9] rounded-xl flex items-center justify-center text-white font-semibold">
                   {{ (currentUser()?.nombre?.[0] || '') + (currentUser()?.apellido?.[0] || '') }}
                 </div>
                 }

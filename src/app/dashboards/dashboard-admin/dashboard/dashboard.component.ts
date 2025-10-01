@@ -1,189 +1,99 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-interface Activity {
-  id: number;
-  actor: string;
-  action: string;
-  entity: string;
-  details: string;
-  timestamp: string;
-  avatar: string;
-}
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Usuario } from '../../../core/interfaces/usuario.model';
+import { FirestoreService } from '../../../core/services/firestore.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
+import { ActivityFeed } from '../../../core/interfaces/activity-feed.model';
+import { RouterModule } from '@angular/router';
+import { Timestamp } from '@angular/fire/firestore';
 
-interface School {
-  id: number;
-  name: string;
-  director: string;
-  contact: string;
-  students: number;
-  status: 'active' | 'inactive';
-  progress: number;
-}
-
-interface Task {
-  id: number;
-  title: string;
-  status: 'pending' | 'in-progress' | 'completed';
-  priority: 'low' | 'medium' | 'high';
-  progress: number;
-  assignedTo: string;
-  dueDate: string;
-  startDate: string;
-}
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  private activityFeedService: ActivityFeedService = inject(ActivityFeedService);
+  usuariosOnline = signal<Usuario[]>([]);
+  firestoreService: FirestoreService = inject(FirestoreService);
+  authService: AuthService = inject(AuthService);
+  totalUsuarios = signal<number>(0);
+  totalEscuelas = signal<number>(0);  
+  activities = signal<ActivityFeed[]>([]);
 
-    escuelas = [
-    {
-      nombre: "Instituto San Martín",
-      tipo: "Secundaria",
-      estudiantes: 450,
-      director: "Ana García",
-      telefono: "+34 912 345 678",
-      estado: "Activa",
-      rendimiento: 92,
-      imagen: "/api/placeholder/48/48",
-    },
-    {
-      nombre: "Colegio Cervantes",
-      tipo: "Primaria",
-      estudiantes: 320,
-      director: "Carlos López",
-      telefono: "+34 913 456 789",
-      estado: "Activa",
-      rendimiento: 88,
-      imagen: "/api/placeholder/48/48",
-    },
-    {
-      nombre: "Escuela Técnica Industrial",
-      tipo: "Técnica",
-      estudiantes: 280,
-      director: "María Rodríguez",
-      telefono: "+34 914 567 890",
-      estado: "Activa",
-      rendimiento: 85,
-      imagen: "/api/placeholder/48/48",
-    },
-    {
-      nombre: "Centro Educativo Futuro",
-      tipo: "Bachillerato",
-      estudiantes: 195,
-      director: "José Martínez",
-      telefono: "+34 915 678 901",
-      estado: "En Revisión",
-      rendimiento: 90,
-      imagen: "/api/placeholder/48/48",
-    },
-  ]
 
-  actividades = [
-    {
-      usuario: "Ana García",
-      descripcion: "Inició sesión en el sistema",
-      tiempo: "Hace 5 minutos",
-      tipo: "login",
-    },
-    {
-      usuario: "Carlos López",
-      descripcion: 'Completó la tarea "Revisión de calificaciones"',
-      tiempo: "Hace 12 minutos",
-      tipo: "task",
-    },
-    {
-      usuario: "María Rodríguez",
-      descripcion: "Se registró como nuevo usuario",
-      tiempo: "Hace 25 minutos",
-      tipo: "register",
-    },
-    {
-      usuario: "José Martínez",
-      descripcion: "Cerró sesión",
-      tiempo: "Hace 1 hora",
-      tipo: "logout",
-    },
-    {
-      usuario: "Laura Sánchez",
-      descripcion: "Inició sesión en el sistema",
-      tiempo: "Hace 2 horas",
-      tipo: "login",
-    },
-    {
-      usuario: "Pedro Gómez",
-      descripcion: 'Completó la tarea "Actualización de datos"',
-      tiempo: "Hace 3 horas",
-      tipo: "task",
-    },
-  ]
+  ngOnInit(): void {
+    const currentUser = this.authService.currentUser();
 
-  tareas = [
-    {
-      titulo: "Revisión Trimestral",
-      descripcion: "Evaluar rendimiento académico del trimestre",
-      asignado: "Ana García",
-      fecha: "15 Dic",
-      progreso: 85,
-      prioridad: "alta",
-      estado: "En Progreso",
-    },
-    {
-      titulo: "Actualizar Expedientes",
-      descripcion: "Actualizar información de estudiantes nuevos",
-      asignado: "Carlos López",
-      fecha: "18 Dic",
-      progreso: 60,
-      prioridad: "media",
-      estado: "En Progreso",
-    },
-    {
-      titulo: "Planificación 2024",
-      descripcion: "Preparar calendario académico del próximo año",
-      asignado: "María Rodríguez",
-      fecha: "20 Dic",
-      progreso: 30,
-      prioridad: "baja",
-      estado: "Pendiente",
-    },
-    {
-      titulo: "Informe Mensual",
-      descripcion: "Generar reporte de actividades del mes",
-      asignado: "José Martínez",
-      fecha: "12 Dic",
-      progreso: 100,
-      prioridad: "alta",
-      estado: "Completada",
-    },
-  ]
+    this.firestoreService.getUsuariosOnline<Usuario>('usuarios').subscribe(users => {
 
-  getActivityIconClass(tipo: string): string {
-    const classes = {
-      login: "bg-green-100 text-green-600",
-      logout: "bg-red-100 text-red-600",
-      register: "bg-blue-100 text-blue-600",
-      task: "bg-purple-100 text-purple-600",
-    }
-    return classes[tipo as keyof typeof classes] || "bg-gray-100 text-gray-600"
+      const filtered = users.filter(u => u.uid !== currentUser?.uid);
+      this.usuariosOnline.set(filtered);
+    });
+    this.cargarTotales();
+    this.activityFeedService.getRecentActivities().subscribe({
+      next: (acts) => this.activities.set(acts),
+      error: (err) => console.error('Error loading activities', err),
+    });
   }
 
-  getPriorityClass(prioridad: string): string {
-    const classes = {
-      alta: "bg-red-500",
-      media: "bg-yellow-500",
-      baja: "bg-green-500",
-    }
-    return classes[prioridad as keyof typeof classes] || "bg-gray-500"
+  cargarTotales() {
+    // Usuarios
+    this.firestoreService.getCollection<Usuario>('usuarios').subscribe(usuarios => {
+      this.totalUsuarios.set(usuarios.length);
+    });
+
+    // Escuelas (suponiendo que tu colección se llama 'escuelas')
+    this.firestoreService.getCollection<any>('escuelas').subscribe(escuelas => {
+      this.totalEscuelas.set(escuelas.length);
+    });
+  }
+  // Utilidad: calcular tiempo transcurrido
+  getLastSeenText(lastSeen: any): string {
+    if (!lastSeen) return 'Sin datos';
+    const last = lastSeen.toDate ? lastSeen.toDate() : new Date(lastSeen);
+    const diffMs = Date.now() - last.getTime();
+    const diffMin = Math.floor(diffMs / 60000);
+    if (diffMin < 1) return 'ahora mismo';
+    if (diffMin < 60) return `hace ${diffMin} min`;
+    const diffHr = Math.floor(diffMin / 60);
+    return `hace ${diffHr} h`;
   }
 
-  getStatusClass(estado: string): string {
-    const classes = {
-      Completada: "bg-green-100 text-green-700",
-      "En Progreso": "bg-blue-100 text-blue-700",
-      Pendiente: "bg-yellow-100 text-yellow-700",
-    }
-    return classes[estado as keyof typeof classes] || "bg-gray-100 text-gray-700"
+  formatRelativeTime(timestamp: Timestamp): string {
+  const now = new Date();
+  const past = timestamp.toDate();
+  const seconds = Math.floor((now.getTime() - past.getTime()) / 1000);
+
+  if (seconds < 60) {
+    return 'Hace unos segundos';
   }
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) {
+    return `Hace ${minutes} min`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) {
+    return `Hace ${hours} ${hours === 1 ? 'hora' : 'horas'}`;
+  }
+
+  const days = Math.floor(hours / 24);
+  if (days < 7) {
+    return `Hace ${days} ${days === 1 ? 'día' : 'días'}`;
+  }
+
+  // Si ya pasó más de una semana, mostramos fecha y hora
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+  return past.toLocaleString('es-ES', options);
+}
+
 }
