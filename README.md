@@ -48,6 +48,7 @@ ng g s core/services/auth --skip-tests
 ng g s core/services/school --skip-tests
 ng g s features/tasks/task --skip-tests
 ng g s core/services/visita --skip-tests
+ng g s core/services/activityFeed  --skip-tests
 ```
 
 ```bash
@@ -70,7 +71,8 @@ ng g guard core/guards/public --skip-tests
 ng g i core/interfaces/usuario --type=model
 ng g i core/interfaces/escuela --type=model
 ng g i core/interfaces/tarea --type=model
-ng g i core/interfaces/visita --type=model
+ng g i core/interfaces/activityFeed --type=model
+ 
 
 ```
 ```bash

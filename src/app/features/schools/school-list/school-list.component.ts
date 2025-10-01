@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { RouterLink } from '@angular/router';
 import { Usuario } from '../../../core/interfaces/usuario.model';
 import { FirestoreService } from '../../../core/services/firestore.service';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-school-list',
@@ -16,11 +18,14 @@ import { FirestoreService } from '../../../core/services/firestore.service';
 export class SchoolListComponent implements OnInit {
   private escuelaService: SchoolService = inject(SchoolService);
   private firestoreService: FirestoreService = inject(FirestoreService);
+  private activityService: ActivityFeedService = inject(ActivityFeedService);
+  private authService: AuthService = inject(AuthService);
 
   private escuelasOriginales: WritableSignal<Escuela[]> = signal([]);
   public isLoading = signal(true);
 
-  directorData: Usuario | null = null;
+  directoresMap: Record<string, Usuario> = {}; // o Map<string, Usuario>
+
 
   public terminoBusqueda = signal('');
   public paginaActual = signal(1);
@@ -69,16 +74,16 @@ export class SchoolListComponent implements OnInit {
     this.cargarEscuelas();
   }
 
-  cargarDirector(uidDirector: string): void {
+  async cargarDirector(uidDirector: string): Promise<void> {
+    // Si ya lo cargaste, no vuelvas a pedirlo
+    if (this.directoresMap[uidDirector]) return;
 
-    this.firestoreService.getDocumentById<Usuario>('usuarios', uidDirector).then(
-      data => {
-        if (data) {
-          this.directorData = data;
-        }
-      }
-    );
+    const data = await this.firestoreService.getDocumentById<Usuario>('usuarios', uidDirector);
+    if (data) {
+      this.directoresMap[uidDirector] = data;
+    }
   }
+
   cargarEscuelas(): void {
     this.escuelaService.getAllEscuelas().subscribe({
       next: (data) => {
@@ -112,7 +117,12 @@ export class SchoolListComponent implements OnInit {
     }
   }
 
-  async eliminarEscuela(id: string): Promise<void> {
+  async eliminarEscuela(id: string, nombreEscuela: string): Promise<void> {
+        const currentUser = this.authService.currentUser();
+    if (!currentUser) {
+      return;
+    }
+
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: "Esta acción eliminará el registro del sistema!",
@@ -125,21 +135,44 @@ export class SchoolListComponent implements OnInit {
     if (result.isConfirmed) {
       try {
         await this.escuelaService.eliminarEscuela(id);
+        await this.registrarActividadEliminacionEscuela(currentUser, id, nombreEscuela);
+        
         Swal.fire({
           title: '¡Eliminado!',
-          text: 'Registro eliminado correctamente',
-          icon: 'success'
+          text: 'La escuela ha sido eliminada correctamente',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
         });
+
       } catch (error) {
-        console.error('Error al eliminar el registro', error);
+        console.error('Error al eliminar escuela:', error);
         Swal.fire({
           title: 'Error',
-          text: 'Ocurrió un error al eliminar el registro',
+          text: 'Ocurrió un error al eliminar la escuela',
           icon: 'error',
         });
       }
     }
   }
+
+  private async registrarActividadEliminacionEscuela(
+    usuario: Usuario,
+    escuelaId: string,
+    nombreEscuela: string
+  ): Promise<void> {
+    await this.activityService.logActivity({
+      actorId: usuario.uid,
+      actorName: `${usuario.apellido} ${usuario.nombre}`,
+      actorImage: usuario.perfil,
+      action: 'update_school', // O puedes crear 'delete_school' si lo prefieres
+      entityType: 'school',
+      entityId: escuelaId,
+      entityDescription: nombreEscuela,
+      details: `${usuario.nombre} ${usuario.apellido} eliminó la escuela "${nombreEscuela}" del sistema`
+    });
+  }
+
   // Método para calcular porcentaje para las barras de progreso
   calcularPorcentaje(valor: number, maximo: number): number {
     if (!valor || !maximo) return 0;

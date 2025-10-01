@@ -1,303 +1,527 @@
+<!-- dashboard.html -->
+<section class="p-4 sm:p-6 lg:p-8 bg-[#fbfcfd] min-h-screen">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 auto-rows-min">
 
-<div class="min-h-screen p-6 font_outfit">
-   
-  <div class="mb-8">
-    <div class="flex items-center justify-between mb-2">
-      <h1 class="text-3xl font-bold text-[#1F2937]">Panel de Control</h1>
-      <div class="flex items-center gap-3">
-        <div class="glass-card px-4 py-2 rounded-xl">
-          <span class="text-sm text-[#6B7280]">Última actualización</span>
-          <span class="ml-2 text-sm font-medium text-[#1F2937]">Hace 2 min</span>
+    <div class="bg-[#5956e9] rounded-[40px] shadow-lg p-5 flex flex-col justify-between col-span-1 lg:col-span-2">
+
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h3 class="text-lg font-semibold text-[#f9f8fe] font_outfit">Resumen General</h3>
+          <p class="text-xs text-[#eaeaf3] mt-1 font_outfit">Estadísticas del sistema</p>
         </div>
-        <button class="glass-card p-3 rounded-xl hover:bg-[#5E5BEB] hover:text-white transition-all duration-300">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-          </svg>
-        </button>
+        <div class="p-2.5 rounded-2xl bg-[#615eeb] shadow-sm">
+          <img class="size-6 object-contain"
+            src="https://res.cloudinary.com/mrpotato/image/upload/v1759202596/Icon_EduTask_White_xab2g9.webp"
+            alt="Icon EduTask White">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-[#615eeb] rounded-3xl p-4 hover:shadow-lg hover:shadow-[#4a47d8]/20 transition-all duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <span
+              class="text-[9px] font-semibold tracking-wider text-white bg-[#6d5ffd] px-2 py-0.5 rounded-lg font_outfit uppercase shadow-sm">Usuarios</span>
+            <svg class="w-4 h-4 text-[#fcfcff]" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                d="M8 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4zm7.25-2.095c.478-.86.75-1.85.75-2.905a6 6 0 0 0-.75-2.906a4 4 0 1 1 0 5.811M15.466 20c.34-.588.535-1.271.535-2v-1a5.98 5.98 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <p class="text-2xl font-semibold text-[#fcfcff] mb-2.5 font_outfit text-center leading-none">{{
+            totalUsuarios() }}</p>
+          <div
+            class="flex items-center justify-center text-[11px] text-[#e1eaf3] bg-[#6d5ffd]/30 px-2.5 py-1.5 rounded-xl">
+            <svg class="w-3 h-3 text-[#ffb4c4] mr-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+              <polyline points="16 7 22 7 22 13" />
+            </svg>
+            <span class="font_outfit font-medium">+5.2% este mes</span>
+          </div>
+        </div>
+
+        <div class="bg-[#615eeb] rounded-3xl p-4 hover:shadow-lg hover:shadow-[#4a47d8]/20 transition-all duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <span
+              class="text-[9px] font-semibold tracking-wider text-white bg-[#6d5ffd] px-2 py-0.5 rounded-lg font_outfit uppercase shadow-sm">Escuelas</span>
+            <svg class="w-4 h-4 text-[#fcfcff]" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24">
+              <g fill="none" fill-rule="evenodd">
+                <path
+                  d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                <path fill="currentColor"
+                  d="M11.063 2.469a1.5 1.5 0 0 1 1.753-.087l.121.087l4.312 3.45a2 2 0 0 1 .743 1.38L18 7.48V19h1v-8.5a.5.5 0 0 1 .41-.492L19.5 10h.5a2 2 0 0 1 1.995 1.85L22 12v7.9a1.1 1.1 0 0 1-.98 1.093L20.9 21H3.1a1.1 1.1 0 0 1-1.094-.98L2 19.9V12a2 2 0 0 1 1.85-1.995L4 10h.5a.5.5 0 0 1 .492.41L5 10.5V19h1V7.48a2 2 0 0 1 .614-1.442l.137-.12zM12 8.999a2 2 0 1 0 0 4a2 2 0 0 0 0-4" />
+              </g>
+            </svg>
+          </div>
+          <p class="text-2xl font-semibold text-[#fcfcff] mb-2.5 font_outfit text-center leading-none">{{
+            totalEscuelas() }}</p>
+          <div
+            class="flex items-center justify-center text-[11px] text-[#e1eaf3] bg-[#6d5ffd]/30 px-2.5 py-1.5 rounded-xl">
+            <svg class="w-3 h-3 text-[#fbb2c6] mr-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M5 12h14" />
+              <path d="M12 5v14" />
+            </svg>
+            <span class="font_outfit font-medium">+2 nuevas</span>
+          </div>
+        </div>
       </div>
     </div>
-    <p class="text-[#6B7280]">Resumen completo de actividades, instituciones y tareas</p>
+
+
+    <div class="bg-white rounded-[40px] shadow-2xs p-5 col-span-1 lg:col-span-2">
+
+      <div class="flex justify-between items-start mb-5">
+        <div>
+          <h3 class="text-base font-medium text-[#2d3748] font_outfit">Usuarios en Línea</h3>
+          <p class="text-xs text-[#718096] mt-0.5 font_outfit">Activos en este momento</p>
+        </div>
+        <span class="text-sm text-[#2d3748] font_outfit font-medium">{{ usuariosOnline().length }} en línea</span>
+      </div>
+
+      <div class="space-y-1.5">
+        @for (user of usuariosOnline(); track user.uid) {
+        <div
+          class="flex items-center justify-between p-2.5 hover:bg-gray-50 rounded-xl transition-all duration-200 group">
+
+          <div class="flex items-center gap-x-3 flex-1">
+
+            <div class="relative">
+              <div
+                class="size-9 rounded-xl overflow-hidden bg-gradient-to-br from-[#5956e9] to-[#5e5beb] flex items-center justify-center">
+                @if (user.perfil) {
+                <img class="size-full object-cover" [src]="user.perfil" [alt]="user.nombre + ' ' + user.apellido">
+                } @else {
+                <div class="text-white font-medium text-xs font_outfit">
+                  {{ (user?.nombre?.[0] ?? '') + (user?.apellido?.[0] ?? '') }}
+                </div>
+                }
+              </div>
+              <div
+                class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-[#3ec4d6] rounded-full border-2 border-white shadow-sm">
+              </div>
+            </div>
+
+            <div class="grow">
+              <h4 class="font-medium text-sm text-[#2d3748] font_outfit">
+                {{ user.nombre }} {{ user.apellido }}
+              </h4>
+              <p class="text-xs text-[#718096] font_outfit">
+                {{ user.rol }} • {{ getLastSeenText(user.lastSeen) }}
+              </p>
+            </div>
+          </div>
+
+          <div class="hs-dropdown relative inline-flex">
+            <button type="button"
+              class="hs-dropdown-toggle size-7 inline-flex justify-center items-center gap-2 rounded-xl text-[#718096] hover:bg-gray-100 hover:text-[#5956e9] focus:outline-hidden focus:bg-gray-100 transition-all duration-200">
+              <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+              </svg>
+            </button>
+
+            <div
+              class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-80 transition-[opacity,margin] duration opacity-0 hidden z-20 mt-2 min-w-80 bg-white shadow-2xs rounded-3xl border border-gray-100"
+              role="tooltip">
+              <div class="py-3.5 px-4">
+                <div class="flex items-center gap-x-3">
+                  <div class="relative">
+                    <div
+                      class="size-9 rounded-xl overflow-hidden bg-gradient-to-br from-[#5956e9] to-[#5e5beb] flex items-center justify-center">
+                      @if (user.perfil) {
+                      <img class="size-full object-cover" [src]="user.perfil" [alt]="user.nombre + ' ' + user.apellido">
+                      } @else {
+                      <div class="text-white font-medium text-xs font_outfit">
+                        {{ (user?.nombre?.[0] ?? '') + (user?.apellido?.[0] ?? '') }}
+                      </div>
+                      }
+                    </div>
+                    <div
+                      class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-[#3ec4d6] rounded-full border-2 border-white shadow-sm">
+                    </div>
+                  </div>
+
+                  <div class="grow">
+                    <h4 class="font-medium text-[#5a5664] font_outfit flex items-center gap-x-2 text-sm">
+                      {{ user.nombre }} {{ user.apellido }}
+                    </h4>
+                    <p class="text-xs text-[#718096] font_outfit">
+                      {{ user.email }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <ul class="py-3 px-7 space-y-2.5">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-[#2d3748] font_outfit">
+                    <svg class="shrink-0 size-3.5 text-[#5956e9]" xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    <span class="text-[#736d77] font-medium text-xs">{{ user.telefono || 'No disponible' }}</span>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-[#2d3748] font_outfit">
+                    <svg class="shrink-0 size-3.5 text-[#5956e9]" xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="20" height="16" x="2" y="4" rx="2" />
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    <span class="text-[#736d77] font-medium truncate text-xs">{{ user.email }}</span>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-[#736d77] font_outfit">
+                    <svg class="shrink-0 size-3.5 text-[#5956e9]" xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span class="text-[#5465ff] font-medium text-xs">En línea - {{ getLastSeenText(user.lastSeen)
+                      }}</span>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-2.5 px-4">
+                <a [routerLink]="['gestion-usuarios/edicion-usuario', user.uid]"
+                  class="w-full py-2 px-3.5 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-2xl bg-[#fbfcfd] text-[#5956e9] disabled:opacity-50 disabled:pointer-events-none font_outfit transition-all duration-200 shadow-2xs">
+                  <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  Ver perfil
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+
+        @empty {
+        <div class="text-center py-2">
+          <svg class="w-14 h-14 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <p class="text-sm text-[#718096] font_outfit mb-1.5">No hay usuarios conectados</p>
+          <p class="text-xs text-[#a0aec0] font_outfit">Los usuarios aparecerán aquí cuando se conecten</p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Card 3: Gráfico Circular Tipos de Usuario -->
+    <div
+      class="bg-white rounded-lg shadow-sm p-3 col-span-1 lg:col-span-2 flex flex-col items-center border border-gray-100">
+      <h3 class="text-sm font-semibold text-gray-800 mb-2">Tipos de Usuario</h3>
+      <div
+        class="relative w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold mb-2">
+        <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center">
+          <p class="text-gray-700 text-xs">G</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-1 text-xs text-gray-600 w-full">
+        <div class="flex items-center">
+          <span class="w-2 h-2 bg-blue-500 rounded-sm mr-1"></span>
+          <span class="text-xs">Emp: 30%</span>
+        </div>
+        <div class="flex items-center">
+          <span class="w-2 h-2 bg-purple-500 rounded-sm mr-1"></span>
+          <span class="text-xs">Doc: 40%</span>
+        </div>
+        <div class="flex items-center">
+          <span class="w-2 h-2 bg-pink-500 rounded-sm mr-1"></span>
+          <span class="text-xs">RTE: 15%</span>
+        </div>
+        <div class="flex items-center">
+          <span class="w-2 h-2 bg-indigo-500 rounded-sm mr-1"></span>
+          <span class="text-xs">Adm: 10%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Gráfico de Barras Tareas Estado (MÁS ALTO) -->
+    <div
+      class="bg-white rounded-lg shadow-sm p-4 col-span-1 md:col-span-2 lg:col-span-4 flex flex-col border border-gray-100">
+      <h3 class="text-base font-semibold text-gray-800 mb-3">Estado de Tareas</h3>
+      <div class="w-full h-48 bg-gray-50 p-4 rounded-md">
+        <div class="flex items-end h-full justify-around">
+          <div class="flex flex-col items-center">
+            <div class="bg-blue-500 w-10 rounded-t-md" style="height: 60%;"></div>
+            <span class="text-xs text-gray-600 mt-2">Pendiente (60)</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="bg-yellow-500 w-10 rounded-t-md" style="height: 30%;"></div>
+            <span class="text-xs text-gray-600 mt-2">En Proceso (30)</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="bg-green-500 w-10 rounded-t-md" style="height: 80%;"></div>
+            <span class="text-xs text-gray-600 mt-2">Finalizada (80)</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="bg-red-500 w-10 rounded-t-md" style="height: 20%;"></div>
+            <span class="text-xs text-gray-600 mt-2">Cancelada (20)</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="bg-purple-500 w-10 rounded-t-md" style="height: 45%;"></div>
+            <span class="text-xs text-gray-600 mt-2">En Revisión (45)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<div class="bg-white rounded-[40px] shadow-2xs p-5 col-span-1 lg:col-span-2 row-span-2 font_outfit">
+
+  <div class="flex justify-between items-start mb-5">
+    <div>
+      <h3 class="text-base font-medium text-[#2d3748] font_outfit">Últimas Actividades</h3>
+      <p class="text-xs text-[#718096] mt-0.5 font_outfit">Actividad reciente del sistema</p>
+    </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6 auto-rows-min">
-    
-    <div class="lg:col-span-2 xl:col-span-2 glass-card rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-[#1F2937]">Estadísticas Generales</h3>
-        <div class="w-3 h-3 bg-[#10B981] rounded-full animate-pulse"></div>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#5E5BEB] mb-1">1,247</div>
-          <div class="text-sm text-[#6B7280]">Usuarios Activos</div>
-        </div>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#F9B8C4] mb-1">89</div>
-          <div class="text-sm text-[#6B7280]">Instituciones</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lg:col-span-2 xl:col-span-2 glass-card rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-[#1F2937]">Tareas Completadas</h3>
-        <span class="text-xs bg-[#10B981] text-white px-2 py-1 rounded-full">+12%</span>
-      </div>
-      <div class="flex items-end gap-2 h-16">
-        <div class="bg-gradient-to-t from-[#5E5BEB] to-[#8B5CF6] rounded-t h-12 w-4"></div>
-        <div class="bg-gradient-to-t from-[#F9B8C4] to-[#EC4899] rounded-t h-8 w-4"></div>
-        <div class="bg-gradient-to-t from-[#10B981] to-[#34D399] rounded-t h-16 w-4"></div>
-        <div class="bg-gradient-to-t from-[#F59E0B] to-[#FCD34D] rounded-t h-10 w-4"></div>
-        <div class="bg-gradient-to-t from-[#5E5BEB] to-[#8B5CF6] rounded-t h-14 w-4"></div>
-      </div>
-    </div>
-
-    <div class="lg:col-span-2 xl:col-span-2 glass-card rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-[#1F2937]">Rendimiento</h3>
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 bg-[#10B981] rounded-full"></div>
-          <span class="text-xs text-[#6B7280]">Excelente</span>
-        </div>
-      </div>
-      <div class="relative">
-        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-          <div class="bg-gradient-to-r from-[#5E5BEB] to-[#F9B8C4] h-2 rounded-full" style="width: 87%"></div>
-        </div>
-        <div class="text-right text-sm text-[#6B7280]">87% de eficiencia</div>
-      </div>
-    </div>
-
-    <div class="lg:col-span-4 xl:col-span-3 glass-card rounded-2xl p-6 hover:scale-[1.01] transition-all duration-300">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-semibold text-[#1F2937]">Actividad Semanal</h3>
-        <div class="flex gap-2">
-          <button class="px-3 py-1 text-xs bg-[#5E5BEB] text-white rounded-full">7D</button>
-          <button class="px-3 py-1 text-xs text-[#6B7280] hover:bg-gray-100 rounded-full">30D</button>
-        </div>
-      </div>
-      <div class="relative h-48">
-        <svg class="w-full h-full" viewBox="0 0 400 200">
-          <defs>
-            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#5E5BEB;stop-opacity:0.3" />
-              <stop offset="100%" style="stop-color:#5E5BEB;stop-opacity:0.05" />
-            </linearGradient>
-          </defs>
-          <path d="M 0 150 Q 50 120 100 130 T 200 110 T 300 90 T 400 85" 
-                stroke="#5E5BEB" stroke-width="3" fill="none"/>
-          <path d="M 0 150 Q 50 120 100 130 T 200 110 T 300 90 T 400 85 L 400 200 L 0 200 Z" 
-                fill="url(#chartGradient)"/>
-           
-          <circle cx="100" cy="130" r="4" fill="#5E5BEB"/>
-          <circle cx="200" cy="110" r="4" fill="#5E5BEB"/>
-          <circle cx="300" cy="90" r="4" fill="#5E5BEB"/>
-        </svg>
-      </div>
-      <div class="flex justify-between text-sm text-[#6B7280] mt-4">
-        <span>Lun</span>
-        <span>Mar</span>
-        <span>Mié</span>
-        <span>Jue</span>
-        <span>Vie</span>
-        <span>Sáb</span>
-        <span>Dom</span>
-      </div>
-    </div>
-
-    <div class="lg:col-span-4 xl:col-span-3 glass-card rounded-2xl p-6 hover:scale-[1.01] transition-all duration-300">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-semibold text-[#1F2937]">Actividades Recientes</h3>
-        <button class="text-sm text-[#5E5BEB] hover:underline">Ver todas</button>
-      </div>
-      <div class="space-y-4 custom-scrollbar max-h-48 overflow-y-auto">
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#5E5BEB] to-[#8B5CF6] rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-[#1F2937]">María González inició sesión</p>
-            <p class="text-xs text-[#6B7280]">Instituto Tecnológico Central</p>
-            <p class="text-xs text-[#9CA3AF]">Hace 5 minutos</p>
-          </div>
-        </div>
-        
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#10B981] to-[#34D399] rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-[#1F2937]">Tarea "Evaluación Q1" completada</p>
-            <p class="text-xs text-[#6B7280]">Asignada a Carlos Ruiz</p>
-            <p class="text-xs text-[#9CA3AF]">Hace 12 minutos</p>
-          </div>
-        </div>
-
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#F59E0B] to-[#FCD34D] rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-            </svg>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-[#1F2937]">Nueva institución registrada</p>
-            <p class="text-xs text-[#6B7280]">Colegio San Patricio</p>
-            <p class="text-xs text-[#9CA3AF]">Hace 1 hora</p>
-          </div>
-        </div>
-
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#EC4899] to-[#F9B8C4] rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-            </svg>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-[#1F2937]">Actualización de currículo</p>
-            <p class="text-xs text-[#6B7280]">Universidad Nacional</p>
-            <p class="text-xs text-[#9CA3AF]">Hace 2 horas</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lg:col-span-2 xl:col-span-2 glass-card rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-[#1F2937]">Instituciones Destacadas</h3>
-        <span class="text-xs bg-[#5E5BEB] text-white px-2 py-1 rounded-full">Top 3</span>
-      </div>
-      <div class="space-y-3">
-        <div class="flex items-center gap-3 p-3 bg-white/50 rounded-xl hover:bg-white/70 transition-all cursor-pointer">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#5E5BEB] to-[#8B5CF6] rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-sm">IT</span>
-          </div>
-          <div class="flex-1">
-            <p class="font-medium text-[#1F2937] text-sm">Instituto Tecnológico</p>
-            <p class="text-xs text-[#6B7280]">2,847 estudiantes</p>
-          </div>
-          <div class="text-right">
-            <p class="text-sm font-bold text-[#10B981]">98%</p>
-            <p class="text-xs text-[#6B7280]">Eficiencia</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3 p-3 bg-white/50 rounded-xl hover:bg-white/70 transition-all cursor-pointer">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#F59E0B] to-[#FCD34D] rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-sm">UN</span>
-          </div>
-          <div class="flex-1">
-            <p class="font-medium text-[#1F2937] text-sm">Universidad Nacional</p>
-            <p class="text-xs text-[#6B7280]">15,234 estudiantes</p>
-          </div>
-          <div class="text-right">
-            <p class="text-sm font-bold text-[#F59E0B]">94%</p>
-            <p class="text-xs text-[#6B7280]">Eficiencia</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3 p-3 bg-white/50 rounded-xl hover:bg-white/70 transition-all cursor-pointer">
-          <div class="w-10 h-10 bg-gradient-to-br from-[#EC4899] to-[#F9B8C4] rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-sm">SP</span>
-          </div>
-          <div class="flex-1">
-            <p class="font-medium text-[#1F2937] text-sm">Colegio San Patricio</p>
-            <p class="text-xs text-[#6B7280]">892 estudiantes</p>
-          </div>
-          <div class="text-right">
-            <p class="text-sm font-bold text-[#EC4899]">91%</p>
-            <p class="text-xs text-[#6B7280]">Eficiencia</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lg:col-span-2 xl:col-span-2 glass-card rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-[#1F2937]">Gestión de Tareas</h3>
-        <button class="text-[#5E5BEB] hover:bg-[#5E5BEB] hover:text-white p-2 rounded-lg transition-all">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-        </button>
-      </div>
+  <div class="space-y-0.5">
+    @if (activities().length > 0) {
+    @for (activity of activities(); track activity.id; let last = $last) {
+ 
+    <div class="flex gap-x-3 group hover:bg-gray-50 rounded-xl p-2.5 transition-all duration-200">
       
-      <div class="space-y-3">
-        <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-100 rounded-xl">
-          <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-          <div class="flex-1">
-            <p class="font-medium text-[#1F2937] text-sm">Revisión de Seguridad</p>
-            <p class="text-xs text-[#6B7280]">Vence hoy</p>
-          </div>
-          <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Alta</span>
-        </div>
-
-        <div class="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-100 rounded-xl">
-          <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-          <div class="flex-1">
-            <p class="font-medium text-[#1F2937] text-sm">Actualizar Base de Datos</p>
-            <p class="text-xs text-[#6B7280]">Vence en 3 días</p>
-          </div>
-          <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Media</span>
-        </div>
-
-        <div class="flex items-center gap-3 p-3 bg-green-50 border border-green-100 rounded-xl">
-          <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-          <div class="flex-1">
-            <p class="font-medium text-[#1F2937] text-sm">Documentación API</p>
-            <p class="text-xs text-[#6B7280]">Vence en 1 semana</p>
-          </div>
-          <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Baja</span>
-        </div>
+      <div class="relative flex flex-col items-center">
+        <div class="relative z-10 w-3 h-3 rounded-full bg-[#5956e9] mt-1"></div>
+        @if (!last) {
+        <div class="flex-1 w-0.5 bg-gradient-to-b from-[#cbd5e0] to-[#e2e8f0] mt-1 mb-1"></div>
+        }
       </div>
 
-      <div class="mt-4 pt-4 border-t border-gray-200">
-        <div class="flex justify-between text-sm mb-2">
-          <span class="text-[#6B7280]">Progreso General</span>
-          <span class="font-medium text-[#1F2937]">73%</span>
+<div class="flex-1 min-w-20 pt-0.5">
+  <span class="block text-[11px] text-[#718096] font-medium leading-snug break-words">
+    {{ formatRelativeTime(activity.timestamp) }}
+  </span>
+</div>
+
+      <div class="grow min-w-0">
+        <div class="hs-tooltip [--placement:top] inline-block w-full">
+          <div class="hs-tooltip-toggle w-full text-left cursor-help">
+            <h3 class="font-medium text-[#5a5664] text-sm leading-tight line-clamp-2">
+              {{ activity.details }}
+            </h3>
+            <span
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-2 px-3 bg-gray-900 text-xs font-medium text-white rounded-lg shadow-2xs max-w-xs"
+              role="tooltip">
+              {{ activity.details }}
+            </span>
+          </div>
         </div>
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div class="bg-gradient-to-r from-[#5E5BEB] to-[#8B5CF6] h-2 rounded-full" style="width: 73%"></div>
+
+        @if (activity.entityDescription) {
+        <div class="hs-tooltip [--placement:top] inline-block w-full mt-0.5">
+          <div class="hs-tooltip-toggle w-full text-left cursor-help">
+            <p class="text-xs text-[#5a5664] line-clamp-1">
+              {{ activity.entityDescription }}
+            </p>
+            <span
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 px-3 bg-gray-900 text-xs font-medium text-white rounded-lg shadow-2xs max-w-xs"
+              role="tooltip">
+              {{ activity.entityDescription }}
+            </span>
+          </div>
         </div>
-      </div>
-    </div>
+        }
 
-    <div class="lg:col-span-2 xl:col-span-2 glass-card rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300">
-      <h3 class="text-lg font-semibold text-[#1F2937] mb-4">Acciones Rápidas</h3>
-      <div class="grid grid-cols-2 gap-3">
-        <button class="flex flex-col items-center gap-2 p-4 bg-gradient-to-br from-[#5E5BEB] to-[#8B5CF6] rounded-xl text-white hover:scale-105 transition-all duration-300">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-          <span class="text-xs font-medium">Nueva Tarea</span>
-        </button>
-
-        <button class="flex flex-col items-center gap-2 p-4 bg-gradient-to-br from-[#10B981] to-[#34D399] rounded-xl text-white hover:scale-105 transition-all duration-300">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-          </svg>
-          <span class="text-xs font-medium">Institución</span>
-        </button>
-
-        <button class="flex flex-col items-center gap-2 p-4 bg-gradient-to-br from-[#F59E0B] to-[#FCD34D] rounded-xl text-white hover:scale-105 transition-all duration-300">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2 2z"></path>
-          </svg>
-          <span class="text-xs font-medium">Reportes</span>
-        </button>
-
-        <button class="flex flex-col items-center gap-2 p-4 bg-gradient-to-br from-[#EC4899] to-[#F9B8C4] rounded-xl text-white hover:scale-105 transition-all duration-300">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
-          <span class="text-xs font-medium">Configurar</span>
-        </button>
+        <div class="flex items-center gap-x-2 mt-1.5">
+          @if (activity.actorImage) {
+          <img [src]="activity.actorImage" alt="Avatar" class="shrink-0 size-5 rounded-2xl" />
+          } @else {
+          <div
+            class="shrink-0 size-5 rounded-2xl bg-gradient-to-br from-[#5956e9] to-[#5e5beb] flex items-center justify-center">
+            <span class="text-[9px] font-medium uppercase text-white">
+              {{ activity?.actorName?.[0] || '?' }}
+            </span>
+          </div>
+          }
+          <span class="text-[11px] text-[#718096] font-medium truncate">{{ activity.actorName }}</span>
+        </div>
       </div>
     </div>
-
+    }
+    } @else {
+    <div class="text-center py-6">
+      <svg class="w-10 h-10 text-gray-300 mx-auto mb-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="text-sm text-[#718096] font_outfit">No hay actividades recientes</p>
+    </div>
+    }
   </div>
 </div>
+
+
+
+
+<div class="bg-white rounded-[40px] shadow-2xs p-5 col-span-1 md:col-span-2 lg:col-span-4 font_outfit">
+
+  <div class="flex justify-between items-start mb-5">
+    <div>
+      <h3 class="text-base font-medium text-slate-900 mb-1">Tareas Próximas</h3>
+      <p class="text-xs text-slate-500">Gestión de vencimientos y prioridades</p>
+    </div>
+  </div>
+
+  <div class="space-y-2.5">
+
+    <div
+      class="group relative bg-white rounded-3xl p-5 hover:shadow-md hover:shadow-slate-200/40 transition-all duration-300 border border-slate-200/80">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3 flex-1">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
+              alt="Carlos López" class="w-10 h-10 rounded-2xl object-cover ring-2 ring-slate-900/5 shadow-sm" />
+            <div
+              class="absolute -top-1 -right-1 w-3 h-3 bg-slate-500 rounded-full border-2 border-white shadow-sm">
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h4 class="font-medium text-slate-900 text-sm">López, Carlos</h4>
+              <span
+                class="text-[9px] font-semibold tracking-wider text-slate-600 bg-slate-50 px-2 py-0.5 rounded-lg uppercase">Alta</span>
+            </div>
+            <p class="text-slate-600 text-xs leading-relaxed">Actualizar sistema de seguridad</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-end gap-0.5 bg-slate-50/50 px-3 py-2.5 rounded-2xl">
+          <span class="text-[9px] text-slate-400 font-medium uppercase tracking-wider">Vence en</span>
+          <span class="text-2xl font-semibold text-slate-700 leading-none">5</span>
+          <span class="text-[9px] text-slate-400 uppercase tracking-wider font-medium">días</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 items-center pt-3.5 border-t border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-400 font-medium uppercase tracking-wider mb-1">Inicio</span>
+            <span class="text-xs font-semibold text-slate-700">10 Mar</span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-600 font-semibold uppercase tracking-wider mb-1">Vence</span>
+            <span class="text-xs font-bold text-slate-800">20 Mar</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between items-center">
+            <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium">Progreso</span>
+            <span class="text-[11px] font-bold text-slate-700">65%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+            <div
+              class="h-full bg-gradient-to-r from-slate-500 to-slate-600 rounded-full transition-all duration-500" style="width: 65%">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <div
+            class="flex items-center gap-1.5 text-slate-600 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200/60">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                clipRule="evenodd" />
+            </svg>
+            <span class="text-[10px] font-semibold uppercase tracking-wider">En curso</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="group relative bg-white rounded-3xl p-5 hover:shadow-sm hover:shadow-slate-200/30 transition-all duration-300 border border-slate-100">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3 flex-1">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face"
+              alt="María Rodríguez" class="w-10 h-10 rounded-2xl object-cover ring-2 ring-slate-900/5 shadow-sm" />
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h4 class="font-medium text-slate-900 text-sm">Rodríguez, María</h4>
+              <span
+                class="text-[9px] font-semibold tracking-wider text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg uppercase">Media</span>
+            </div>
+            <p class="text-slate-600 text-xs leading-relaxed">Presentación cliente A</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-end gap-0.5 bg-slate-50/30 px-3 py-2.5 rounded-2xl">
+          <span class="text-[9px] text-slate-400 font-medium uppercase tracking-wider">Vence en</span>
+          <span class="text-2xl font-semibold text-slate-600 leading-none">7</span>
+          <span class="text-[9px] text-slate-400 uppercase tracking-wider font-medium">días</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 items-center pt-3.5 border-t border-slate-50">
+        <div class="flex items-center gap-2.5">
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-400 font-medium uppercase tracking-wider mb-1">Inicio</span>
+            <span class="text-xs font-semibold text-slate-600">5 Mar</span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-600 font-semibold uppercase tracking-wider mb-1">Vence</span>
+            <span class="text-xs font-bold text-slate-700">25 Mar</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between items-center">
+            <span class="text-[9px] text-slate-400 uppercase tracking-wider font-medium">Progreso</span>
+            <span class="text-[11px] font-bold text-slate-600">85%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-50 rounded-full overflow-hidden shadow-inner">
+            <div
+              class="h-full bg-gradient-to-r from-slate-400 to-slate-500 rounded-full transition-all duration-500" style="width: 85%">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <div class="flex items-center gap-1.5 text-slate-500 bg-slate-50 px-3 py-1.5 rounded-xl">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd" />
+            </svg>
+            <span class="text-[10px] font-semibold uppercase tracking-wider">Avanzando</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</section>

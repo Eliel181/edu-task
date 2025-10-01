@@ -10,6 +10,8 @@ import { Tarea } from '../../../core/interfaces/tarea.model';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { SpinnerOverlayComponent } from "../../../shared/spinner-overlay/spinner-overlay.component";
+import { ActivityAction } from '../../../core/interfaces/activity-feed.model';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
 
 
 @Component({
@@ -22,6 +24,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private taskService: TaskService = inject(TaskService);
   private authService: AuthService = inject(AuthService);
+  private activityFeedService: ActivityFeedService = inject(ActivityFeedService);
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
@@ -115,7 +118,7 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     });
   }
 
-  crearTarea(): void {
+  async crearTarea(): Promise<void> {
     if (this.tareaForm.invalid) {
       this.tareaForm.markAllAsTouched();
       return;
@@ -129,11 +132,12 @@ export class EditTareaComponent implements OnInit, OnDestroy {
     const empleadoSeleccionado = this.empleados().find(emp => emp.uid === this.tareaForm.value.asignadoA);
     if (!empleadoSeleccionado) {
       console.error('Empleado no encontrado');
+      this.isSubmitting.set(false);
       return;
     }
     const nombreCompleto = `${empleadoSeleccionado.apellido} ${empleadoSeleccionado.nombre}`;
     const formValue = this.tareaForm.value;
-    debugger
+
     const nuevaTarea: Partial<Tarea> = {
       titulo: formValue.titulo,
       descripcion: formValue.descripcion,
@@ -151,37 +155,66 @@ export class EditTareaComponent implements OnInit, OnDestroy {
       const fechaLocal = new Date(formValue.fechaDeVencimiento + 'T00:00:00');
       nuevaTarea.fechaDeVencimiento = Timestamp.fromDate(fechaLocal);
     }
-    this.taskService.crearTarea(nuevaTarea).then(() => {
+
+    try {
+      const tareaRef = await this.taskService.crearTarea(nuevaTarea);
+
+      // SOLUCIÓN: Usar formValue.titulo en lugar de tarea.titulo
+      await this.registrarActividadCreacionTarea(admin, tareaRef.id, formValue.titulo, empleadoSeleccionado);
+
       Swal.fire({
-        title: 'Tarea creada!!', icon: 'success', text: 'La tarea se ha creado exitosamente',
-        timer: 2000, showConfirmButton: false
+        title: 'Tarea creada!!',
+        icon: 'success',
+        text: 'La tarea se ha creado exitosamente',
+        timer: 2000,
+        showConfirmButton: false
       });
+
       this.router.navigate(['administracion/gestion-tareas']);
-    }).catch(error => {
-      Swal.fire({ title: 'Error', icon: 'error', text: 'No se pudo crear la tarea' });
-    }).finally(() => {
+    } catch (error) {
+      console.error('Error al crear tarea:', error);
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: 'No se pudo crear la tarea'
+      });
+    } finally {
       this.isSubmitting.set(false);
-    });
+    }
   }
 
-  guardarCambios(): void {
+  async guardarCambios(): Promise<void> {
     if (this.tareaFormEdicion.invalid || !this.tareaSeleccionadaParaEditar()) {
       return;
     }
+
     this.isSubmitting.set(true);
     const tareaActual = this.tareaSeleccionadaParaEditar()!;
+
     if (!tareaActual.id) {
       console.error('Tarea no encontrada para editar');
+      this.isSubmitting.set(false);
       return;
     }
+
+    const admin = this.authService.currentUser();
+    if (!admin) {
+      console.error('No hay admin autenticado');
+      this.isSubmitting.set(false);
+      return;
+    }
+
     const formValue = this.tareaFormEdicion.value;
     const datosParaActualizar: Partial<Tarea> = {
       titulo: formValue.titulo,
       descripcion: formValue.descripcion,
       asignadoA: formValue.asignadoA,
       estado: formValue.estado,
-      prioridad: formValue.prioridad
+      prioridad: formValue.prioridad,
+      fechaDeActualizacion: Timestamp.now()
     };
+
+    // Manejar progreso según estado
     if (formValue.estado === 'Pendiente') {
       datosParaActualizar.progreso = 0;
     } else if (formValue.estado === 'Finalizada') {
@@ -196,7 +229,6 @@ export class EditTareaComponent implements OnInit, OnDestroy {
       datosParaActualizar.fotoEmpleadoAsignado = empleadoSeleccionado.perfil;
     }
 
-
     if (formValue.fechaDeVencimiento && formValue.fechaDeVencimiento.trim() !== '') {
       const fechaLocal = new Date(formValue.fechaDeVencimiento + 'T00:00:00');
       datosParaActualizar.fechaDeVencimiento = Timestamp.fromDate(fechaLocal);
@@ -204,17 +236,92 @@ export class EditTareaComponent implements OnInit, OnDestroy {
       datosParaActualizar.fechaDeVencimiento = null;
     }
 
+    try {
+      await this.taskService.actualizarTareaCompleta(tareaActual.id, datosParaActualizar);
 
-    this.taskService.actualizarTareaCompleta(tareaActual.id, datosParaActualizar).then(() => {
+      // Registrar actividad de edición
+      await this.registrarActividadEdicionTarea(admin, tareaActual, datosParaActualizar);
+
       Swal.fire({
-        title: 'Tarea actualizada!!', icon: 'success', text: 'La tarea se ha actualizado exitosamente',
-        timer: 2000, showConfirmButton: false
+        title: 'Tarea actualizada!!',
+        icon: 'success',
+        text: 'La tarea se ha actualizado exitosamente',
+        timer: 2000,
+        showConfirmButton: false
       });
+
       this.router.navigate(['administracion/gestion-tareas']);
-    }).catch(error => {
-      Swal.fire({ title: 'Error', icon: 'error', text: 'No se pudo actualizar la tarea' });
-    }).finally(() => {
+    } catch (error) {
+      console.error('Error al actualizar tarea:', error);
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: 'No se pudo actualizar la tarea'
+      });
+    } finally {
       this.isSubmitting.set(false);
+    }
+  }
+
+  private async registrarActividadCreacionTarea(
+    admin: Usuario,
+    tareaId: string,
+    tituloTarea: string,
+    empleado: Usuario
+  ): Promise<void> {
+    const accion: ActivityAction = 'task_created';
+    const nombreEmpleado = `${empleado.nombre} ${empleado.apellido}`;
+
+    await this.activityFeedService.logActivity({
+      actorId: admin.uid,
+      actorName: `${admin.nombre} ${admin.apellido}`,
+      actorImage: admin.perfil,
+      action: accion,
+      entityType: 'task',
+      entityId: tareaId,
+      entityDescription: tituloTarea, // Usamos el título del formulario
+      details: `${admin.nombre} ${admin.apellido} creó la tarea "${tituloTarea}" para ${nombreEmpleado}`
+    });
+  }
+
+  private async registrarActividadEdicionTarea(admin: Usuario, tareaOriginal: Tarea, cambios: Partial<Tarea>): Promise<void> {
+    const accion: ActivityAction = 'task_updated'; // O puedes crear 'task_updated'
+
+    // Detectar cambios específicos
+    const cambiosDetallados: string[] = [];
+
+    if (tareaOriginal.titulo !== cambios.titulo) {
+      cambiosDetallados.push(`título de "${tareaOriginal.titulo}" a "${cambios.titulo}"`);
+    }
+
+    if (tareaOriginal.estado !== cambios.estado) {
+      cambiosDetallados.push(`estado de "${tareaOriginal.estado}" a "${cambios.estado}"`);
+    }
+
+    if (tareaOriginal.prioridad !== cambios.prioridad) {
+      cambiosDetallados.push(`prioridad de "${tareaOriginal.prioridad}" a "${cambios.prioridad}"`);
+    }
+
+    if (tareaOriginal.asignadoA !== cambios.asignadoA) {
+      const nuevoEmpleado = this.empleados().find(e => e.uid === cambios.asignadoA);
+      if (nuevoEmpleado) {
+        cambiosDetallados.push(`asignación a ${nuevoEmpleado.nombre} ${nuevoEmpleado.apellido}`);
+      }
+    }
+
+    const detalles = cambiosDetallados.length > 0
+      ? `Cambió ${cambiosDetallados.join(', ')}`
+      : 'Actualizó la tarea';
+
+    await this.activityFeedService.logActivity({
+      actorId: admin.uid,
+      actorName: `${admin.nombre} ${admin.apellido}`,
+      actorImage: admin.perfil,
+      action: accion,
+      entityType: 'task',
+      entityId: tareaOriginal.id,
+      entityDescription: cambios.titulo || tareaOriginal.titulo,
+      details: `${admin.nombre} ${admin.apellido} ${detalles}`
     });
   }
 
@@ -225,9 +332,9 @@ export class EditTareaComponent implements OnInit, OnDestroy {
   get fechaDeVencimiento() { return this.tareaForm.get('fechaDeVencimiento'); }
 
   prioridades = [
-  { value: 'Baja', label: 'Baja', colorClass: 'bg-[#2ecc71]' },
-  { value: 'Media', label: 'Media', colorClass: 'bg-[#f39c12]' },
-  { value: 'Alta', label: 'Alta', colorClass: 'bg-[#e74c3c]' },
-  { value: 'Urgente', label: 'Urgente', colorClass: 'bg-[#e91e63]' }
-];
+    { value: 'Baja', label: 'Baja', colorClass: 'bg-[#2ecc71]' },
+    { value: 'Media', label: 'Media', colorClass: 'bg-[#f39c12]' },
+    { value: 'Alta', label: 'Alta', colorClass: 'bg-[#e74c3c]' },
+    { value: 'Urgente', label: 'Urgente', colorClass: 'bg-[#e91e63]' }
+  ];
 }
