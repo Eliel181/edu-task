@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, doc, docData, DocumentReference, Firestore, query, updateDoc, where, Timestamp, deleteDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, docData, DocumentReference, Firestore, query, updateDoc, where, Timestamp, deleteDoc, orderBy } from '@angular/fire/firestore';
 import { FirestoreService } from '../../core/services/firestore.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs';
@@ -25,7 +25,7 @@ export class TaskService {
 
 
   async crearTarea(tarea: Partial<Tarea>): Promise<DocumentReference> {
-    
+
     debugger
     const actor = this.authService.currentUser();
     if (!actor) throw new Error("Usuario no autenticado para crear la tarea.");
@@ -41,6 +41,24 @@ export class TaskService {
     const tareasCollection = collection(this.firestore, 'tareas');
     return collectionData(tareasCollection, { idField: 'id' }) as Observable<Tarea[]>;
   }
+
+  getTareasProximasAVencer(): Observable<Tarea[]> {
+    const hoy = new Date();
+    const hoyMedianoche = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+    const haceUnaSemana = new Date(hoyMedianoche.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const enUnaSemana = new Date(hoyMedianoche.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+    const tareasCollection = collection(this.firestore, 'tareas');
+    const q = query(
+      tareasCollection,
+      where('estado', '!=', 'Finalizada'),
+      where('fechaDeVencimiento', '>=', haceUnaSemana),
+      where('fechaDeVencimiento', '<=', enUnaSemana),
+      orderBy('fechaDeVencimiento', 'asc')
+    );
+    return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
+  }
+
   getTareasPendientes(): Observable<Tarea[]> {
     return this.firestoreService.getCollectionByFilter<Tarea>('tareas', 'estado', 'Pendiente');
   }
@@ -59,8 +77,8 @@ export class TaskService {
       q = query(tareasCollection, where('asignadoA', '==', uid));
     } else {
       q = query(tareasCollection,
-                where('asignadoA', '==', uid),
-                where('estado', '==', estado)); 
+        where('asignadoA', '==', uid),
+        where('estado', '==', estado));
     }
     return collectionData(q, { idField: 'id' }) as Observable<Tarea[]>;
   }

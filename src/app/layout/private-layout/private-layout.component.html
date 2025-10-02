@@ -89,7 +89,6 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
     <!-- End Header -->
 
     <div class="mb-5 px-2.5 mt-3 flex flex-col gap-y-5">
-      <!-- List -->
 
       <ul class="flex flex-col gap-y-0.5">
 
@@ -161,24 +160,15 @@ md:block md:translate-x-0 md:end-auto md:bottom-0" role="dialog" tabindex="-1" a
 
         }
         @if (currentUser()?.rol === 'Empleado') {
-
         <li>
           <a routerLink="/administracion/mis-tareas" routerLinkActive="active"
-            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100">
-            <span class="-ms-[5px] flex shrink-0 justify-center items-center size-5">
-
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                color="#000000" fill="none">
-                <path d="M11 6L21 6" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M11 12L21 12" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M11 18L21 18" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4" stroke="#141B34" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15" stroke="#141B34" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+            class="group relative w-full flex items-center gap-3 pl-8 hs-overlay-minified:pl-2.5 py-2 px-2 outfit-2 text-[#9897C9] rounded-lg before:absolute before:top-1/2 before:-start-2.5 before:rounded-e-full before:w-[4px] before:h-6 before:-translate-y-1/2 before:bg-[#5956e9] before:opacity-0 before:transition-all before:duration-300 hover:before:opacity-100 transition-all duration-300 ease-out hover:translate-x-1 hover:bg-[#f9f9fe]">
+            <span
+              class="-ms-[5px] flex shrink-0 justify-center items-center size-5 transition-all duration-300 group-hover:scale-110 group-hover:text-[#5956e9]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 24 24"><path fill="currentColor" d="M6 0h8a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6H6a6 6 0 0 1-6-6V6a6 6 0 0 1 6-6m6 9a1 1 0 0 0 0 2h3a1 1 0 1 0 0-2zm-2 4a1 1 0 0 0 0 2h5a1 1 0 1 0 0-2zm0-8a1 1 0 1 0 0 2h5a1 1 0 0 0 0-2zm-4.172 5.243l-.707-.707a1 1 0 1 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.415 0l2.828-2.828A1 1 0 0 0 7.95 8.12l-2.122 2.122z"/></svg>
             </span>
-            <span class="truncate hs-overlay-minified:opacity-0 transition-opacity duration-300">Mis Tareas</span>
+            <span
+              class="truncate hs-overlay-minified:opacity-0 transition-all duration-500 ease-out opacity-100 group-hover:translate-x-1">Mis Tareas</span>
           </a>
         </li>
         }
