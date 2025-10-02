@@ -2,8 +2,3 @@
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
 }
-  .glassmorphic-card {
-    background-color: rgba(230, 236, 245, 0.7); /* Un color azulado muy claro con transparencia */
-    backdrop-filter: blur(10px); /* Desenfoque para el efecto glassmórfico */
-    border: 1px solid rgba(255, 255, 255, 0.9); /* Borde más sutil y blanco */
-  }

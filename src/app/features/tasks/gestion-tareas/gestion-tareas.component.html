@@ -238,6 +238,7 @@
             </td>
 
             <!-- Columna Vencimiento -->
+            <!-- Columna Vencimiento -->
             <td class="px-4 py-3">
               <div class="flex flex-col items-start gap-1">
                 @if(tarea.fechaDeVencimiento) {
@@ -259,7 +260,8 @@
                     {{ formatDate(tarea.fechaDeVencimiento) | date:'dd/MM/yyyy' }}
                   </span>
 
-                  <!-- Indicador de estado de vencimiento -->
+                  <!-- Indicador de estado de vencimiento - SOLO si NO está finalizada -->
+                  @if (tarea.estado !== 'Finalizada') {
                   @if (esTareaVencida(tarea)) {
                   <span
                     class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium bg-[#fff7f8] text-[#fb3640]">
@@ -279,9 +281,11 @@
                     Por vencer
                   </span>
                   }
+                  }
                 </div>
 
-                <!-- Días restantes o transcurridos -->
+                <!-- Días restantes o transcurridos - SOLO si NO está finalizada -->
+                @if (tarea.estado !== 'Finalizada') {
                 <div class="text-xs ml-6">
                   @if (diasRestantes(tarea) > 0) {
                   <span class="text-[#5b4ff3] font-medium">{{ diasRestantes(tarea) }} días restantes</span>
@@ -291,6 +295,12 @@
                   <span class="text-[#fb3640] font-medium">{{ -diasRestantes(tarea) }} días de retraso</span>
                   }
                 </div>
+                } @else {
+                <!-- Mensaje para tareas finalizadas -->
+                <div class="text-xs ml-6">
+                  <span class="text-[#2ecc71] font-medium">Tarea completada ✓</span>
+                </div>
+                }
                 } @else {
                 <!-- Sin fecha de vencimiento -->
                 <div class="flex items-center gap-2 text-[#8579a4]">

@@ -149,11 +149,11 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: 'Cancelar',
-    }).then(async (result)  => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await this.taskService.eliminarTarea(tarea.id!, tarea.titulo);
-          
+
           // Registrar actividad de eliminación
           await this.registrarActividadEliminacionTarea(admin, tarea);
 
@@ -165,9 +165,9 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
       }
     });
   }
-    private async registrarActividadEliminacionTarea(admin: Usuario, tarea: Tarea): Promise<void> {
+  private async registrarActividadEliminacionTarea(admin: Usuario, tarea: Tarea): Promise<void> {
     const accion: ActivityAction = 'task_deleted'; // O puedes crear 'task_deleted'
-    
+
     await this.activityFeedService.logActivity({
       actorId: admin.uid,
       actorName: `${admin.nombre} ${admin.apellido}`,

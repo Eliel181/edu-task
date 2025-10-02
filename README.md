@@ -120,6 +120,8 @@ ng g c shared/spinner-overlay --skip-tests
 
 # Dashboards
 ng g c dashboards/dashboard-admin/dashboard --skip-tests
+ng g c dashboards/dashboard-admin/grafico-usuarios --skip-tests
+
 ```
 
 Instalación de Dependencias y Librerias:
@@ -139,6 +141,11 @@ npm install sweetalert2
   }
 }
 
+```
+
+```bash
+# Descargar apexchart para angular version 19
+npm install apexcharts ng-apexcharts@1.15.0 --save
 ```
 
 ```bash

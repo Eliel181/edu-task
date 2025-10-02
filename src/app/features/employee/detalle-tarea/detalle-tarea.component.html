@@ -1,16 +1,17 @@
-<div class="min-h-screen bg-gray-50/50 dark:bg-gray-900">
+<div class="min-h-screen bg-[#fafbfe] dark:bg-gray-900">
     @if (tarea(); as tarea) {
     <div class="max-w-6xl mx-auto py-10 lg:py-14 px-4 sm:px-6 lg:px-8">
 
         <!-- Header -->
         <div class="flex justify-between items-start mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200 tracking-tight">{{ tarea.titulo }}</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2">Gestiona el estado y el progreso de la tarea asignada.
+                <h1 class="text-2xl font-semibold text-[#2d2c63] mb-2">{{ tarea.titulo }}</h1>
+                <p class="text-sm text-[#9291aa]">
+                    Gestiona el estado y el progreso de la tarea asignada.
                 </p>
             </div>
             <a routerLink="/administracion/mis-tareas"
-                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent text-[#707078] hover:bg-[#fafbfe] transition-colors duration-200"
                 title="Volver a la lista">
                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="2" stroke="currentColor">
@@ -27,27 +28,32 @@
             <div class="lg:col-span-2 space-y-8">
 
                 <!-- Panel de Descripción -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="bg-white rounded-3xl shadow-2xs border border-transparent">
                     <div class="p-6">
-                        <h3
-                            class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-3">
+                        <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                            <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                            </svg>
                             Descripción
                         </h3>
-                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                        <p class="text-[#707078] whitespace-pre-wrap">
                             {{ tarea.descripcion || 'Esta tarea no tiene una descripción detallada.' }}</p>
                     </div>
                 </div>
 
                 <!-- Panel de Acciones -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="bg-white rounded-3xl shadow-2xs border border-transparent">
                     <div class="p-6 space-y-6">
-                        <h3 class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider">
+                        <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                            <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
                             Actualizar Tarea
                         </h3>
 
                         <!-- Cambiar Estado -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label class="block text-sm font-medium text-[#524380] mb-3">
                                 Cambiar Estado
                             </label>
 
@@ -55,48 +61,56 @@
                                 <!-- Pendiente -->
                                 <button (click)="actualizarEstado('Pendiente')"
                                     [disabled]="tarea.progreso > 0 || tarea.estado === 'Finalizada' || isSubmitting()"
-                                    class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{
-        'bg-gray-200 text-gray-400 cursor-not-allowed': tarea.progreso > 0 || tarea.estado === 'Finalizada',
-        'bg-blue-50 border-blue-300 text-blue-800 shadow-inner dark:bg-blue-900/30 dark:border-blue-700 dark:text-blue-400': tarea.estado === 'Pendiente' && !(tarea.progreso > 0),
-        'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'Pendiente' && !(tarea.progreso > 0)
-    }">
+                                    class="px-4 py-2.5 text-sm font-medium rounded-xl border border-transparent transition-all duration-200" 
+                                    [ngClass]="{
+                                        'bg-[#f0f1f8] text-[#9291aa] cursor-not-allowed': tarea.progreso > 0 || tarea.estado === 'Finalizada',
+                                        'bg-[#5956e9] text-white shadow-2xs': tarea.estado === 'Pendiente' && !(tarea.progreso > 0),
+                                        'bg-white text-[#707078] hover:bg-[#fafbfe] shadow-2xs': tarea.estado !== 'Pendiente' && !(tarea.progreso > 0)
+                                    }">
                                     Pendiente
                                 </button>
 
-
                                 <!-- En Proceso -->
-<!-- En Proceso -->
-<button (click)="actualizarEstado('En Proceso')"
-        [disabled]="isSubmitting() || tarea.estado === 'Finalizada'"
-        class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
-    'bg-gray-50 border-gray-300 text-gray-800 shadow-inner dark:bg-gray-700/50 dark:border-gray-600 dark:text-gray-200': tarea.estado === 'En Proceso', 
-    'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'En Proceso' 
-  }">
-    En Proceso
-</button>
+                                <button (click)="actualizarEstado('En Proceso')"
+                                    [disabled]="isSubmitting() || tarea.estado === 'Finalizada'"
+                                    class="px-4 py-2.5 text-sm font-medium rounded-xl border border-transparent transition-all duration-200" 
+                                    [ngClass]="{ 
+                                        'bg-[#5956e9] text-white shadow-2xs': tarea.estado === 'En Proceso', 
+                                        'bg-white text-[#707078] hover:bg-[#fafbfe] shadow-2xs': tarea.estado !== 'En Proceso' 
+                                    }">
+                                    En Proceso
+                                </button>
 
-<!-- Finalizada -->
-<button (click)="actualizarEstado('Finalizada')"
-        [disabled]="isSubmitting() || tarea.estado === 'Finalizada'"
-        class="px-4 py-2 text-sm font-medium rounded-lg border transition-all" [ngClass]="{ 
-    'bg-teal-50 border-teal-300 text-teal-800 shadow-inner dark:bg-teal-900/30 dark:border-teal-700 dark:text-teal-400': tarea.estado === 'Finalizada', 
-    'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': tarea.estado !== 'Finalizada' 
-  }">
-    Finalizada
-</button>
+                                <!-- Finalizada -->
+                                <button (click)="actualizarEstado('Finalizada')"
+                                    [disabled]="isSubmitting() || tarea.estado === 'Finalizada'"
+                                    class="px-4 py-2.5 text-sm font-medium rounded-xl border border-transparent transition-all duration-200" 
+                                    [ngClass]="{ 
+                                        'bg-[#32c000] text-white shadow-2xs': tarea.estado === 'Finalizada', 
+                                        'bg-white text-[#707078] hover:bg-[#fafbfe] shadow-2xs': tarea.estado !== 'Finalizada' 
+                                    }">
+                                    Finalizada
+                                </button>
                             </div>
                         </div>
 
                         @if (tarea.estado === 'En Proceso') {
                         <div class="pt-2">
                             <label for="progreso"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Ajustar Progreso: <span class="font-bold">{{ progresoActual }}%</span>
+                                class="block text-sm font-medium text-[#524380] mb-3">
+                                Ajustar Progreso: <span class="font-bold text-[#5956e9]">{{ progresoActual }}%</span>
                             </label>
-                            <input type="range" id="progreso"
-                                class="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
-                                min="1" max="99" [(ngModel)]="progresoActual" (change)="actualizarProgreso()"
-                                [disabled]="isSubmitting() || estadoOriginal === 'Finalizada'">
+                            <div class="space-y-2">
+                                <input type="range" id="progreso"
+                                    class="w-full h-2 bg-[#f0f1f8] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#5956e9]"
+                                    min="1" max="99" [(ngModel)]="progresoActual" (change)="actualizarProgreso()"
+                                    [disabled]="isSubmitting() || estadoOriginal === 'Finalizada'">
+                                <div class="flex justify-between text-xs text-[#9291aa]">
+                                    <span>0%</span>
+                                    <span>50%</span>
+                                    <span>100%</span>
+                                </div>
+                            </div>
                         </div>
                         }
 
@@ -108,82 +122,91 @@
             <div class="lg:col-span-1 lg:sticky lg:top-8 space-y-6">
 
                 <!-- Panel de Estado -->
-                <div
-                    class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                    <h3 class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-3">
-                        Estado</h3>
+                <div class="bg-white rounded-3xl shadow-2xs border border-transparent p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Estado
+                    </h3>
                     <span
-                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-md font-semibold w-full justify-center"
+                        class="inline-flex items-center gap-x-1.5 py-2.5 px-4 rounded-xl text-sm font-semibold w-full justify-center shadow-2xs"
                         [ngClass]="{
-              'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400': tarea.estado === 'Pendiente',
-              'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300': tarea.estado === 'En Proceso',
-              'bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400': tarea.estado === 'Finalizada'
-            }">
+                            'bg-[#5956e9] text-white': tarea.estado === 'Pendiente',
+                            'bg-[#ffa500] text-white': tarea.estado === 'En Proceso',
+                            'bg-[#32c000] text-white': tarea.estado === 'Finalizada'
+                        }">
                         {{ tarea.estado }}
                     </span>
                 </div>
 
                 <!-- Panel de Detalles -->
-                <div
-                    class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                    <h3 class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-4">
-                        Detalles</h3>
-                    <ul class="space-y-4 text-sm text-gray-700 dark:text-gray-300">
+                <div class="bg-white rounded-3xl shadow-2xs border border-transparent p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Detalles
+                    </h3>
+                    <ul class="space-y-4 text-sm text-[#707078]">
 
                         <!-- Sección "Asignada por" -->
                         <li class="flex items-start">
-                            <svg class="shrink-0 size-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3"
+                            <svg class="shrink-0 size-5 text-[#9291aa] mt-0.5 mr-3"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                             </svg>
                             <div>
-                                <span class="font-medium text-gray-500 dark:text-gray-400">Asignada por:</span>
+                                <span class="font-medium text-[#524380]">Asignada por:</span>
                                 @if (adminAsignador(); as admin) {
                                 <div class="flex items-center gap-3 mt-2">
-                                    <img class="inline-block size-10 rounded-full object-cover"
+                                    <img class="inline-block size-10 rounded-full object-cover shadow-2xs"
                                         [src]="admin.perfil || 'https://placehold.co/600x400/6b7280/ffffff?text=Icono'"
                                         [alt]="admin.nombre">
                                     <div class="grow">
-                                        <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200">{{
+                                        <span class="block text-sm font-semibold text-[#2d2c63]">{{
                                             admin.nombre }} {{
                                             admin.apellido }}</span>
-                                        <span class="block text-xs text-gray-500 dark:text-gray-400">{{ admin.rol
+                                        <span class="block text-xs text-[#9291aa]">{{ admin.rol
                                             }}</span>
                                     </div>
                                 </div>
                                 } @else {
-                                <span class="italic"> Cargando...</span>
+                                <span class="italic text-[#9291aa]"> Cargando...</span>
                                 }
                             </div>
                         </li>
 
                         <!-- Fecha de Creación -->
                         <li class="flex items-start">
-                            <svg class="shrink-0 size-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3"
+                            <svg class="shrink-0 size-5 text-[#9291aa] mt-0.5 mr-3"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <div><span class="font-medium text-gray-500 dark:text-gray-400">Fecha de Creación:</span> {{
-                                tarea.fechaDeCreacion.toDate() | date:'d MMMM, y' }}</div>
+                            <div>
+                                <span class="font-medium text-[#524380]">Fecha de Creación:</span> 
+                                {{ tarea.fechaDeCreacion.toDate() | date:'d MMMM, y' }}
+                            </div>
                         </li>
 
                         <!-- Vencimiento -->
                         <li class="flex items-start">
-                            <svg class="shrink-0 size-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3"
+                            <svg class="shrink-0 size-5 text-[#9291aa] mt-0.5 mr-3"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0h18" />
                             </svg>
-                            <div><span class="font-medium text-gray-500 dark:text-gray-400">Vencimiento:</span>
+                            <div>
+                                <span class="font-medium text-[#524380]">Vencimiento:</span>
                                 @if(tarea.fechaDeVencimiento) {
                                 {{ tarea.fechaDeVencimiento.toDate() | date:'d MMMM, y' }}
                                 } @else {
-                                <span class="italic">No definido</span>
+                                <span class="italic text-[#9291aa]">No definido</span>
                                 }
                             </div>
                         </li>
@@ -192,7 +215,7 @@
 
                 <div class="pt-4">
                     <button (click)="guardarCambios()" [disabled]="!pendingChanges() || isSubmitting()"
-                        class="w-full px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center">
+                        class="w-full px-4 py-2.5 text-sm font-semibold text-white bg-[#5956e9] rounded-xl hover:bg-[#4a47d8] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center shadow-2xs">
                         @if (isSubmitting()) {
                         <span
                             class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full mr-2"></span>
@@ -203,15 +226,14 @@
                     </button>
                 </div>
 
-
             </div>
         </div>
     </div>
     } @else {
     <!-- Estado de Carga -->
     <div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-20">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500 mb-4"></div>
-        <p class="text-lg text-gray-600 dark:text-gray-400">Cargando detalles de la tarea...</p>
+        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#5956e9] mb-4"></div>
+                        <p class="text-lg text-[#9291aa]">Cargando detalles de la tarea...</p>
     </div>
     }
 </div>
