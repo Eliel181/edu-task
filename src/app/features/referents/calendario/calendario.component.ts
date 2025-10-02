@@ -76,7 +76,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
       onClickDate: (date) => { this.openModalForCreate(date); },
       onEventClick: (event: CalendarEvent) => { this.handleEventClick(event); },
       onClickAgendaDate: (date) => { this.openModalForCreate(date); },
-      onRangeUpdate: (range) => { this.formatearFecha(range); }
+      onRangeUpdate: (range) => { this.formatearFecha(range); },
     }
   });
 
