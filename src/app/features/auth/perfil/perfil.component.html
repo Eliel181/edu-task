@@ -2,50 +2,49 @@
 <div class="max-w-8xl px-4 py-10 sm:px-6 lg:px-8 mx-auto font_outfit">
     <!-- Card -->
     @if (currentUser(); as user) {
-    <div class="bg-[#fcfdfe] rounded-3xl p-4 sm:p-7 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+    <div class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-3xl p-4 sm:p-7 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
 
         <div class="mb-8">
-            <h2 class="text-xl font-semibold text-[#2d2c63]">
+            <h2 class="text-xl font-semibold text-[#2d2c63] dark:text-[#E4E4E7]">
                 Mi Perfil
             </h2>
-            <p class="text-sm text-[#9291aa] mt-1">
+            <p class="text-sm text-[#9291aa] dark:text-[#A78BFA] mt-1">
                 Administra tu nombre, información y configuración de cuenta.
             </p>
         </div>
 
         <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
             <!-- Profile Picture Section -->
-            <div class="grid grid-cols-12 gap-y-4 sm:gap-y-7 pb-8 border-b border-[#f0f1f8]">
+            <div class="grid grid-cols-12 gap-y-4 sm:gap-y-7 pb-8 border-b border-[#f0f1f8] dark:border-[#443a52]">
                 <div class="col-span-12">
                     <div class="flex items-center gap-x-5">
                         <!-- Contenedor de imagen -->
-      <div
-        class="relative size-32 rounded-full flex items-center justify-center border-2 border-[#e2e3fa] overflow-hidden">
-        
-        @if (imagenBase64Preview() || user?.perfil) {
-          <!-- Si hay imagen seleccionada o ya guardada -->
-          <img
-            class="inline-block size-32 rounded-full object-cover"
-            [src]="imagenBase64Preview() || user?.perfil"
-            [alt]="user?.nombre" />
-        } @else {
-          <!-- Si no hay imagen: mostrar iniciales -->
-          <div
-            class="size-32 rounded-full flex items-center justify-center text-white text-4xl font-semibold bg-[#5956e9]">
-            {{ (user?.nombre?.[0] || '') + (user?.apellido?.[0] || '') }}
-          </div>
-        }
-      </div>
+                        <div
+                            class="relative size-32 rounded-full flex items-center justify-center border-2 border-[#e2e3fa] dark:border-[#443a52] overflow-hidden">
+
+                            @if (imagenBase64Preview() || user?.perfil) {
+                            <!-- Si hay imagen seleccionada o ya guardada -->
+                            <img class="inline-block size-32 rounded-full object-cover"
+                                [src]="imagenBase64Preview() || user?.perfil" [alt]="user?.nombre" />
+                            } @else {
+                            <!-- Si no hay imagen: mostrar iniciales -->
+                            <div
+                                class="size-32 rounded-full flex items-center justify-center text-white text-4xl font-semibold bg-[#5956e9] dark:bg-[#A78BFA]">
+                                {{ (user?.nombre?.[0] || '') + (user?.apellido?.[0] || '') }}
+                            </div>
+                            }
+                        </div>
 
                         <!-- Información de ayuda -->
                         <div class="flex-1">
-                            <p class="text-sm text-[#524380] font-medium font_outfit mb-1">Foto de perfil</p>
-                            <p class="text-xs text-[#9291aa] font_outfit">
+                            <p class="text-sm text-[#524380] dark:text-[#E4E4E7] font-medium font_outfit mb-1">Foto de
+                                perfil</p>
+                            <p class="text-xs text-[#9291aa] dark:text-[#A78BFA] font_outfit">
                                 Formatos: JPG, PNG (Max. 2MB)
                             </p>
                             <div class="flex gap-3 mt-4">
                                 <label
-                                    class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg  bg-white text-[#796ffc] shadow-2xs hover:shadow-md hover:bg-[#f9f9fe] transition-all duration-300 cursor-pointer font_outfit">
+                                    class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg  bg-white dark:bg-[#443a52] text-[#796ffc] dark:text-[#A78BFA] shadow-2xs hover:shadow-md hover:bg-[#f9f9fe] dark:hover:bg-[#443a52] transition-all duration-300 cursor-pointer font_outfit">
                                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24" width="24" height="24" fill="none">
                                         <path
@@ -53,7 +52,7 @@
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round"></path>
                                         <path
-                                            d="M15.5 8C15.7761 8 16 7.77614 16 7.5C16 7.22386 15.7761 7 15.5 7M15.5 8C15.2239 8 15 7.77614 15 7.5C15 7.22386 15.2239 7 15.5 7M15.5 8V7"
+                                            d="M15.5 8C15.7761 8 16 7.77614 16 7.5C16 7.22386 15.7761 7 15.5 7M15.5 8C15.2239 8 15 7.77614 15 7.5C15 7.22386 15.2239 7 15.5 7V7"
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round"></path>
                                         <path
@@ -68,7 +67,7 @@
 
                                 @if (imagenBase64Preview() || user.perfil) {
                                 <button type="button" (click)="eliminarFoto()"
-                                    class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg bg-[#fffcff] text-[#e77833] shadow-2xs hover:shadow-md hover:bg-[#faf1fe] transition-all duration-300 font_outfit cursor-pointer">
+                                    class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg bg-[#fffcff] dark:bg-[#443a52] text-[#e77833] dark:text-[#A78BFA] shadow-2xs hover:shadow-md hover:bg-[#faf1fe] dark:hover:bg-[#443a52] transition-all duration-300 font_outfit cursor-pointer">
                                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24" width="24" height="24" fill="none">
                                         <path
@@ -93,7 +92,6 @@
                 </div>
             </div>
             <!-- End Profile Picture Section -->
-
             <!-- Contact Details Section -->
             <div class="pt-8">
                 <!-- <h3 class="text-xl font-semibold text-gray-800 mb-6">
@@ -102,35 +100,39 @@
                 <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
                     <!-- First Name -->
                     <div>
-                        <label for="first-name" class="block text-sm font-medium text-[#4e3e76] mb-2">Nombre</label>
+                        <label for="first-name"
+                            class="block text-sm font-medium text-[#4e3e76] dark:text-[#E4E4E7] mb-2">Nombre</label>
                         <input type="text" id="first-name" name="nombre" formControlName="nombre"
-                            class="py-2 px-4 block w-full text-[#707078] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                            class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] border-gray-200 dark:border-[#443a52] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs dark:bg-transparent">
                     </div>
                     <!-- End First Name -->
 
                     <!-- Last Name -->
                     <div>
-                        <label for="last-name" class="block text-sm font-medium text-[#4e3e76] mb-2">Apellido</label>
+                        <label for="last-name"
+                            class="block text-sm font-medium text-[#4e3e76] dark:text-[#E4E4E7] mb-2">Apellido</label>
                         <input type="text" id="last-name" name="apellido" formControlName="apellido"
-                            class="py-2 px-4 block w-full text-[#707078] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                            class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] border-gray-200 dark:border-[#443a52] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs dark:bg-transparent">
                     </div>
                     <!-- End Last Name -->
 
                     <!-- Phone Number -->
                     <div>
-                        <label for="phone-number" class="block text-sm font-medium text-[#4e3e76] mb-2">Número de
+                        <label for="phone-number"
+                            class="block text-sm font-medium text-[#4e3e76] dark:text-[#E4E4E7] mb-2">Número de
                             Teléfono</label>
 
                         <input type="text" id="phone-number" name="telefono" formControlName="telefono"
-                            class="py-2 px-4 text-[#8276a2]  block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                            class="py-2 px-4 text-[#8276a2] dark:text-[#E4E4E7] block w-full border-gray-200 dark:border-[#443a52] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs dark:bg-transparent">
 
                     </div>
                     <!-- End Phone Number -->
 
                     <div>
-                        <label for="email" class="inline-block text-sm font-medium text-[#4e3e76] mb-2">Email</label>
+                        <label for="email"
+                            class="inline-block text-sm font-medium text-[#4e3e76] dark:text-[#E4E4E7] mb-2">Email</label>
                         <div class="hs-tooltip inline-block">
-                            <svg class="hs-tooltip-toggle ms-1 inline-block size-2.5 -mt-3 text-gray-400"
+                            <svg class="hs-tooltip-toggle ms-1 inline-block size-2.5 -mt-3 text-gray-400 dark:text-[#A78BFA]"
                                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -138,23 +140,23 @@
                                     d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                             </svg>
                             <span
-                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs"
+                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 dark:bg-[#1A1A1E] text-xs font-medium text-white dark:text-[#E4E4E7] rounded-md shadow-2xs"
                                 role="tooltip">
                                 Por el momento no podes cambiar el email.
                             </span>
                         </div>
                         <input type="email" id="email" name="email" formControlName="email"
-                            class="py-2 px-4 block w-full text-[#707078] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
+                            class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] border-gray-200 dark:border-[#443a52] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs dark:bg-transparent">
                     </div>
                 </div>
 
                 <!-- Sección de Botones - Nueva ubicación más prominente -->
-                <div class="mt-10 pt-8 border-t border-[#f0f1f8]">
+                <div class="mt-10 pt-8 border-t border-[#f0f1f8] dark:border-[#443a52]">
                     <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <!-- Información de estado -->
-                        <div class="text-sm text-[#9291aa] font_outfit">
+                        <div class="text-sm text-[#9291aa] dark:text-[#A78BFA] font_outfit">
                             @if (profileForm.dirty) {
-                            <span class="inline-flex items-center gap-1 text-[#524380]">
+                            <span class="inline-flex items-center gap-1 text-[#524380] dark:text-[#A78BFA]">
                                 <svg class="size-3" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
@@ -171,13 +173,13 @@
                         <div class="flex gap-3">
                             <!-- Botón Cancelar -->
                             <button routerLink="/administracion/dashboard" type="button" [disabled]="isSubmitting"
-                                class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] hover:border-[#d0d0e0] transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs">
+                                class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white dark:bg-[#443a52] text-[#8276a2] dark:text-[#A78BFA] hover:bg-[#f9f9fe] dark:hover:bg-[#443a52] hover:text-[#524380] dark:hover:text-[#E4E4E7] hover:border-[#d0d0e0] dark:hover:border-[#443a52] transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs">
                                 Volver
                             </button>
 
                             <!-- Botón Guardar Cambios -->
                             <button type="submit" [disabled]="isSubmitting || !profileForm.dirty"
-                                class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+                                class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] dark:bg-[#A78BFA] text-white dark:text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 font_outfit disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
 
                                 @if (isSubmitting) {
                                 <div class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"

@@ -1,24 +1,23 @@
-<!-- task-list.component.html -->
 <div class="max-w-8xl px-1 py-10 sm:px-2 lg:px-4 mx-auto font_outfit">
-  <div class="bg-[#fcfdfe] rounded-3xl p-4 sm:p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+  <div class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-3xl p-4 sm:p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
     <!-- Header de la sección de tareas -->
     <!-- Header de la sección de tareas -->
     <div class="mb-8">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <!-- Título y descripción a la izquierda -->
         <div class="flex-grow">
-          <h2 class="text-xl font-semibold text-[#2d2c63]">Gestión de Tareas</h2>
-          <p class="text-sm text-[#9291aa] mt-2">
+          <h2 class="text-xl font-semibold text-[#2d2c63] dark:text-[#E4E4E7]">Gestión de Tareas</h2>
+          <p class="text-sm text-[#9291aa] dark:text-[#A78BFA] mt-2">
             Administra de forma eficiente las tareas de tu plataforma.
           </p>
 
           <!-- Barra de búsqueda ahora debajo de la descripción -->
           <div class="mt-4 relative max-w-md">
             <input type="text" id="task-search-input" (input)="onBusquedaChange($event)"
-              class="py-2.5 px-4 ps-11 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs"
+              class="py-2.5 px-4 ps-11 block w-full bg-white dark:bg-[#2A2433] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs"
               placeholder="Buscar tareas...">
             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-              <svg class="size-4 text-[#9291aa]" viewBox="0 0 16 16" fill="currentColor">
+              <svg class="size-4 text-[#9291aa] dark:text-[#A78BFA]" viewBox="0 0 16 16" fill="currentColor">
                 <path
                   d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
               </svg>
@@ -35,11 +34,11 @@
             <select (change)="onFiltroEmpleadoChange($event)" data-hs-select='{
   "placeholder": "Select option...",
   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
-  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
-  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white dark:bg-[#2A2433] text-[#707078] dark:text-[#E4E4E7] min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-[#1A1A1E] rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-[#443a52] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-[#A78BFA]",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-[#E4E4E7] cursor-pointer hover:bg-gray-100 dark:hover:bg-[#443a52] rounded-3xl focus:outline-hidden focus:bg-gray-100 dark:focus:bg-[#443a52] hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078] dark:text-[#E4E4E7] w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-[#A78BFA] \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
 }' class="hidden">
               <option value="todos">Todos los Empleados</option>
               @for (emp of empleados(); track emp.uid) {
@@ -53,11 +52,11 @@
             <select (change)="onFiltroEstadoChange($event)" data-hs-select='{
   "placeholder": "Select option...",
   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[160px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
-  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
-  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white dark:bg-[#2A2433] text-[#707078] dark:text-[#E4E4E7] min-w-[160px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-[#1A1A1E] rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-[#443a52] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-[#A78BFA]",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-[#E4E4E7] cursor-pointer hover:bg-gray-100 dark:hover:bg-[#443a52] rounded-3xl focus:outline-hidden focus:bg-gray-100 dark:focus:bg-[#443a52] hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078] dark:text-[#E4E4E7] w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-[#A78BFA] \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
 }' class="hidden">
               <option value="todos">Todos los Estados</option>
               <option value="Pendiente">Pendiente</option>
@@ -95,30 +94,35 @@
     } @else {
     <!-- Tabla de Tareas -->
     <div class="overflow-x-auto rounded-3xl shadow-[0_2px_6px_rgba(0,0,0,0.02)]">
-      <table class="min-w-full divide-y divide-[#f0f1f8]">
-        <thead class="bg-[#fafbfe]">
+      <table class="min-w-full divide-y divide-[#f0f1f8] dark:divide-[#443a52]">
+        <thead class="bg-[#fafbfe] dark:bg-[#443a52]">
           <tr>
-            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+            <th scope="col"
+              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-[#E4E4E7] tracking-wider">
               Tarea
             </th>
-            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+            <th scope="col"
+              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-[#E4E4E7] tracking-wider">
               Prioridad
             </th>
-            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+            <th scope="col"
+              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-[#E4E4E7] tracking-wider">
               Progreso
             </th>
-            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+            <th scope="col"
+              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-[#E4E4E7] tracking-wider">
               Vencimiento
             </th>
-            <th scope="col" class="px-2 py-3 text-center text-xs font-semibold uppercase text-[#524380] tracking-wider
-         sm:static sticky right-0 bg-[#f9f9fe] z-30 w-16 min-w-[4rem]">
+            <th scope="col" class="px-2 py-3 text-center text-xs font-semibold uppercase text-[#524380] dark:text-[#E4E4E7]
+         sm:static sticky right-0 bg-[#f9f9fe] dark:bg-[#443a52] z-30 w-16 min-w-[4rem]">
               Acciones
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-[#f0f1f8]">
+        <tbody class="divide-y divide-[#f0f1f8] dark:divide-[#443a52]">
           @for (tarea of tareasPaginadas(); track tarea.id) {
-          <tr class="bg-white hover:bg-[#fcfdfe] transition-colors duration-200">
+          <tr
+            class="bg-white dark:bg-[#2A2433] hover:bg-[#fcfdfe] dark:hover:bg-[#443a52] transition-colors duration-200">
             <!-- Columna Tarea - Nuevo Estilo -->
             <td class="px-4 py-3">
               <div class="flex items-start gap-3">
@@ -128,8 +132,10 @@
                   <img class="size-10 rounded-xl object-cover shadow-2xs" [src]="tarea.fotoEmpleadoAsignado"
                     [alt]="tarea.nombreEmpleadoAsignado">
                   } @else {
-                  <div class="size-10 rounded-xl flex items-center justify-center shadow-2xs">
-                    <svg class="size-5 text-[#9291aa]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div
+                    class="size-10 rounded-xl flex items-center justify-center shadow-2xs bg-gray-100 dark:bg-[#443a52]">
+                    <svg class="size-5 text-[#9291aa] dark:text-[#E4E4E7]" fill="none" stroke="currentColor"
+                      viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
@@ -141,25 +147,26 @@
                 <div class="min-w-0 flex-1">
                   <!-- Título y estado -->
                   <div class="flex items-center gap-2 mb-1">
-                    <h3 class="text-base font-medium text-[#4e3e76]">{{ tarea.titulo }}</h3>
+                    <h3 class="text-base font-medium text-[#4e3e76] dark:text-[#E4E4E7]">{{ tarea.titulo }}</h3>
                     <!-- Badge de estado -->
                     <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium shadow-2xs"
                       [ngClass]="{
             'bg-[#ebf3ff] text-[#5b4ff3]': tarea.estado === 'Pendiente',
             'bg-[#fffae5] text-[#f06543] ': tarea.estado === 'En Proceso',
-            'bg-[#f0f9f4] text-[#00a896] ': tarea.estado === 'Finalizada'
+            'bg-[#f0f9f4] text-[#00a896] ': tarea.estado === 'Finalizada',
+            'dark:bg-opacity-20 dark:text-[#4e3e76]': tarea.estado === 'Pendiente' || tarea.estado === 'En Proceso' || tarea.estado === 'Finalizada'
           }">
                       {{ tarea.estado }}
                     </span>
                   </div>
 
                   <!-- Descripción -->
-                  <p class="text-sm text-[#9291aa] line-clamp-2 mb-2 leading-relaxed">
+                  <p class="text-sm text-[#9291aa] dark:text-[#A78BFA] line-clamp-2 mb-2 leading-relaxed">
                     {{ tarea.descripcion }}
                   </p>
 
                   <!-- Información adicional -->
-                  <div class="flex items-center gap-3 text-xs text-[#9291aa]">
+                  <div class="flex items-center gap-3 text-xs text-[#9291aa] dark:text-[#A78BFA]">
                     <span class="flex items-center gap-1">
                       <svg class="size-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -189,21 +196,21 @@
                   @switch (tarea.prioridad) {
                   @case ('Baja') {
                   <span class="size-2 bg-[#2ecc71] rounded-full"></span>
-                  <span class="size-2 bg-[#f0f1f8] rounded-full"></span>
-                  <span class="size-2 bg-[#f0f1f8] rounded-full"></span>
-                  <span class="size-2 bg-[#f0f1f8] rounded-full"></span>
+                  <span class="size-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full"></span>
+                  <span class="size-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full"></span>
+                  <span class="size-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full"></span>
                   }
                   @case ('Media') {
                   <span class="size-2 bg-[#f39c12] rounded-full"></span>
                   <span class="size-2 bg-[#f39c12] rounded-full"></span>
-                  <span class="size-2 bg-[#f0f1f8] rounded-full"></span>
-                  <span class="size-2 bg-[#f0f1f8] rounded-full"></span>
+                  <span class="size-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full"></span>
+                  <span class="size-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full"></span>
                   }
                   @case ('Alta') {
                   <span class="size-2 bg-[#e74c3c] rounded-full"></span>
                   <span class="size-2 bg-[#e74c3c] rounded-full"></span>
                   <span class="size-2 bg-[#e74c3c] rounded-full"></span>
-                  <span class="size-2 bg-[#f0f1f8] rounded-full"></span>
+                  <span class="size-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full"></span>
                   }
                   @case ('Urgente') {
                   <span class="size-2 bg-[#e91e63] rounded-full"></span>
@@ -219,7 +226,8 @@
         'bg-[#f0f9f4] text-[#2ecc71] ': tarea.prioridad === 'Baja',
         'bg-[#fef7ed] text-[#f39c12] ': tarea.prioridad === 'Media',
         'bg-[#fef2f2] text-[#e74c3c] ': tarea.prioridad === 'Alta',
-        'bg-[#fdf2f8] text-[#e91e63] ': tarea.prioridad === 'Urgente'
+        'bg-[#fdf2f8] text-[#e91e63] ': tarea.prioridad === 'Urgente',
+        'dark:bg-opacity-20 dark:text-[#4e3e76]': tarea.prioridad === 'Baja' || tarea.prioridad === 'Media' || tarea.prioridad === 'Alta' || tarea.prioridad === 'Urgente'
       }">
                   {{ tarea.prioridad }}
                 </span>
@@ -229,8 +237,8 @@
             <!-- Columna Progreso -->
             <td class="px-4 py-3 whitespace-nowrap">
               <div class="flex items-center gap-x-3">
-                <span class="text-xs text-[#9291aa] w-12 text-end">{{ tarea.progreso }}%</span>
-                <div class="flex w-full h-2 bg-[#f0f1f8] rounded-full overflow-hidden">
+                <span class="text-xs text-[#9291aa] dark:text-[#A78BFA] w-12 text-end">{{ tarea.progreso }}%</span>
+                <div class="flex w-full h-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full overflow-hidden">
                   <div class="flex flex-col justify-center rounded-full overflow-hidden bg-[#ffb2c5]"
                     [style.width.%]="tarea.progreso"></div>
                 </div>
@@ -256,7 +264,7 @@
                     <path d="M11.9955 14H12.0045M11.9955 18H12.0045M15.991 14H16M8 14H8.00897M8 18H8.00897"
                       stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
-                  <span class="text-sm font-medium text-[#8579a4]">
+                  <span class="text-sm font-medium text-[#8579a4] dark:text-[#E4E4E7]">
                     {{ formatDate(tarea.fechaDeVencimiento) | date:'dd/MM/yyyy' }}
                   </span>
 
@@ -264,7 +272,7 @@
                   @if (tarea.estado !== 'Finalizada') {
                   @if (esTareaVencida(tarea)) {
                   <span
-                    class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium bg-[#fff7f8] text-[#fb3640]">
+                    class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium bg-[#fff7f8] text-[#fb3640] dark:bg-opacity-20 dark:text-[#4e3e76]">
                     <svg class="size-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -273,7 +281,7 @@
                   </span>
                   } @else if (esTareaPorVencer(tarea)) {
                   <span
-                    class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium bg-[#ebf3ff] text-[#5b4ff3]">
+                    class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium bg-[#ebf3ff] text-[#5b4ff3] dark:bg-opacity-20 dark:text-[#4e3e76]">
                     <svg class="size-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -288,22 +296,24 @@
                 @if (tarea.estado !== 'Finalizada') {
                 <div class="text-xs ml-6">
                   @if (diasRestantes(tarea) > 0) {
-                  <span class="text-[#5b4ff3] font-medium">{{ diasRestantes(tarea) }} días restantes</span>
+                  <span class="text-[#5b4ff3] font-medium dark:text-[#A78BFA]">{{ diasRestantes(tarea) }} días
+                    restantes</span>
                   } @else if (diasRestantes(tarea) === 0) {
-                  <span class="text-[#2ecc71] font-medium">Vence hoy</span>
+                  <span class="text-[#2ecc71] font-medium dark:text-[#A78BFA]">Vence hoy</span>
                   } @else {
-                  <span class="text-[#fb3640] font-medium">{{ -diasRestantes(tarea) }} días de retraso</span>
+                  <span class="text-[#fb3640] font-medium dark:text-[#A78BFA]">{{ -diasRestantes(tarea) }} días de
+                    retraso</span>
                   }
                 </div>
                 } @else {
                 <!-- Mensaje para tareas finalizadas -->
                 <div class="text-xs ml-6">
-                  <span class="text-[#2ecc71] font-medium">Tarea completada ✓</span>
+                  <span class="text-[#2ecc71] font-medium dark:text-[#A78BFA]">Tarea completada ✓</span>
                 </div>
                 }
                 } @else {
                 <!-- Sin fecha de vencimiento -->
-                <div class="flex items-center gap-2 text-[#8579a4]">
+                <div class="flex items-center gap-2 text-[#8579a4] dark:text-[#A78BFA]">
                   <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -316,11 +326,11 @@
 
             <!-- Columna Acciones -->
             <td
-              class="px-2 py-3 whitespace-nowrap text-center sm:static sticky right-0 bg-white z-40 w-16 min-w-[4rem]">
+              class="px-2 py-3 whitespace-nowrap text-center sm:static sticky right-0 bg-white dark:bg-[#2A2433] z-40 w-16 min-w-[4rem]">
               <div class="relative">
                 <div class="hs-dropdown [--placement:bottom-right] inline-block">
                   <button type="button"
-                    class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center rounded-full text-[#9291aa] hover:bg-[#f0f1f8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#5956e9] transition-all duration-200 ease-out">
+                    class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center rounded-full text-[#9291aa] dark:text-[#E4E4E7] hover:bg-[#f0f1f8] dark:hover:bg-[#443a52] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#2A2433] focus:ring-[#5956e9] transition-all duration-200 ease-out">
                     <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                       viewBox="0 0 16 16">
                       <path
@@ -330,10 +340,11 @@
 
                   <!-- Menú desplegable -->
                   <div
-                    class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-[9999] bg-white shadow-[0_2px_6px_rgba(0,0,0,0.05)] rounded-2xl p-2 mt-2">
+                    class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-[9999] bg-white dark:bg-[#1A1A1E] shadow-[0_2px_6px_rgba(0,0,0,0.05)] rounded-2xl p-2 mt-2">
                     <div class="first:pt-0 last:pb-0">
-                      <span class="block py-2 px-3 mb-2 text-xs font-medium uppercase text-[#9291aa]">Acciones</span>
-                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#796ffc] hover:bg-[#f9f9fe] transition-colors duration-200"
+                      <span
+                        class="block py-2 px-3 mb-2 text-xs font-medium uppercase text-[#9291aa] dark:text-[#A78BFA]">Acciones</span>
+                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#796ffc] dark:text-[#A78BFA] hover:bg-[#f9f9fe] dark:hover:bg-[#443a52] transition-colors duration-200"
                         [routerLink]="['form-tarea', tarea.id]">
                         <svg class="size-[18px]" xmlns="http://www.w3.org/2000/svg" width="128" height="128"
                           viewBox="0 0 24 24">
@@ -348,7 +359,7 @@
                       </a>
                     </div>
                     <div class="first:pt-0 last:pb-0">
-                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#e77833] hover:bg-[#fef9f9] transition-colors duration-200 cursor-pointer"
+                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#e77833] dark:text-[#A78BFA] hover:bg-[#fef9f9] dark:hover:bg-[#443a52] transition-colors duration-200 cursor-pointer"
                         (click)="confirmarEliminacion(tarea)">
                         <svg class="size-[18px]" xmlns="http://www.w3.org/2000/svg" width="128" height="128"
                           viewBox="0 0 48 48">
@@ -366,7 +377,7 @@
           </tr>
           } @empty {
           <tr>
-            <td colspan="5" class="text-center p-10 text-[#9291aa]">
+            <td colspan="5" class="text-center p-10 text-[#9291aa] dark:text-[#A78BFA]">
               No se encontraron tareas con los filtros seleccionados.
             </td>
           </tr>
@@ -375,11 +386,11 @@
       </table>
     </div>
 
-    <!-- Paginación -->
+<!-- Paginación -->
     <div class="mt-8 flex justify-center">
       <nav class="flex justify-center items-center gap-x-1" aria-label="Pagination">
         <button type="button"
-          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] hover:bg-[#f0f1f8] focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] dark:text-[#E4E4E7] hover:bg-[#f0f1f8] dark:hover:bg-[#443a52] focus:outline-none focus:bg-[#f0f1f8] dark:focus:bg-[#443a52] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
           aria-label="Previous" [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
           <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -391,7 +402,7 @@
         <div class="flex items-center gap-x-1">
           @for (page of paginasDisponibles(); track page) {
           <button type="button" (click)="irAPagina(page)"
-            [ngClass]="{'bg-[#5956e9] text-white shadow-sm': paginaActual() === page, 'text-[#707078] hover:bg-[#f0f1f8]': paginaActual() !== page}"
+            [ngClass]="{'bg-[#5956e9] text-white shadow-sm': paginaActual() === page, 'text-[#707078] dark:text-[#E4E4E7] hover:bg-[#f0f1f8] dark:hover:bg-[#443a52]': paginaActual() !== page}"
             class="min-h-9.5 min-w-9.5 flex justify-center items-center py-2 px-3 text-sm rounded-lg focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
             [attr.aria-current]="paginaActual() === page ? 'page' : null">
             {{ page }}
@@ -400,7 +411,7 @@
         </div>
 
         <button type="button"
-          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] hover:bg-[#f0f1f8] focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] dark:text-[#E4E4E7] hover:bg-[#f0f1f8] dark:hover:bg-[#443a52] focus:outline-none focus:bg-[#f0f1f8] dark:focus:bg-[#443a52] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
           aria-label="Next" [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
           <span class="sr-only">Next</span>
           <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
