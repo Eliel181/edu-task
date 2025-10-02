@@ -8,7 +8,7 @@ import { SchoolService } from '../../../core/services/school.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Escuela } from '../../../core/interfaces/escuela.model';
 import { range, Subject } from 'rxjs';
-import { Visita } from '../../../core/interfaces/visita.model';
+import { TareaVisita, Visita } from '../../../core/interfaces/visita.model';
 import { Timestamp } from '@angular/fire/firestore';
 import type { CalendarEvent } from '@schedule-x/calendar';
 import '@schedule-x/theme-default/dist/index.css';
@@ -27,13 +27,16 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
   private escuelaService: SchoolService = inject(SchoolService);
   private authService: AuthService = inject(AuthService);
   visitaForm!: FormGroup;
+  actividadForm!: FormGroup;
 
   // Control de visibilidad
   isModalVisible = false;
+  isActividadModalVisible = false; // Variable para el nuevo modal
   isCardVisible = false;
 
   // Estado y datos
   isEditMode = false;
+  isEditModeActividad = false;
   activeEvent: CalendarEvent | null = null;
 
   // Escuelas
@@ -44,6 +47,9 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
   visitas = signal<Visita[]>([]);
 
   visitaForEdit = signal<Visita | undefined>(undefined);
+  visitaIdForNewTask = signal<string>("");
+  tareaIdForEdit = signal<string>("");
+  visitaIdForEdit = signal<string>("");
 
   //cariables para manejar el rango de eventos, como filtro
   fechaInicio = signal<string>("");
@@ -134,12 +140,19 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
       estado: ['Planificada'],
     });
 
+    this.actividadForm = this.formBuilder.group({
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      descripcion: ['', [Validators.required, Validators.minLength(3)]],
+      completada: [false],
+    })
+
     this.cargarVisitasEnCalendario();
 
     this.fechaInicio.set("2025-09-29");
     this.fechaFin.set("2025-11-02");
   }
 
+  //funcion para controlar el modo dark del calendario
   syncCalendarTheme(): void {
     const isDarkMode = document.documentElement.classList.contains('dark');
     this.calendarApp.setTheme(isDarkMode ? 'dark' : 'light');
@@ -156,7 +169,6 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
     this.visitaService.getVisitasByRte(uidRte).subscribe(visitas => {
       const eventos = this.mapVisitasToEventos(visitas);
       this.visitas.set(visitas);
-      console.log(eventos);
 
       this.calendarApp.events.set(eventos);
     });
@@ -177,6 +189,7 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  //funcion para quitar la hora y minutos de la  fecha
   formatearFecha(range: any) {
     const end = range.end;
     const fechaFin = end.split(" ")[0]; //"2025-09-29"
@@ -223,6 +236,7 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isModalVisible = true;
   }
 
+  //funcion abre el modal con los datos de la visita a editar
   openModalForEdit(id: string) {
     let idVisitaEdit;
 
@@ -253,6 +267,11 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isEditMode = false;
     this.activeEvent = null;
     this.visitaForm.reset();
+  }
+
+  closeActividadModal() {
+    this.isActividadModalVisible = false;
+    this.actividadForm.reset();
   }
 
   //funcion valida que el form sea valido
@@ -306,14 +325,12 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
       estado: formValues.estado,
     };
 
-    console.log(visitaParaActualizar);
-
     if (!idVisita) {
       return;
     }
 
     this.visitaService.updateVisita(idVisita, visitaParaActualizar).then(() => {
-      Swal.fire('Actualizacion Exitosa', 'La tarea se actualizo con exito', 'success');
+      Swal.fire('Actualizacion Exitosa', 'La visita se actualizo con exito', 'success');
     });
 
     this.closeModal();
@@ -349,6 +366,117 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
           icon: 'error',
         });
       }
+    }
+  }
+
+  //METODOS PARA MANEJAR LAS TAREAS/ACTIVIDADES DE UNA VISITA
+
+  openModalForCreateActividad(visitaId: string) {
+    this.isEditModeActividad = false;
+    this.visitaIdForNewTask.set(visitaId);
+    this.actividadForm.reset();
+    this.isActividadModalVisible = true;
+  }
+
+  openModalForEditTarea(visitaId: string | undefined, tarea: TareaVisita) {
+    if (!visitaId && tarea != null) {
+      return;
+    }
+
+    this.visitaIdForEdit.set(visitaId!)
+
+    const { id, nombre, descripcion, completada } = tarea;
+
+    if(!id){
+      return
+    }
+    //guardo el id para la edicion de la tarea
+    this.tareaIdForEdit.set(id)
+
+    this.actividadForm.patchValue({
+      nombre: nombre,
+      descripcion: descripcion,
+      completada: completada
+    });
+
+    this.isEditModeActividad = true;
+
+    this.isActividadModalVisible = true;
+
+  }
+
+  async agregarTarea(visitaId: string) {
+    const tareaData = this.actividadForm.value;
+
+    const tareaNueva: TareaVisita = {
+      id: crypto.randomUUID(),
+      nombre: tareaData.nombre,
+      descripcion: tareaData.descripcion,
+      completada: false,
+    }
+
+    this.visitaService.agregarTarea(visitaId, tareaNueva).then(() => {
+      this.closeActividadModal();
+      this.actividadForm.reset();
+    });
+  }
+
+  async actualizarTarea(){
+    const idVisita = this.visitaIdForEdit();
+    const formValues = this.actividadForm.getRawValue();
+
+    const tareaParaActualizar: TareaVisita = {
+      id: this.tareaIdForEdit(),
+      nombre: formValues.nombre,
+      descripcion: formValues.descripcion,
+      completada: formValues.completada
+    };
+
+    if (!idVisita) {
+      return;
+    }
+
+
+    this.visitaService.editarTarea(idVisita, tareaParaActualizar).then(() => {
+      Swal.fire('Actualizacion Exitosa', 'La tarea se actualizo con exito', 'success');
+    });
+
+    this.closeActividadModal();
+  }
+
+  async eliminarTarea(visitaId: string, tareaId: string): Promise<void> {
+    console.log(visitaId);
+    console.log(tareaId);
+
+    if (!visitaId) {
+      return;
+    }
+
+    if (!tareaId) {
+      return;
+    }
+
+    this.visitaService.eliminarTarea(visitaId, tareaId).then(() => {
+      Swal.fire({
+        title: 'Correcto',
+        text: 'Tarea Eliminada Exitosamente',
+        icon: 'success'
+      })
+    })
+  }
+
+  saveOrUpdateActividad() {
+    if (this.actividadForm.invalid) {
+      this.actividadForm.markAllAsTouched();
+      return;
+    }
+
+    const visitaId = this.visitaIdForNewTask();
+
+    if (this.isEditModeActividad) {
+      this.actualizarTarea();
+    } else {
+      this.agregarTarea(visitaId);
     }
   }
 }
