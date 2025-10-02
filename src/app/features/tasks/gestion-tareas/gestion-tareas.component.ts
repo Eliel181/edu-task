@@ -59,7 +59,7 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
 
 
   paginaActual = signal(1);
-  tareasPorPagina = signal(3);
+  tareasPorPagina = signal(2);
 
   totalPaginas = computed(() => {
     return Math.ceil(this.tareasFiltradas().length / this.tareasPorPagina());

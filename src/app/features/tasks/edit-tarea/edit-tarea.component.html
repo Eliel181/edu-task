@@ -1,11 +1,11 @@
 @if (isLoading()) {
 <!-- Spinner de Carga de Página -->
-<div class="fixed inset-0 bg-white bg-opacity-90 flex justify-center items-center z-50">
+<div class="fixed inset-0 bg-white dark:bg-[#1A1A1E] bg-opacity-90 flex justify-center items-center z-50">
     <app-spinner-overlay />
 </div>
 } @else {
 
-<div class="min-h-screen bg-[#fcfdfe] p-6 font_outfit">
+<div class="min-h-screen bg-[#fcfdfe] dark:bg-[#1A1A1E] p-6 font_outfit">
     <div class="mx-auto px-1 py-10 max-w-6xl">
         <!-- El contenido principal solo se muestra si NO está cargando -->
         @if (!isEditMode || !isLoading()) {
@@ -14,17 +14,17 @@
         @if (!isEditMode) {
         <div>
             <div class="mb-8">
-                <h1 class="text-2xl font-semibold text-[#2d2c63] mb-2">Asignar Nueva Tarea</h1>
-                <p class="text-sm text-[#9291aa]">
+                <h1 class="text-2xl font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-2">Asignar Nueva Tarea</h1>
+                <p class="text-sm text-[#9291aa] dark:text-[#A78BFA]">
                     Completa los detalles para asignar una nueva tarea a tu equipo.
                 </p>
             </div>
             
             <form [formGroup]="tareaForm" (ngSubmit)="crearTarea()" class="space-y-6">
                 <!-- Card Información Básica -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
-                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
-                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9] dark:text-[#A78BFA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                         Información Básica
@@ -33,13 +33,13 @@
                         <!-- Columna Izquierda -->
                         <div class="space-y-6">
                             <div class="space-y-3">
-                                <label for="create-titulo" class="block text-sm font-medium text-[#524380]">
+                                <label for="create-titulo" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Título de la Tarea *
                                 </label>
                                 <input id="create-titulo" formControlName="titulo"
-                                    class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                                    class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] dark:focus:border-[#A78BFA] focus:ring-[#5956e9] dark:focus:ring-[#A78BFA] shadow-2xs transition-all duration-200">
                                 @if (titulo?.touched && titulo?.invalid) {
-                                <div class="text-sm text-[#fb3640] mt-2">
+                                <div class="text-sm text-[#fb3640] dark:text-[#fb3640] mt-2">
                                     @if (titulo?.errors?.['required']) {
                                     <span>Debe ingresar el nombre de la tarea.</span>
                                     }
@@ -49,7 +49,7 @@
 
                             <!-- Selector de Prioridad -->
                             <div class="space-y-3">
-                                <label class="block text-sm font-medium text-[#524380]">
+                                <label class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Prioridad de la Tarea *
                                 </label>
                                 <div class="flex flex-wrap gap-3">
@@ -60,8 +60,8 @@
                                             class="sr-only">
                                         <div class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 shadow-2xs"
                                             [ngClass]="{
-                                                'bg-[#5956e9] text-white': tareaForm.get('prioridad')?.value === prioridadOption.value,
-                                                'bg-white text-[#707078] hover:bg-[#fafbfe]': tareaForm.get('prioridad')?.value !== prioridadOption.value
+                                                'bg-[#5956e9] dark:bg-[#A78BFA] text-white': tareaForm.get('prioridad')?.value === prioridadOption.value,
+                                                'bg-white dark:bg-[#443a52] text-[#707078] dark:text-[#E4E4E7] hover:bg-[#fafbfe] dark:hover:bg-[#2A2433]': tareaForm.get('prioridad')?.value !== prioridadOption.value
                                             }">
                                             <span class="inline-block w-2 h-2 rounded-full mr-2" 
                                                 [ngClass]="prioridadOption.colorClass"></span>
@@ -71,7 +71,7 @@
                                     }
                                 </div>
                                 @if (prioridad?.touched && prioridad?.invalid) {
-                                <div class="text-sm text-[#fb3640] mt-2">
+                                <div class="text-sm text-[#fb3640] dark:text-[#fb3640] mt-2">
                                     @if (prioridad?.errors?.['required']) {
                                     <span>Debe seleccionar la prioridad de la tarea.</span>
                                     }
@@ -83,18 +83,18 @@
                         <!-- Columna Derecha -->
                         <div class="space-y-6">
                             <div class="space-y-3">
-                                <label for="create-asignadoA" class="block text-sm font-medium text-[#524380]">
+                                <label for="create-asignadoA" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Asignar a *
                                 </label>
                                 @if (empleados().length > 0) {
                                 <select id="create-asignadoA" formControlName="asignadoA" data-hs-select='{
   "placeholder": "Seleccione un empleado...",
   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
-  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
-  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white dark:bg-[#443a52] text-[#707078] dark:text-[#E4E4E7] min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-[#443a52] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-[#A78BFA]",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-[#E4E4E7] cursor-pointer hover:bg-gray-100 dark:hover:bg-[#443a52] rounded-3xl focus:outline-hidden focus:bg-gray-100 dark:focus:bg-[#443a52] hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078] dark:text-[#E4E4E7] w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-[#A78BFA] \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-[#A78BFA] \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
 }' class="hidden">
                                
                                     @for (emp of empleados(); track emp.uid) {
@@ -102,12 +102,12 @@
                                     }
                                 </select>
                                 } @else {
-                                <div class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#9291aa] shadow-2xs">
+                                <div class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#9291aa] dark:text-[#A78BFA] shadow-2xs">
                                     Cargando empleados...
                                 </div>
                                 }
                                 @if (asignadoA?.touched && asignadoA?.invalid) {
-                                <div class="text-sm text-[#fb3640] mt-2">
+                                <div class="text-sm text-[#fb3640] dark:text-[#fb3640] mt-2">
                                     @if (asignadoA?.errors?.['required']) {
                                     <span>Debe seleccionar un empleado.</span>
                                     }
@@ -116,37 +116,37 @@
                             </div>
 
                             <div class="space-y-3">
-                                <label for="create-fechaDeVencimiento" class="block text-sm font-medium text-[#524380]">
+                                <label for="create-fechaDeVencimiento" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Fecha de Vencimiento
                                 </label>
                                 
                                 <input id="create-fechaDeVencimiento" type="date" formControlName="fechaDeVencimiento"
-                                    class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs">
+                                    class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] dark:focus:border-[#A78BFA] focus:ring-[#5956e9] dark:focus:ring-[#A78BFA] shadow-2xs">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card Descripción -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
-                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
-                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9] dark:text-[#A78BFA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
                         </svg>
                         Descripción Detallada *
                     </h3>
                     <div class="space-y-3">
                         <textarea id="create-descripcion" formControlName="descripcion" rows="5"
-                            class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs resize-none transition-all duration-200"
+                            class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] dark:focus:border-[#A78BFA] focus:ring-[#5956e9] dark:focus:ring-[#A78BFA] shadow-2xs resize-none transition-all duration-200"
                             placeholder="Describe los detalles de la tarea..."></textarea>
                         @if (descripcion?.touched && descripcion?.invalid) {
-                        <div class="text-sm text-[#fb3640] mt-2">
+                        <div class="text-sm text-[#fb3640] dark:text-[#fb3640] mt-2">
                             @if (descripcion?.errors?.['required']) {
                             <span>Debe ingresar la descripción de la tarea.</span>
                             }
                         </div>
                         }
-                        <div class="flex justify-between items-center text-xs text-[#9291aa]">
+                        <div class="flex justify-between items-center text-xs text-[#9291aa] dark:text-[#A78BFA]">
                             <span>Mínimo 10 caracteres</span>
                             <span>{{ descripcion?.value?.length || 0 }} caracteres</span>
                         </div>
@@ -154,14 +154,14 @@
                 </div>
 
                 <!-- Card Acciones -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
                     <div class="flex justify-end gap-3">
                         <a routerLink="/administracion/gestion-tareas"
-                            class="py-2.5 px-6 inline-flex items-center justify-center text-sm font-medium rounded-xl border border-transparent text-[#707078] hover:bg-[#fafbfe] transition-colors duration-200">
+                            class="py-2.5 px-6 inline-flex items-center justify-center text-sm font-medium rounded-xl border border-transparent text-[#707078] dark:text-[#E4E4E7] hover:bg-[#fafbfe] dark:hover:bg-[#443a52] transition-colors duration-200">
                             Cancelar
                         </a>
                         <button type="submit" [disabled]="isSubmitting() || tareaForm.invalid"
-                            class="py-2.5 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#5956e9] text-white hover:bg-[#4a47d8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-w-[120px]">
+                            class="py-2.5 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#5956e9] dark:bg-[#A78BFA] text-white hover:bg-[#4a47d8] dark:hover:bg-[#8B5CF6] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-w-[120px]">
                             @if(isSubmitting()) {
                             <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
                             <span>Asignando...</span>
@@ -179,17 +179,17 @@
         @if (isEditMode) {
         <div>
             <div class="mb-8">
-                <h1 class="text-2xl font-semibold text-[#2d2c63] mb-2">Editar Tarea</h1>
-                <p class="text-sm text-[#9291aa]">
+                <h1 class="text-2xl font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-2">Editar Tarea</h1>
+                <p class="text-sm text-[#9291aa] dark:text-[#A78BFA]">
                     Modifica los detalles de la tarea según sea necesario.
                 </p>
             </div>
 
             <form [formGroup]="tareaFormEdicion" (ngSubmit)="guardarCambios()" class="space-y-6">
                 <!-- Card Información Básica -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
-                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
-                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9] dark:text-[#A78BFA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                         Información Básica
@@ -198,16 +198,16 @@
                         <!-- Columna Izquierda -->
                         <div class="space-y-6">
                             <div class="space-y-3">
-                                <label for="edit-titulo" class="block text-sm font-medium text-[#524380]">
+                                <label for="edit-titulo" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Título de la Tarea
                                 </label>
                                 <input id="edit-titulo" formControlName="titulo"
-                                    class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs transition-all duration-200">
+                                    class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] dark:focus:border-[#A78BFA] focus:ring-[#5956e9] dark:focus:ring-[#A78BFA] shadow-2xs transition-all duration-200">
                             </div>
 
                             <!-- Selector de Prioridad -->
                             <div class="space-y-3">
-                                <label class="block text-sm font-medium text-[#524380]">
+                                <label class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Prioridad de la Tarea
                                 </label>
                                 <div class="flex flex-wrap gap-3">
@@ -218,8 +218,8 @@
                                             class="sr-only">
                                         <div class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 shadow-2xs"
                                             [ngClass]="{
-                                                'bg-[#5956e9] text-white': tareaFormEdicion.get('prioridad')?.value === prioridadOption.value,
-                                                'bg-white text-[#707078] hover:bg-[#fafbfe]': tareaFormEdicion.get('prioridad')?.value !== prioridadOption.value
+                                                'bg-[#5956e9] dark:bg-[#A78BFA] text-white': tareaFormEdicion.get('prioridad')?.value === prioridadOption.value,
+                                                'bg-white dark:bg-[#443a52] text-[#707078] dark:text-[#E4E4E7] hover:bg-[#fafbfe] dark:hover:bg-[#2A2433]': tareaFormEdicion.get('prioridad')?.value !== prioridadOption.value
                                             }">
                                             <span class="inline-block w-2 h-2 rounded-full mr-2" 
                                                 [ngClass]="prioridadOption.colorClass"></span>
@@ -234,54 +234,54 @@
                         <!-- Columna Derecha -->
                         <div class="space-y-6">
                             <div class="space-y-3">
-                                <label for="edit-asignadoA" class="block text-sm font-medium text-[#524380]">
+                                <label for="edit-asignadoA" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Asignar a
                                 </label>
                                 @if (empleados().length > 0) {
                                 <select id="edit-asignadoA" formControlName="asignadoA" data-hs-select='{
   "placeholder": "Seleccione un empleado...",
   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
-  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
-  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white dark:bg-[#443a52] text-[#707078] dark:text-[#E4E4E7] min-w-[180px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-[#443a52] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-[#A78BFA]",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-[#E4E4E7] cursor-pointer hover:bg-gray-100 dark:hover:bg-[#443a52] rounded-3xl focus:outline-hidden focus:bg-gray-100 dark:focus:bg-[#443a52] hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078] dark:text-[#E4E4E7] w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-[#A78BFA] \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-[#A78BFA] \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
 }' class="hidden">
                                     @for (emp of empleados(); track emp.uid) {
                                     <option [value]="emp.uid">{{ emp.apellido }}, {{ emp.nombre }}</option>
                                     }
                                 </select>
                                 } @else {
-                                <div class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#9291aa] shadow-2xs">
+                                <div class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#9291aa] dark:text-[#A78BFA] shadow-2xs">
                                     Cargando empleados...
                                 </div>
                                 }
                             </div>
 
                             <div class="space-y-3">
-                                <label for="edit-fechaDeVencimiento" class="block text-sm font-medium text-[#524380]">
+                                <label for="edit-fechaDeVencimiento" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                     Fecha de Vencimiento
                                 </label>
                                 <input id="edit-fechaDeVencimiento" type="date" formControlName="fechaDeVencimiento"
-                                    class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs">
+                                    class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] dark:focus:border-[#A78BFA] focus:ring-[#5956e9] dark:focus:ring-[#A78BFA] shadow-2xs">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card Descripción -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
-                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
-                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9] dark:text-[#A78BFA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
                         </svg>
                         Descripción Detallada
                     </h3>
                     <div class="space-y-3">
                         <textarea id="edit-descripcion" formControlName="descripcion" rows="5"
-                            class="py-3 px-4 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs resize-none transition-all duration-200"
+                            class="py-3 px-4 block w-full bg-white dark:bg-[#443a52] rounded-xl text-sm text-[#707078] dark:text-[#E4E4E7] focus:border-[#5956e9] dark:focus:border-[#A78BFA] focus:ring-[#5956e9] dark:focus:ring-[#A78BFA] shadow-2xs resize-none transition-all duration-200"
                             placeholder="Describe los detalles de la tarea..."></textarea>
-                        <div class="flex justify-between items-center text-xs text-[#9291aa]">
+                        <div class="flex justify-between items-center text-xs text-[#9291aa] dark:text-[#A78BFA]">
                             <span>Mínimo 10 caracteres</span>
                             <span>{{ tareaFormEdicion.get('descripcion')?.value?.length || 0 }} caracteres</span>
                         </div>
@@ -289,26 +289,26 @@
                 </div>
 
                 <!-- Card Estado y Progreso -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
-                    <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
-                        <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
+                    <h3 class="text-lg font-semibold text-[#2d2c63] dark:text-[#E4E4E7] mb-6 flex items-center gap-2">
+                        <svg class="size-5 text-[#5956e9] dark:text-[#A78BFA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
                         Estado y Progreso
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-3">
-                            <label for="edit-estado" class="block text-sm font-medium text-[#524380]">
+                            <label for="edit-estado" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                 Estado
                             </label>
                             <select id="edit-estado" formControlName="estado" data-hs-select='{
   "placeholder": "Seleccione un estado...",
   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[160px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
-  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
-  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white dark:bg-[#443a52] text-[#707078] dark:text-[#E4E4E7] min-w-[160px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
+  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-[#443a52] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-[#A78BFA]",
+  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 dark:text-[#E4E4E7] cursor-pointer hover:bg-gray-100 dark:hover:bg-[#443a52] rounded-3xl focus:outline-hidden focus:bg-gray-100 dark:focus:bg-[#443a52] hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078] dark:text-[#E4E4E7] w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-[#A78BFA] \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-[#A78BFA] \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
 }' class="hidden">
                                 <option value="Pendiente">Pendiente</option>
                                 <option value="En Proceso">En Proceso</option>
@@ -318,18 +318,18 @@
                         
                         @if (tareaFormEdicion.get('estado')?.value === 'En Proceso') {
                         <div class="space-y-3">
-                            <label for="edit-progreso" class="block text-sm font-medium text-[#524380]">
+                            <label for="edit-progreso" class="block text-sm font-medium text-[#524380] dark:text-[#E4E4E7]">
                                 Progreso
                             </label>
                             <div class="space-y-2">
                                 <div class="flex items-center gap-3">
                                     <input id="edit-progreso" type="range" min="1" max="99" formControlName="progreso"
-                                        class="w-full h-2 bg-[#f0f1f8] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#5956e9]">
-                                    <span class="text-sm font-medium text-[#5956e9] min-w-[3rem] text-right">
+                                        class="w-full h-2 bg-[#f0f1f8] dark:bg-[#443a52] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#5956e9] dark:[&::-webkit-slider-thumb]:bg-[#A78BFA]">
+                                    <span class="text-sm font-medium text-[#5956e9] dark:text-[#A78BFA] min-w-[3rem] text-right">
                                         {{ tareaFormEdicion.get('progreso')?.value }}%
                                     </span>
                                 </div>
-                                <div class="flex justify-between text-xs text-[#9291aa]">
+                                <div class="flex justify-between text-xs text-[#9291aa] dark:text-[#A78BFA]">
                                     <span>0%</span>
                                     <span>50%</span>
                                     <span>100%</span>
@@ -341,14 +341,14 @@
                 </div>
 
                 <!-- Card Acciones -->
-                <div class="bg-white rounded-3xl shadow-2xs p-6">
+                <div class="bg-white dark:bg-[#2A2433] rounded-3xl shadow-2xs p-6">
                     <div class="flex justify-end gap-3">
                         <a routerLink="/administracion/gestion-tareas"
-                            class="py-2.5 px-6 inline-flex items-center justify-center text-sm font-medium rounded-xl border border-transparent text-[#707078] hover:bg-[#fafbfe] transition-colors duration-200">
+                            class="py-2.5 px-6 inline-flex items-center justify-center text-sm font-medium rounded-xl border border-transparent text-[#707078] dark:text-[#E4E4E7] hover:bg-[#fafbfe] dark:hover:bg-[#443a52] transition-colors duration-200">
                             Cancelar
                         </a>
                         <button type="submit" [disabled]="isSubmitting()"
-                            class="py-2.5 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#5956e9] text-white hover:bg-[#4a47d8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-w-[120px]">
+                            class="py-2.5 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#5956e9] dark:bg-[#A78BFA] text-white hover:bg-[#4a47d8] dark:hover:bg-[#8B5CF6] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-w-[120px]">
                             @if(isSubmitting()) {
                             <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
                             <span>Guardando...</span>
@@ -362,7 +362,7 @@
         </div>
         }
         } @else {
-        <p class="text-center text-[#9291aa]">Cargando tarea...</p>
+        <p class="text-center text-[#9291aa] dark:text-[#A78BFA]">Cargando tarea...</p>
         }
     </div>
 </div>
