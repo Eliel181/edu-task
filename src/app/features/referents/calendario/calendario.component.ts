@@ -1,25 +1,27 @@
+import { Tarea } from './../../../core/interfaces/tarea.model';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarComponent } from '@schedule-x/angular';
-import {  createCalendar, createViewList, createViewMonthAgenda, createViewMonthGrid } from '@schedule-x/calendar';
+import { createCalendar, createViewList, createViewMonthAgenda, createViewMonthGrid } from '@schedule-x/calendar';
 import { VisitaService } from '../../../core/services/visita.service';
 import { SchoolService } from '../../../core/services/school.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Escuela } from '../../../core/interfaces/escuela.model';
-import { Subject } from 'rxjs';
+import { range, Subject } from 'rxjs';
 import { Visita } from '../../../core/interfaces/visita.model';
 import { Timestamp } from '@angular/fire/firestore';
 import type { CalendarEvent } from '@schedule-x/calendar';
 import '@schedule-x/theme-default/dist/index.css';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-calendario',
-  imports: [CalendarComponent,CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CalendarComponent, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.css'
 })
-export class CalendarioComponent implements OnInit,OnDestroy {
+export class CalendarioComponent implements OnInit, OnDestroy {
   private visitaService: VisitaService = inject(VisitaService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private escuelaService: SchoolService = inject(SchoolService);
@@ -39,11 +41,18 @@ export class CalendarioComponent implements OnInit,OnDestroy {
   escuelaSeleccionada = signal<Escuela | undefined>(undefined);
 
   eventos = signal<CalendarEvent[]>([]);
+  visitas = signal<Visita[]>([]);
+
+  visitaForEdit = signal<Visita | undefined>(undefined);
+
+  //cariables para manejar el rango de eventos, como filtro
+  fechaInicio = signal<string>("");
+  fechaFin = signal<string>("");
 
   private destroy$ = new Subject<void>();
 
   calendarApp = createCalendar({
-    views: [createViewMonthGrid(), createViewMonthAgenda(),createViewList()],
+    views: [createViewMonthGrid(), createViewMonthAgenda(), createViewList()],
     calendars: {
       Finalizada: {
         colorName: 'Finalizada',
@@ -63,10 +72,22 @@ export class CalendarioComponent implements OnInit,OnDestroy {
     },
     locale: 'es-ES',
     callbacks: {
+      //onRender: (range) => { this.formatearFecha(range)},
       onClickDate: (date) => { this.openModalForCreate(date); },
       onEventClick: (event: CalendarEvent) => { this.handleEventClick(event); },
-      onClickAgendaDate: (date) => { this.openModalForCreate(date); }
+      onClickAgendaDate: (date) => { this.openModalForCreate(date); },
+      onRangeUpdate: (range) => { this.formatearFecha(range); }
     }
+  });
+
+  // visitas filtradas
+  visitasFiltradas = computed(() => {
+    const inicio = this.fechaInicio();
+    const fin = this.fechaFin();
+
+    return this.visitas().filter(v => {
+      return v.fecha >= inicio && v.fecha <= fin;
+    });
   });
 
   ngOnDestroy(): void {
@@ -86,7 +107,7 @@ export class CalendarioComponent implements OnInit,OnDestroy {
       cueEscuela: [{ value: '', disabled: true }],
       nombreEscuela: [{ value: '', disabled: true }],
       direccionEscuela: [{ value: '', disabled: true }],
-      fecha: [{value:'', disabled: true}],
+      fecha: [{ value: '', disabled: true }],
       horaInicio: ['09:00'],
       horaFin: ['10:00'],
       observaciones: [''],
@@ -94,18 +115,22 @@ export class CalendarioComponent implements OnInit,OnDestroy {
     });
 
     this.cargarVisitasEnCalendario();
+
+    this.fechaInicio.set("2025-09-29");
+    this.fechaFin.set("2025-11-02");
   }
 
   //funcion encargada de cargar las visitas en el calendario
   cargarVisitasEnCalendario() {
     const uidRte = this.authService.currentUser()?.uid;
 
-    if(!uidRte){
+    if (!uidRte) {
       return;
     }
 
     this.visitaService.getVisitasByRte(uidRte).subscribe(visitas => {
       const eventos = this.mapVisitasToEventos(visitas);
+      this.visitas.set(visitas);
       console.log(eventos);
 
       this.calendarApp.events.set(eventos);
@@ -122,9 +147,19 @@ export class CalendarioComponent implements OnInit,OnDestroy {
         start: `${v.fecha} ${v.horaInicio}`,
         end: `${v.fecha} ${v.horaFin}`,
         description: v.observaciones,
-        calendarId: v.estado == 'En Curso'? 'Curso' : v.estado,
+        calendarId: v.estado == 'En Curso' ? 'Curso' : v.estado,
       };
     });
+  }
+
+  formatearFecha(range: any) {
+    const end = range.end;
+    const fechaFin = end.split(" ")[0]; //"2025-09-29"
+    this.fechaFin.set(fechaFin)
+
+    const start = range.start;
+    const fechaInicio = start.split(" ")[0]; //"2025-09-29"
+    this.fechaInicio.set(fechaInicio)
   }
 
   //funcion encargada de traer las escuelas, para mostrarlas en el select de crearVisita
@@ -163,6 +198,24 @@ export class CalendarioComponent implements OnInit,OnDestroy {
     this.isModalVisible = true;
   }
 
+  openModalForEdit(id: string) {
+    let idVisitaEdit;
+
+    if (!id) {
+      return;
+    }
+
+    this.visitaService.getVisitaById(id).subscribe(data => {
+      if (data) {
+        this.visitaForm.patchValue(data);
+        this.visitaForEdit.set(data);
+      }
+    });
+    this.isEditMode = true;
+
+    this.isModalVisible = true;
+  }
+
   handleEventClick(event: CalendarEvent) {
     this.isModalVisible = false;
     this.activeEvent = event;
@@ -178,14 +231,14 @@ export class CalendarioComponent implements OnInit,OnDestroy {
   }
 
   //funcion valida que el form sea valido
-   saveOrUpdateTask() {
+  saveOrUpdateTask() {
     if (this.visitaForm.invalid) {
       this.visitaForm.markAllAsTouched();
       return;
     }
 
     if (this.isEditMode) {
-      //this.updateVisit();
+      this.actualizarVisita();
     } else {
       this.crearNuevaVisita();
     }
@@ -202,19 +255,75 @@ export class CalendarioComponent implements OnInit,OnDestroy {
       horaInicio: formValues.horaInicio,
       horaFin: formValues.horaFin,
       observaciones: formValues.observaciones,
-      tareas:[],
+      tareas: [],
       estado: formValues.estado,
       creadaPor: this.authService.currentUser()?.uid!,
       fechaDeCreacion: Timestamp.now(),
     };
+    this.visitaService.crearVisita(nuevaVisita);
 
-    console.log(nuevaVisita);
+    this.closeModal();
+  }
 
+  actualizarVisita() {
+    const idVisita = this.visitaForEdit()?.id;
+    const formValues = this.visitaForm.getRawValue();
 
-    this.visitaService.crearVisita(nuevaVisita).then(() => {
-      // Idealmente, aquí se recargaría el calendario
+    const visitaParaActualizar: any = {
+      escuelaId: formValues.escuelaId,
+      cueEscuela: formValues.cueEscuela,
+      nombreEscuela: formValues.nombreEscuela,
+      direccionEscuela: formValues.direccionEscuela,
+      horaInicio: formValues.horaInicio,
+      horaFin: formValues.horaFin,
+      observaciones: formValues.observaciones,
+      tareas: this.visitaForEdit()?.tareas,
+      estado: formValues.estado,
+    };
+
+    console.log(visitaParaActualizar);
+
+    if (!idVisita) {
+      return;
+    }
+
+    this.visitaService.updateVisita(idVisita, visitaParaActualizar).then(() => {
+      Swal.fire('Actualizacion Exitosa', 'La tarea se actualizo con exito', 'success');
     });
 
     this.closeModal();
+  }
+
+  async eliminarVisita(idVisita: string) {
+    if (!idVisita) {
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará la visita!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await this.visitaService.eliminarVisita(idVisita);
+        Swal.fire({
+          title: '¡Eliminado!',
+          text: 'Registro eliminado correctamente',
+          icon: 'success'
+        });
+      } catch (error) {
+        console.error('Error al eliminar el registro', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un error al eliminar el registro',
+          icon: 'error',
+        });
+      }
+    }
   }
 }

@@ -1,74 +1,131 @@
-<div class="my-10">
-  <sx-calendar [calendarApp]="calendarApp"></sx-calendar>
-</div>
+<section>
+  <div class="my-10">
+    <sx-calendar [calendarApp]="calendarApp"></sx-calendar>
+  </div>
 
-<!-- Modal Unificado (Crear/Editar) -->
-<div class="modal-overlay" *ngIf="isModalVisible" (click)="closeModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <form [formGroup]="visitaForm" (ngSubmit)="saveOrUpdateTask()">
-      <h3>{{ isEditMode ? 'Editar Visita' : 'Agregar Nueva Visita' }}</h3>
+  <div class="my-3">
+    <h3
+      class="my-10 text-2xl md:text-3xl pl-2 border-l-4  font-sans font-bold border-[#6985fd] text-gray-600  dark:text-gray-200">
+      Visitas Programadas ({{this.fechaInicio()}}) - ({{this.fechaFin()}})
+    </h3>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="fecha">Fecha</label>
-          <input id="fecha" formControlName="fecha" type="text">
-        </div>
-        <div class="form-group">
-          <label for="horaInicio">Inicio</label>
-          <input id="horaInicio" formControlName="horaInicio" type="time">
-        </div>
-        <div class="form-group">
-          <label for="horaFin">Fin</label>
-          <input id="horaFin" type="time" formControlName="horaFin">
-        </div>
+    @for(vis of visitasFiltradas(); track vis.id){
+    <div class="relative w-full">
+      <div class="absolute inset-x-0 -top-2 flex justify-center">
+        <span class="rounded-full px-3 py-1 text-xs font-semibold text-white" [ngClass]="{
+          'bg-[#1cf9b0] text-[#004d3d]': vis.estado === 'En Curso',
+          'bg-[#6985fd] text-[#004d3d]': vis.estado === 'Planificada',
+          'bg-[#f91c45] text-[#004d3d]': vis.estado === 'Finalizada'
+        }">
+          {{vis.estado}}
+        </span>
       </div>
 
-      <div class="form-row">
-        <div class="form-group form-group-large">
-          <label for="add-task-calendar">Escuela *</label>
-          <select id="add-task-calendar" formControlName="escuelaId" (change)="cargarEscuelaSeleccionada($event)">
-            <option value="" disabled selected>Seleccione una escuela</option>
-            @for (esc of escuelas(); track esc.id) {
-            <option [value]="esc.id">{{esc.nombreCompleto}} - {{esc.cue}}</option>
-            }
+      <div class="mt-4 rounded-lg border-2 border-gray-600 bg-white shadow-lg">
+        <div class="border-b p-4 flex justify-between">
+          <div>
+            <h3 class="text-md md:text-2xl font-bold">Visita a {{vis.nombreEscuela}} <span
+                class="text-gray-400 text-sm  md:text-xl">(CUE:{{vis.cueEscuela}})</span></h3>
+            <p class="text-gray-500">{{vis.fecha}}</p>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <a (click)="openModalForEdit(vis.id!)"
+              class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium cursor-pointer bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+              Editar
+            </a>
+            <a (click)="eliminarVisita(vis.id!)"
+              class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium cursor-pointer bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+              Eliminar
+            </a>
+          </div>
+        </div>
+
+        <div class="border-t p-6">
+          <!-- Lista de Actividades de cata Visita -->
+          @for(actividad of vis.tareas; track actividad.id){
+
+          } @empty{
+          <p class="text-center">Sin Actividades</p>
+          }
+        </div>
+      </div>
+    </div>
+    } @empty {
+    <h4 class="text-2xl text-center font-bold uppercase text-indigo-600 transition duration-500">Sin Visitas Programadas
+    </h4>
+    }
+  </div>
+
+  <!-- Modal Unificado (Crear/Editar) -->
+  <div class="modal-overlay" *ngIf="isModalVisible" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <form [formGroup]="visitaForm" (ngSubmit)="saveOrUpdateTask()">
+        <h3>{{ isEditMode ? 'Editar Visita' : 'Agregar Nueva Visita' }}</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input id="fecha" formControlName="fecha" type="text">
+          </div>
+          <div class="form-group">
+            <label for="horaInicio">Inicio</label>
+            <input id="horaInicio" formControlName="horaInicio" type="time">
+          </div>
+          <div class="form-group">
+            <label for="horaFin">Fin</label>
+            <input id="horaFin" type="time" formControlName="horaFin">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="add-task-calendar">Escuela *</label>
+            <select id="add-task-calendar" formControlName="escuelaId" (change)="cargarEscuelaSeleccionada($event)">
+              <option value="" disabled selected>Seleccione una escuela</option>
+              @for (esc of escuelas(); track esc.id) {
+              <option [value]="esc.id">{{esc.nombreCompleto}} - {{esc.cue}}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cueEscuela">CUE</label>
+            <input id="cueEscuela" name="cueEscuela" type="text" formControlName="cueEscuela">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nombreEscuela">Nombre de la Escuela</label>
+          <input id="nombreEscuela" name="nombreEscuela" type="text" formControlName="nombreEscuela">
+        </div>
+
+        <div class="form-group">
+          <label for="direccionEscuela">Dirección</label>
+          <input id="direccionEscuela" name="direccionEscuela" type="text" formControlName="direccionEscuela">
+        </div>
+
+        <div class="form-group">
+          <label for="estado">Estado *</label>
+          <select id="estado" name="estado" formControlName="estado">
+            <option value="Planificada">Planificada</option>
+            <option value="En Curso">En Curso</option>
+            <option value="Finalizada">Finalizada</option>
           </select>
         </div>
+
         <div class="form-group">
-          <label for="cueEscuela">CUE</label>
-          <input id="cueEscuela" name="cueEscuela" type="text" formControlName="cueEscuela">
+          <label for="observaciones">Observaciones</label>
+          <textarea id="observaciones" name="observaciones" formControlName="observaciones" rows="3"></textarea>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="nombreEscuela">Nombre de la Escuela</label>
-        <input id="nombreEscuela" name="nombreEscuela" type="text" formControlName="nombreEscuela">
-      </div>
-
-      <div class="form-group">
-        <label for="direccionEscuela">Dirección</label>
-        <input id="direccionEscuela" name="direccionEscuela" type="text" formControlName="direccionEscuela">
-      </div>
-
-      <div class="form-group">
-        <label for="estado">Estado *</label>
-        <select id="estado" name="estado" formControlName="estado">
-          <option value="Planificada">Planificada</option>
-          <option value="En Curso">En Curso</option>
-          <option value="Finalizada">Finalizada</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="observaciones">Observaciones</label>
-        <textarea id="observaciones" name="observaciones" formControlName="observaciones" rows="3"></textarea>
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
-        <button type="submit" class="btn-save" [disabled]="visitaForm.invalid">
-          {{ isEditMode ? 'Guardar Cambios' : 'Guardar Visita' }}
-        </button>
-      </div>
-    </form>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-save" [disabled]="visitaForm.invalid">
+            {{ isEditMode ? 'Guardar Cambios' : 'Guardar Visita' }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+
+</section>
