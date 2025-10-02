@@ -62,7 +62,14 @@ export class FirestoreService {
       return querySnapshot.docs.some(doc => doc.id !== excludeId);
     }
 
-    return !querySnapshot.empty; 
+    return !querySnapshot.empty;
   }
+
+  getUsuariosOnline<T>(path: string): Observable<T[]> {
+    const collectionRef = collection(this.firestore, path);
+    const q = query(collectionRef, where('online', '==', true));
+    return collectionData(q, { idField: 'id' }) as Observable<T[]>;
+  }
+
 
 }

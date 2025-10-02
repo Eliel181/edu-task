@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../../core/interfaces/usuario.model';
 import { SchoolService } from '../../../core/services/school.service';
 import { distinctUntilChanged, skip, Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
-import { FirestoreService } from '../../../core/services/firestore.service';
-import { Escuela } from '../../../core/interfaces/escuela.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
 
 
 declare const HSStaticMethods: any;
@@ -18,19 +18,18 @@ declare const HSStaticMethods: any;
   styleUrl: './school-management.component.css'
 })
 export class SchoolManagementComponent implements OnInit, OnDestroy {
-
-
+  private activityService: ActivityFeedService = inject(ActivityFeedService);
+  private authService: AuthService = inject(AuthService);
   private escuelaService: SchoolService = inject(SchoolService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
 
-  private firestoreService: FirestoreService = inject(FirestoreService);
   directores = signal<Usuario[]>([]);
 
   router: Router = inject(Router);
 
   escuelaForm!: FormGroup;
-  isSubmitting: boolean = false;
+  isSubmitting = signal<boolean>(false);
 
   isEditMode: boolean = false;
   escuelaId: string | null = null;
@@ -114,55 +113,87 @@ export class SchoolManagementComponent implements OnInit, OnDestroy {
 
   }
 
-  guardarCambios(): void {
+  async guardarCambios(): Promise<void> {
     // debugger
     if (this.escuelaForm.invalid) {
       this.escuelaForm.markAllAsTouched();
       return;
     }
 
+  this.isSubmitting.set(true);
     const escuelaData = this.escuelaForm.value;
-    const { cue } = escuelaData;
+    const currentUser = this.authService.currentUser();
 
-    if (this.isEditMode && this.escuelaId) {
-      //modo actualización
-      this.escuelaService.updateEscuela(this.escuelaId, escuelaData).then(res => {
+    
+    if (!currentUser) {
+      this.isSubmitting.set(false);
+      return;
+    }
 
-        Swal.fire({
-          title: 'Actualizado Exitosamente',
-          text: 'Los datos de la Esc. se actualizaron exitosamente',
-          icon: 'success'
-        })
-
-        this.router.navigate(['administracion/gestion-escuelas']);
-
-      }).catch(err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Datos NO Actualizados',
-          text: 'Error al Actualizar los datos'
-        })
-      })
-    } else {
-
-      //modo nueva escuela
-      this.escuelaService.crearEscuela(escuelaData).then(res => {
-        Swal.fire({
+    try {
+      if (this.isEditMode && this.escuelaId) {
+        await this.escuelaService.updateEscuela(this.escuelaId, escuelaData);        
+        await this.registrarActividadEdicionEscuela(currentUser, this.escuelaId, escuelaData.nombreCompleto);
+        Swal.fire({ 
+          title: 'Actualizado Exitosamente', 
           icon: 'success',
-          title: 'Creado Exitosamente',
-          text: 'Escuela Creada Exitosamente'
-        })
-        this.router.navigate(['administracion/gestion-escuelas']);
-      }).catch(err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error al Intentar Registrar Escuela'
-        })
-      })
+          timer: 2000,
+          showConfirmButton: false
+        });
+      } else {
+        const docRef = await this.escuelaService.crearEscuela(escuelaData);
+        await this.registrarActividadCreacionEscuela(currentUser, docRef.id, escuelaData.nombreCompleto);
+        
+        Swal.fire({ 
+          title: 'Creado Exitosamente', 
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+
+      this.router.navigate(['administracion/gestion-escuelas']);
+    } catch (err) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo guardar la escuela' });
+    }finally {
+      this.isSubmitting.set(false);
     }
   }
 
+ // Métodos para registrar actividades
+  private async registrarActividadCreacionEscuela(
+    usuario: Usuario, 
+    escuelaId: string, 
+    nombreEscuela: string
+  ): Promise<void> {
+    await this.activityService.logActivity({
+      actorId: usuario.uid,
+      actorName: `${usuario.apellido} ${usuario.nombre}`,
+      actorImage: usuario.perfil,
+      action: 'create_school',
+      entityType: 'school',
+      entityId: escuelaId,
+      entityDescription: nombreEscuela,
+      details: `${usuario.nombre} ${usuario.apellido} registró una nueva escuela "${nombreEscuela}"`
+    });
+  }
+
+  private async registrarActividadEdicionEscuela(
+    usuario: Usuario, 
+    escuelaId: string, 
+    nombreEscuela: string
+  ): Promise<void> {
+    await this.activityService.logActivity({
+      actorId: usuario.uid,
+      actorName: `${usuario.apellido} ${usuario.nombre}`,
+      actorImage: usuario.perfil,
+      action: 'update_school',
+      entityType: 'school',
+      entityId: escuelaId,
+      entityDescription: nombreEscuela,
+      details: `${usuario.nombre} ${usuario.apellido} actualizó los datos de la escuela "${nombreEscuela}"`
+    });
+  }
 
   get nombreCompleto() { return this.escuelaForm.get('nombreCompleto'); }
   get nombreCorto() { return this.escuelaForm.get('nombreCorto'); }

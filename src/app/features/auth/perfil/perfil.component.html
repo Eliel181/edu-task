@@ -19,13 +19,23 @@
                 <div class="col-span-12">
                     <div class="flex items-center gap-x-5">
                         <!-- Contenedor de imagen -->
-                        <div
-                            class="relative size-32 rounded-full bg-[#f9f9fe] flex items-center justify-center border-2 border-[#e2e3fa]">
-                            <img class="inline-block size-32 rounded-full object-cover"
-                                [src]="imagenBase64Preview() || user.perfil || 'https://preline.co/assets/img/160x160/img1.jpg'"
-                                alt="User Profile Picture">
-
-                        </div>
+      <div
+        class="relative size-32 rounded-full flex items-center justify-center border-2 border-[#e2e3fa] overflow-hidden">
+        
+        @if (imagenBase64Preview() || user?.perfil) {
+          <!-- Si hay imagen seleccionada o ya guardada -->
+          <img
+            class="inline-block size-32 rounded-full object-cover"
+            [src]="imagenBase64Preview() || user?.perfil"
+            [alt]="user?.nombre" />
+        } @else {
+          <!-- Si no hay imagen: mostrar iniciales -->
+          <div
+            class="size-32 rounded-full flex items-center justify-center text-white text-4xl font-semibold bg-[#5956e9]">
+            {{ (user?.nombre?.[0] || '') + (user?.apellido?.[0] || '') }}
+          </div>
+        }
+      </div>
 
                         <!-- Información de ayuda -->
                         <div class="flex-1">

@@ -25,6 +25,8 @@ export class TaskService {
 
 
   async crearTarea(tarea: Partial<Tarea>): Promise<DocumentReference> {
+    
+    debugger
     const actor = this.authService.currentUser();
     if (!actor) throw new Error("Usuario no autenticado para crear la tarea.");
 

@@ -25,13 +25,31 @@ export class AuthService {
             ...user!,
             emailVerified: firebaseUser.emailVerified
           };
+
           console.log("Usuario con datos (y verificación): ", userWithVerificationStatus);
           this.currentUser.set(userWithVerificationStatus || null);
+
+          this.firestoreService.updateDocument('usuarios', firebaseUser.uid, {
+            online: true,
+            lastSeen: new Date()
+          });
+
         } else {
           this.currentUser.set(null);
         }
         this.isAuthStatusLoaded.set(true);
       });
+
+    // esto para detectar cierre de pestaña
+    window.addEventListener('beforeunload', async () => {
+      const user = this.currentUser();
+      if (user) {
+        await this.firestoreService.updateDocument('usuarios', user.uid, {
+          online: false,
+          lastSeen: new Date()
+        });
+      }
+    });
   }
 
 
@@ -48,15 +66,11 @@ export class AuthService {
         apellido,
         nombre,
         rol: 'Empleado',
+        emailVerified: firebaseUser.emailVerified
       };
 
       await this.firestoreService.setDocument('usuarios', firebaseUser.uid, newUser);
 
-      // await signOut(this.auth);
-
-      // this.currentUser.set(newUser);
-      // this.currentUser.set(null);
-      // this.router.navigate(['/verificar-email']);
       return firebaseUser;
 
     } catch (error) {
@@ -97,13 +111,24 @@ export class AuthService {
         throw new Error('Debes verificar tu correo antes de ingresar.');
       }
       const appUser = await this.firestoreService.getDocument<Usuario>('usuarios', user.uid);
-      // Establecemos la señal currentUser con el usuario autenticado y sus datos
-      // this.currentUser.set(appUser || null);
+
+      if (!appUser) {
+        throw new Error('No se encontraron datos del usuario en la base de datos.');
+      }
+
+      if (user.emailVerified && appUser.emailVerified !== true) {
+        await this.firestoreService.updateDocument('usuarios', user.uid, { emailVerified: true });
+      }
       const userWithVerificationStatus: Usuario = {
         ...appUser!,
         emailVerified: user.emailVerified
       };
-      // console.log("Usuario con datos (y verificación): ", userWithVerificationStatus);
+
+      await this.firestoreService.updateDocument('usuarios', user.uid, {
+        online: true,
+        lastSeen: new Date()
+      });
+
       this.currentUser.set(userWithVerificationStatus || null);
     } catch (error: any) {
       console.error("Error en el login", error);
@@ -153,13 +178,17 @@ export class AuthService {
         await this.firestoreService.setDocument('usuarios', user.uid, newUser);
         appUser = newUser;
       }
-      // **Actualizar siempre currentUser**
+
       this.currentUser.set({
         ...appUser,
         emailVerified: user.emailVerified
       });
 
-      // Luego redirigir
+      await this.firestoreService.updateDocument('usuarios', user.uid, {
+        online: true,
+        lastSeen: new Date()
+      });
+
       this.router.navigate(['/administracion']);
     } catch (error) {
       console.error('Error en login con google', error);
@@ -168,10 +197,18 @@ export class AuthService {
 
   // Metodo para el LogOut
   async logOut() {
+    const user = this.currentUser();
+    if (user) {
+      await this.firestoreService.updateDocument('usuarios', user.uid, {
+        online: false,
+        lastSeen: new Date()
+      });
+    }
     await signOut(this.auth);
     this.currentUser.set(null);
     this.router.navigate(['/login']);
   }
+
 
   async resetPassword(email: string): Promise<void> {
     // Metodo para enviar email de recuperacion de la contraseña

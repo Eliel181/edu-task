@@ -29,7 +29,7 @@ export class LoginComponent {
   async onSubmit(): Promise<void> {
 
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched;
+      this.loginForm.markAllAsTouched();
       return;
     }
 

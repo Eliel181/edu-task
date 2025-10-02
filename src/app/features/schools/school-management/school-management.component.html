@@ -1,7 +1,7 @@
 <!-- Formulario de Escuela -->
 <div class="min-h-screen bg-[#fcfdfe] p-6 font_outfit">
     <div class="mx-auto px-1 py-10 max-w-6xl">
-        
+
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-2xl font-semibold text-[#2d2c63] mb-2">
@@ -18,7 +18,8 @@
             <div class="bg-white rounded-3xl shadow-2xs p-6">
                 <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
                     <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     Información Básica
                 </h3>
@@ -71,26 +72,17 @@
                             <label for="nivel" class="block text-sm font-medium text-[#524380]">
                                 Nivel Educativo *
                             </label>
-                            <!-- <select id="nivel" name="nivel" formControlName="nivel" data-hs-select='{
-  "placeholder": "Seleccione un nivel...",
-  "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-  "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white text-[#707078]  min-w-[160px] shadow-2xs rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-  "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-3xl shadow-2xs overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
-  "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-3xl focus:outline-hidden focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
-  "optionTemplate": "<div class=\"flex justify-between items-center text-[#707078]  w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-  "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
-}' class="hidden"> 
+
+                            <select id="nivel" name="nivel" formControlName="nivel"
+                            
+                                class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm shadow-2xs text-[#707078] focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                <option value="" disabled selected>Seleccione un nivel...</option>
                                 <option value="Primario">Primario</option>
                                 <option value="Secundario">Secundario</option>
                                 <option value="Terciario">Terciario</option>
                                 <option value="Universitario">Universitario</option>
-                            </select> -->
-                            <select id="nivel" name="nivel" formControlName="nivel">
-  <option value="Primario">Primario</option>
-  <option value="Secundario">Secundario</option>
-  <option value="Terciario">Terciario</option>
-  <option value="Universitario">Universitario</option>
-</select>
+                            </select>
+
                             @if (nivel?.touched && nivel?.invalid) {
                             <div class="text-sm text-[#fb3640] mt-2">
                                 @if (nivel?.errors?.['required']) {
@@ -99,6 +91,7 @@
                             </div>
                             }
                         </div>
+
                     </div>
 
                     <!-- Columna Derecha -->
@@ -179,7 +172,8 @@
             <div class="bg-white rounded-3xl shadow-2xs p-6">
                 <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
                     <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     Información de Contacto
                 </h3>
@@ -256,7 +250,8 @@
             <div class="bg-white rounded-3xl shadow-2xs p-6">
                 <h3 class="text-lg font-semibold text-[#2d2c63] mb-6 flex items-center gap-2">
                     <svg class="size-5 text-[#5956e9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                     Estadísticas
                 </h3>
@@ -340,10 +335,11 @@
                         class="py-2.5 px-6 inline-flex items-center justify-center text-sm font-medium rounded-xl border border-transparent text-[#707078] hover:bg-[#fafbfe] transition-colors duration-200">
                         Cancelar
                     </a>
-                    <button type="submit" [disabled]="escuelaForm.invalid || isSubmitting"
+                    <button type="submit" [disabled]="escuelaForm.invalid || isSubmitting()"
                         class="py-2.5 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#5956e9] text-white hover:bg-[#4a47d8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-w-[140px]">
-                        @if(isSubmitting) {
-                        <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
+                        @if(isSubmitting()) {
+                        <span
+                            class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
                         <span>Guardando...</span>
                         } @else {
                         <span>{{ isEditMode ? 'Guardar Cambios' : 'Crear Escuela' }}</span>

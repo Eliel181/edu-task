@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { delay } from 'rxjs';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import { delay } from 'rxjs';
 })
 export class RegisterComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private activityFeedService: ActivityFeedService = inject(ActivityFeedService);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
@@ -41,14 +43,15 @@ export class RegisterComponent {
     this.isSubmitting = true;
     try {
       // Desestructurar para obtener el email
-      const { email } = this.registerForm.value;
+      const { email, nombre, apellido } = this.registerForm.value;
       // await this.authService.register(this.registerForm.value);
       const firebaseUser = await this.authService.register(this.registerForm.value);
+      await this.registrarActividadRegistro(firebaseUser.uid, nombre, apellido, email);
       // this.isSubmitting = false;
       await this.authService.sendEmailVerification();
-      
+
       sessionStorage.setItem('pendingVerificationEmail', email);
-      
+
       this.router.navigate(['/verificar-email'], {
         state: { email: email }
       });
@@ -58,6 +61,29 @@ export class RegisterComponent {
       alert('Hubo un error al registrar el usuario, Intenta de nuevo');
     } finally {
       this.isSubmitting = false;
+    }
+  }
+
+  private async registrarActividadRegistro(
+    usuarioId: string,
+    nombre: string,
+    apellido: string,
+    email: string
+  ): Promise<void> {
+    try {
+      await this.activityFeedService.logActivity({
+        actorId: usuarioId,
+        actorName: `${nombre} ${apellido}`,
+        actorImage: '', // No hay imagen de perfil al registrarse
+        action: 'register',
+        entityType: 'user',
+        entityId: usuarioId,
+        entityDescription: `${nombre} ${apellido}`,
+        details: `${nombre} ${apellido} se registró en el sistema con el email ${email}`
+      });
+    } catch (error) {
+      console.error('Error registrando actividad de registro:', error);
+      // No mostrar error al usuario para no interrumpir el flujo de registro
     }
   }
 

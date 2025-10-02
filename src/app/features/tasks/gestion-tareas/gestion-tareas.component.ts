@@ -7,6 +7,9 @@ import { EstadoTarea, Tarea } from '../../../core/interfaces/tarea.model';
 import { TaskService } from '../task.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ActivityAction } from '../../../core/interfaces/activity-feed.model';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-gestion-tareas',
@@ -16,7 +19,8 @@ import { RouterModule } from '@angular/router';
 })
 export class GestionTareasComponent implements OnInit, OnDestroy {
   private taskService: TaskService = inject(TaskService);
-
+  private authService: AuthService = inject(AuthService);
+  private activityFeedService: ActivityFeedService = inject(ActivityFeedService);
   public empleados = signal<Usuario[]>([]);
   private allTasks = signal<Tarea[]>([]);
   public isLoading = signal(true);
@@ -131,8 +135,12 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
       this.paginaActual.set(numeroPagina);
     }
   }
-  confirmarEliminacion(tarea: Tarea): void {
+  async confirmarEliminacion(tarea: Tarea): Promise<void> {
     if (!tarea.id) return;
+
+    const admin = this.authService.currentUser();
+
+    if (!admin) { return; }
 
     Swal.fire({
       title: "¿Estás seguro?",
@@ -141,12 +149,34 @@ export class GestionTareasComponent implements OnInit, OnDestroy {
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
+    }).then(async (result)  => {
       if (result.isConfirmed) {
-        this.taskService.eliminarTarea(tarea.id!, tarea.titulo)
-          .then(() => Swal.fire('¡Eliminada!', 'La tarea ha sido eliminada.', 'success'))
-          .catch(() => Swal.fire('Error', 'No se pudo eliminar la tarea.', 'error'));
+        try {
+          await this.taskService.eliminarTarea(tarea.id!, tarea.titulo);
+          
+          // Registrar actividad de eliminación
+          await this.registrarActividadEliminacionTarea(admin, tarea);
+
+          Swal.fire('¡Eliminada!', 'La tarea ha sido eliminada.', 'success');
+        } catch (error) {
+          console.error('Error al eliminar tarea:', error);
+          Swal.fire('Error', 'No se pudo eliminar la tarea.', 'error');
+        }
       }
+    });
+  }
+    private async registrarActividadEliminacionTarea(admin: Usuario, tarea: Tarea): Promise<void> {
+    const accion: ActivityAction = 'task_deleted'; // O puedes crear 'task_deleted'
+    
+    await this.activityFeedService.logActivity({
+      actorId: admin.uid,
+      actorName: `${admin.nombre} ${admin.apellido}`,
+      actorImage: admin.perfil,
+      action: accion,
+      entityType: 'task',
+      entityId: tarea.id,
+      entityDescription: tarea.titulo,
+      details: `${admin.nombre} ${admin.apellido} eliminó la tarea "${tarea.titulo}"`,
     });
   }
 

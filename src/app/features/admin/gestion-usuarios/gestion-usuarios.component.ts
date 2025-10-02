@@ -4,6 +4,8 @@ import { Component, computed, inject, OnInit, Signal, signal, WritableSignal } f
 import { Usuario } from '../../../core/interfaces/usuario.model';
 import Swal from 'sweetalert2';
 import { RouterLink, RouterModule } from '@angular/router';
+import { ActivityFeedService } from '../../../core/services/activity-feed.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -11,9 +13,11 @@ import { RouterLink, RouterModule } from '@angular/router';
   templateUrl: './gestion-usuarios.component.html',
   styleUrl: './gestion-usuarios.component.css'
 })
-export class GestionUsuariosComponent implements OnInit{
+export class GestionUsuariosComponent implements OnInit {
 
   private firestoreService = inject(FirestoreService);
+  private activityFeedService: ActivityFeedService = inject(ActivityFeedService);
+  private authService: AuthService = inject(AuthService);
 
   // Datos y estado
   usuariosOriginales: WritableSignal<Usuario[]> = signal([]);
@@ -40,9 +44,9 @@ export class GestionUsuariosComponent implements OnInit{
     return todos.filter(u => {
       const nombreCompleto = `${u.nombre} ${u.apellido}`;
       return this.normalizarTexto(nombreCompleto).includes(termino) ||
-             this.normalizarTexto(u.email).includes(termino) ||
-             this.normalizarTexto(u.rol).includes(termino) ||
-             this.normalizarTexto(u.telefono || '').includes(termino);
+        this.normalizarTexto(u.email).includes(termino) ||
+        this.normalizarTexto(u.rol).includes(termino) ||
+        this.normalizarTexto(u.telefono || '').includes(termino);
     });
   });
 
@@ -97,32 +101,60 @@ export class GestionUsuariosComponent implements OnInit{
     }
   }
 
-  // Eliminar usuario (opcional; lo dejé igual que antes)
-  async eliminarUsuario(uid: string): Promise<void> {
+  async eliminarUsuario(usuario: Usuario): Promise<void> {
+    const admin = this.authService.currentUser();
+    if (!admin) {
+      return;
+    }
     const result = await Swal.fire({
       title: '¿Estás Seguro?',
-      text: 'Esta acción eliminará el registro del usuario.',
+      text: `Esta acción eliminará al usuario ${usuario.nombre} ${usuario.apellido} del sistema.`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
-      reverseButtons: true,
-      buttonsStyling: false
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d'
     });
 
     if (!result.isConfirmed) return;
 
     try {
-      await this.firestoreService.deleteDocument('usuarios', uid);
-      this.usuariosOriginales.set(this.usuariosOriginales().filter(u => u.uid !== uid));
+      await this.firestoreService.deleteDocument('usuarios', usuario.uid);
+
+      // Registrar actividad de eliminación
+      await this.registrarActividadEliminacionUsuario(admin, usuario);
+
+      // Actualizar lista local
+      this.usuariosOriginales.set(this.usuariosOriginales().filter(u => u.uid !== usuario.uid));
+
       // Ajustar página si quedó fuera de rango
-      if (this.paginaActual() > this.totalPaginas()) {
+      if (this.paginaActual() > this.totalPaginas() && this.totalPaginas() > 0) {
         this.paginaActual.set(this.totalPaginas());
       }
-      Swal.fire('Eliminado', 'Usuario eliminado correctamente.', 'success');
+
+      Swal.fire({
+        title: 'Eliminado',
+        text: 'Usuario eliminado correctamente.',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+      });
     } catch (error) {
       console.error('Error eliminando usuario', error);
       Swal.fire('Error', 'No se pudo eliminar el usuario.', 'error');
     }
+  }
+  private async registrarActividadEliminacionUsuario(admin: Usuario, usuarioEliminado: Usuario): Promise<void> {
+    await this.activityFeedService.logActivity({
+      actorId: admin.uid,
+      actorName: `${admin.nombre} ${admin.apellido}`,
+      actorImage: admin.perfil,
+      action: 'user_deleted', // O puedes crear 'user_deleted'
+      entityType: 'user',
+      entityId: usuarioEliminado.uid,
+      entityDescription: `${usuarioEliminado.nombre} ${usuarioEliminado.apellido}`,
+      details: `${admin.nombre} ${admin.apellido} eliminó al usuario "${usuarioEliminado.nombre} ${usuarioEliminado.apellido}" (${usuarioEliminado.email}) del sistema`
+    });
   }
 }
