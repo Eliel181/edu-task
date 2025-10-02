@@ -1,6 +1,5 @@
-import { Tarea } from './../../../core/interfaces/tarea.model';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarComponent } from '@schedule-x/angular';
 import { createCalendar, createViewList, createViewMonthAgenda, createViewMonthGrid } from '@schedule-x/calendar';
@@ -21,7 +20,8 @@ import Swal from 'sweetalert2';
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.css'
 })
-export class CalendarioComponent implements OnInit, OnDestroy {
+export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
+
   private visitaService: VisitaService = inject(VisitaService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private escuelaService: SchoolService = inject(SchoolService);
@@ -50,6 +50,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   fechaFin = signal<string>("");
 
   private destroy$ = new Subject<void>();
+  private themeObserver: MutationObserver | undefined;
 
   calendarApp = createCalendar({
     views: [createViewMonthGrid(), createViewMonthAgenda(), createViewList()],
@@ -93,6 +94,25 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    if (this.themeObserver) {
+      this.themeObserver.disconnect();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    const targetNode = document.documentElement;
+
+    const callback = (mutationsList: MutationRecord[]) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          this.syncCalendarTheme();
+        }
+      }
+    };
+
+    this.themeObserver = new MutationObserver(callback);
+    this.themeObserver.observe(targetNode, { attributes: true });
+    this.syncCalendarTheme();
   }
 
   ngOnInit(): void {
@@ -118,6 +138,11 @@ export class CalendarioComponent implements OnInit, OnDestroy {
 
     this.fechaInicio.set("2025-09-29");
     this.fechaFin.set("2025-11-02");
+  }
+
+  syncCalendarTheme(): void {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    this.calendarApp.setTheme(isDarkMode ? 'dark' : 'light');
   }
 
   //funcion encargada de cargar las visitas en el calendario

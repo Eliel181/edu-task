@@ -1,23 +1,23 @@
-<section class="bg-gray-50 p-4 sm:p-6 lg:p-8">
+<section class="bg-gray-50 dark:bg-[#1A1A1E] backdrop-blur-sm p-4 sm:p-6 lg:p-8">
   <div class="max-w-7xl mx-auto">
     <!-- Calendar -->
-    <div class="bg-white rounded-xl shadow-lg p-4">
+    <div class="bg-white dark:bg-[#2A2433] rounded-xl shadow-lg p-4">
       <sx-calendar [calendarApp]="calendarApp"></sx-calendar>
     </div>
 
     <!-- Visits Title -->
     <div class="my-8">
-      <h3 class="text-2xl md:text-3xl font-bold text-gray-800 pl-3 border-l-4 border-purple-600">
+      <h3 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-[#E4E4E7] pl-3 border-l-4 border-purple-600">
         Visitas Programadas
       </h3>
-      <p class="text-gray-500 mt-1 pl-3">{{this.fechaInicio()}} - {{this.fechaFin()}}</p>
+      <p class="text-gray-500 dark:text-slate-400 mt-1 pl-3">{{this.fechaInicio()}} - {{this.fechaFin()}}</p>
     </div>
 
     <!-- Visits List -->
     <div class="space-y-6">
       @for(vis of visitasFiltradas(); track vis.id){
-      <div class="bg-white rounded-xl shadow-md transition-shadow hover:shadow-xl">
-        <div class="p-5 border-b border-gray-200 flex justify-between items-start">
+      <div class="bg-white dark:bg-[#2A2433] rounded-xl shadow-md transition-shadow hover:shadow-xl">
+        <div class="p-5 border-b border-gray-200 dark:border-slate-700 flex justify-between items-start">
           <div>
             <div class="flex items-center gap-3 mb-1">
               <span class="rounded-full px-3 py-1 text-xs font-semibold text-white" [ngClass]="{
@@ -27,20 +27,20 @@
               }">
                 {{vis.estado}}
               </span>
-              <h3 class="text-xl font-bold text-gray-800">Visita a {{vis.nombreEscuela}}</h3>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-[#E4E4E7]">Visita a {{vis.nombreEscuela}}</h3>
             </div>
-            <p class="text-gray-500 text-sm ml-3">CUE: {{vis.cueEscuela}} | Fecha: {{vis.fecha}}</p>
+            <p class="text-gray-500 dark:text-slate-400 text-sm ml-3">CUE: {{vis.cueEscuela}} | Fecha: {{vis.fecha}}</p>
           </div>
 
           <div class="flex items-center gap-2 flex-shrink-0 mt-1">
             <button (click)="openModalForEdit(vis.id!)"
-              class="inline-flex items-center justify-center h-10 w-10 rounded-full text-gray-600 hover:bg-gray-200 hover:text-gray-800 transition-colors" aria-label="Editar">
+              class="inline-flex items-center justify-center h-10 w-10 rounded-full text-gray-600 dark:text-purple-400 hover:bg-gray-200 dark:hover:bg-purple-900/50 dark:hover:text-purple-300 transition-colors" aria-label="Editar">
               <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
               </svg>
             </button>
             <button (click)="eliminarVisita(vis.id!)"
-              class="inline-flex items-center justify-center h-10 w-10 rounded-full text-red-600 hover:bg-red-100 hover:text-red-800 transition-colors" aria-label="Eliminar">
+              class="inline-flex items-center justify-center h-10 w-10 rounded-full text-red-600 dark:text-pink-500 hover:bg-red-100 dark:hover:bg-pink-900/50 hover:text-red-800 transition-colors" aria-label="Eliminar">
               <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.067-2.09 1.02-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
               </svg>
@@ -48,60 +48,78 @@
           </div>
         </div>
 
-        <div class="p-6">
-          <div class="flex justify-between items-center mb-3">
-            <h4 class="font-semibold text-gray-700">Actividades</h4>
-            <button class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors" aria-label="Agregar Actividad">
-              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-            </button>
-          </div>
-          @for(actividad of vis.tareas; track actividad.id){
-            <!-- Activity item will go here -->
-          } @empty{
-            <p class="text-center text-gray-500 py-4">Sin Actividades</p>
-          }
+        <div class="p-6 border-t border-gray-100 dark:border-[#F0ABFC]">
+          <details class="group">
+            <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
+              <h4 class="font-semibold text-gray-700 dark:text-slate-300">Actividades</h4>
+              <div class="flex items-center gap-2">
+                <button (click)="$event.preventDefault()" class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors" aria-label="Agregar Actividad">
+                  <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                </button>
+                <span class="transition group-open:rotate-180 text-gray-700 dark:text-slate-300">
+                  <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                </span>
+              </div>
+            </summary>
+            <div class="mt-4">
+              @for(actividad of vis.tareas; track actividad.id){
+                <div class="border-t border-gray-200 dark:border-[#F0ABFC] py-3 dark:text-slate-400">
+                  <p>{{actividad.nombre}}</p>
+                </div>
+              } @empty{
+                <p class="text-center text-gray-500 dark:text-slate-400 py-4 border-t border-gray-200 dark:border-[#F0ABFC] mt-4">Sin Actividades</p>
+              }
+            </div>
+          </details>
         </div>
       </div>
       } @empty {
         <div class="text-center py-16">
-          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2z" />
           </svg>
-          <h4 class="mt-2 text-lg font-semibold text-gray-800">Sin Visitas Programadas</h4>
-          <p class="mt-1 text-sm text-gray-500">No hay visitas en el rango de fechas seleccionado.</p>
+          <h4 class="mt-2 text-lg font-semibold text-gray-800 dark:text-slate-200">Sin Visitas Programadas</h4>
+          <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">No hay visitas en el rango de fechas seleccionado.</p>
         </div>
       }
     </div>
   </div>
 
   <!-- Modal Unificado (Crear/Editar) -->
-  <div *ngIf="isModalVisible" (click)="closeModal()" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div (click)="$event.stopPropagation()" class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[95vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+  <div *ngIf="isModalVisible" (click)="closeModal()" class="fixed inset-0 bg-[#4e3e76]/30 backdrop-blur-sm z-100 flex items-center justify-center p-4">
+    <div (click)="$event.stopPropagation()" class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-2xl shadow-2xl w-full max-w-3xl max-h-[95vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
       <form [formGroup]="visitaForm" (ngSubmit)="saveOrUpdateTask()" class="p-8">
-        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">{{ isEditMode ? 'Editar Visita' : 'Agregar Nueva Visita' }}</h3>
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-center text-[#2d2c63] dark:text-[#A78BFA]">
+                {{ isEditMode ? 'Editar Visita' : 'Agregar Nueva Visita' }}
+            </h2>
+            <p class="text-sm text-center text-[#9291aa] mt-1">
+                Completa la información de la visita.
+            </p>
+        </div>
 
-        <!-- Form fields styled with Tailwind -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <!-- Form fields styled like perfil -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4">
           <div>
-            <label for="fecha" class="block text-sm font-medium text-gray-600 mb-1">Fecha</label>
-            <input id="fecha" formControlName="fecha" type="text" class="w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label for="fecha" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Fecha</label>
+            <input id="fecha" formControlName="fecha" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
           </div>
           <div>
-            <label for="horaInicio" class="block text-sm font-medium text-gray-600 mb-1">Inicio</label>
-            <input id="horaInicio" formControlName="horaInicio" type="time" class="w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label for="horaInicio" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Inicio</label>
+            <input id="horaInicio" formControlName="horaInicio" type="time" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
           </div>
           <div>
-            <label for="horaFin" class="block text-sm font-medium text-gray-600 mb-1">Fin</label>
-            <input id="horaFin" formControlName="horaFin" type="time" class="w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label for="horaFin" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Fin</label>
+            <input id="horaFin" formControlName="horaFin" type="time" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none shadow-2xs">
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4">
           <div class="md:col-span-2">
-            <label for="add-task-calendar" class="block text-sm font-medium text-gray-600 mb-1">Escuela *</label>
-            <select id="add-task-calendar" formControlName="escuelaId" (change)="cargarEscuelaSeleccionada($event)" class="w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label for="add-task-calendar" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Escuela *</label>
+            <select id="add-task-calendar" formControlName="escuelaId" (change)="cargarEscuelaSeleccionada($event)" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs appearance-none">
               <option value="" disabled selected>Seleccione una escuela</option>
               @for (esc of escuelas(); track esc.id) {
               <option [value]="esc.id">{{esc.nombreCompleto}} - {{esc.cue}}</option>
@@ -109,35 +127,37 @@
             </select>
           </div>
           <div>
-            <label for="cueEscuela" class="block text-sm font-medium text-gray-600 mb-1">CUE</label>
-            <input id="cueEscuela" formControlName="cueEscuela" type="text" class="w-full px-4 py-2 bg-gray-200 border-transparent rounded-lg cursor-not-allowed" readonly>
+            <label for="cueEscuela" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">CUE</label>
+            <input id="cueEscuela" formControlName="cueEscuela" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] bg-gray-100 border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none shadow-2xs" readonly>
           </div>
         </div>
 
         <div class="mb-4">
-          <label for="nombreEscuela" class="block text-sm font-medium text-gray-600 mb-1">Nombre de la Escuela</label>
-          <input id="nombreEscuela" formControlName="nombreEscuela" type="text" class="w-full px-4 py-2 bg-gray-200 border-transparent rounded-lg cursor-not-allowed" readonly>
+          <label for="nombreEscuela" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Nombre de la Escuela</label>
+          <input id="nombreEscuela" formControlName="nombreEscuela" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] bg-gray-100 dark:bg-[#443a52] border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none shadow-2xs" readonly>
         </div>
         <div class="mb-4">
-          <label for="direccionEscuela" class="block text-sm font-medium text-gray-600 mb-1">Dirección</label>
-          <input id="direccionEscuela" formControlName="direccionEscuela" type="text" class="w-full px-4 py-2 bg-gray-200 border-transparent rounded-lg cursor-not-allowed" readonly>
+          <label for="direccionEscuela" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Dirección</label>
+          <input id="direccionEscuela" formControlName="direccionEscuela" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] bg-gray-100 dark:bg-[#443a52] border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none shadow-2xs" readonly>
         </div>
         <div class="mb-4">
-          <label for="estado" class="block text-sm font-medium text-gray-600 mb-1">Estado *</label>
-          <select id="estado" formControlName="estado" class="w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label for="estado" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Estado *</label>
+          <select id="estado" formControlName="estado" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7]  dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs appearance-none">
             <option value="Planificada">Planificada</option>
             <option value="En Curso">En Curso</option>
             <option value="Finalizada">Finalizada</option>
           </select>
         </div>
         <div class="mb-6">
-          <label for="observaciones" class="block text-sm font-medium text-gray-600 mb-1">Observaciones</label>
-          <textarea id="observaciones" formControlName="observaciones" rows="3" class="w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <label for="observaciones" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Observaciones</label>
+          <textarea id="observaciones" formControlName="observaciones" rows="3" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs"></textarea>
         </div>
 
-        <div class="flex justify-end gap-4">
-          <button type="button" (click)="closeModal()" class="px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors">Cancelar</button>
-          <button type="submit" [disabled]="visitaForm.invalid" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors">
+        <div class="mt-10 pt-8 border-t border-[#f0f1f8] dark:border-[#F0ABFC] flex justify-end gap-3">
+          <button type="button" (click)="closeModal()" class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs">
+            Cancelar
+          </button>
+          <button type="submit" [disabled]="visitaForm.invalid" class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
             {{ isEditMode ? 'Guardar Cambios' : 'Guardar Visita' }}
           </button>
         </div>
