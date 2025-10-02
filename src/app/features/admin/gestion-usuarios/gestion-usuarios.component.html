@@ -1,10 +1,10 @@
-<div class="max-w-8xl px-1 py-10 sm:px-2 lg:px-4 mx-auto font_outfit">
-  <div class="bg-[#fcfdfe] rounded-3xl p-4 sm:p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+<div class="max-w-8xl px-1 py-10 sm:px-2 lg:px-4 mx-auto font_outfit dark:bg-[#1A1A1E]">
+  <div class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-3xl p-4 sm:p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
     <!-- Header de la sección de usuarios -->
     <div class="mb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-y-4">
       <div>
-        <h2 class="text-xl font-semibold text-[#2d2c63]">Gestión de Usuarios</h2>
-        <p class="text-sm text-[#9291aa] mt-2">
+        <h2 class="text-xl font-semibold text-[#2d2c63] dark:text-[#E4E4E7]">Gestión de Usuarios</h2>
+        <p class="text-sm text-[#9291aa] dark:text-slate-400 mt-2">
           Administra de forma eficiente los usuarios de tu plataforma.
         </p>
       </div>
@@ -12,7 +12,7 @@
       <!-- Barra de búsqueda mejorada -->
       <div class="relative sm:w-80">
         <input type="text" id="user-search-input" (input)="onBusquedaChange($event)"
-          class="py-2.5 px-4 ps-11 block w-full bg-white rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs"
+          class="py-2.5 px-4 ps-11 block w-full bg-white dark:bg-[#443a52] dark:border-slate-700 dark:text-slate-300 dark:placeholder-slate-400 rounded-xl text-sm text-[#707078] focus:border-[#5956e9] focus:ring-[#5956e9] shadow-2xs"
           placeholder="Buscar usuarios...">
         <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
           <svg class="size-4 text-[#9291aa]" viewBox="0 0 16 16" fill="currentColor">
@@ -42,30 +42,30 @@
     } @else {
     <!-- Tabla de Usuarios -->
     <div class="overflow-x-auto rounded-3xl shadow-[0_2px_6px_rgba(0,0,0,0.02)]">
-      <table class="min-w-full divide-y divide-[#f0f1f8]">
-        <thead class="bg-[#fafbfe]">
+      <table class="min-w-full divide-y divide-[#f0f1f8] dark:divide-slate-700">
+        <thead class="bg-[#fafbfe] dark:bg-[#443a52]/50">
           <tr>
-            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider">
               Usuario
             </th>
             <th scope="col"
-              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider hidden sm:table-cell">
+              class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider hidden sm:table-cell">
               Contacto
             </th>
-            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] tracking-wider">
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider">
               Rol
             </th>
-            <th scope="col" class="px-2 py-3 text-center text-xs font-semibold uppercase text-[#524380] tracking-wider
-         sm:static sticky right-0 bg-[#f9f9fe] z-30 w-16 min-w-[4rem]">
+            <th scope="col" class="px-2 py-3 text-center text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider
+         sm:static sticky right-0 bg-[#f9f9fe] dark:bg-[#2A2433] z-30 w-16 min-w-[4rem]">
               Acciones
             </th>
 
 
           </tr>
         </thead>
-        <tbody class="divide-y divide-[#f0f1f8]">
+        <tbody class="divide-y divide-[#f0f1f8] dark:divide-slate-700">
           @for (usuario of usuariosPaginados(); track usuario.uid) {
-          <tr class="bg-white hover:bg-[#fcfdfe] transition-colors duration-200">
+          <tr class="bg-white dark:bg-[#2A2433] hover:bg-[#fcfdfe] dark:hover:bg-[#443a52] transition-colors duration-200">
             <td class="px-4 py-3 whitespace-nowrap">
               <div class="flex items-center">
 
@@ -82,7 +82,7 @@
                   }
                 </div>
                 <div class="ms-3">
-                  <p class="text-sm font-medium text-[#4e3e76]">{{usuario.nombre}} {{usuario.apellido}}
+                  <p class="text-sm font-medium text-[#4e3e76] dark:text-[#E4E4E7]">{{usuario.nombre}} {{usuario.apellido}}
                     @if(usuario.emailVerified){
                     <span class="ms-1 text-green-500" title="Email verificado">
                       <svg class="inline-block size-4" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
@@ -106,44 +106,44 @@
                     </span>
                     }
                   </p>
-                  <p class="text-xs text-[#9291aa] truncate w-48 sm:w-auto">{{usuario.email}}
+                  <p class="text-xs text-[#9291aa] dark:text-slate-400 truncate w-48 sm:w-auto">{{usuario.email}}
 
                   </p>
                 </div>
               </div>
             </td>
             <td class="px-4 py-3 whitespace-nowrap hidden sm:table-cell">
-              <p class="text-sm text-[#707078]">{{usuario.telefono || 'N/A'}}</p>
+              <p class="text-sm text-[#707078] dark:text-slate-400">{{usuario.telefono || 'N/A'}}</p>
             </td>
             <td class="px-4 py-3 whitespace-nowrap">
               @if (usuario.rol === 'Admin') {
               <span
-                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#f0e7fa] text-[#8e44ad] shadow-sm">
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#f0e7fa] text-[#8e44ad] dark:bg-purple-900/50 dark:text-purple-400 shadow-sm">
                 {{usuario.rol}}
               </span>
               } @else if (usuario.rol === 'RTE') {
               <span
-                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#e7f0fa] text-[#3498db] shadow-sm">
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#e7f0fa] text-[#3498db] dark:bg-blue-900/50 dark:text-blue-400 shadow-sm">
                 {{usuario.rol}}
               </span>
               } @else if (usuario.rol === 'Docente') {
               <span
-                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#fae7e7] text-[#e74c3c] shadow-sm">
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#fae7e7] text-[#e74c3c] dark:bg-red-900/50 dark:text-red-400 shadow-sm">
                 {{usuario.rol}}
               </span>
               } @else {
               <span
-                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#e7faed] text-[#2ecc71] shadow-sm">
+                class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-[#e7faed] text-[#2ecc71] dark:bg-green-900/50 dark:text-green-400 shadow-sm">
                 {{usuario.rol}}
               </span>
               }
             </td>
             <td
-              class="px-2 py-3 whitespace-nowrap text-center sm:static sticky right-0 bg-white z-40 w-16 min-w-[4rem]">
+              class="px-2 py-3 whitespace-nowrap text-center sm:static sticky right-0 bg-white dark:bg-[#2A2433] z-1 w-16 min-w-[4rem]">
               <div class="relative">
                 <div class="hs-dropdown [--placement:bottom-right] inline-block">
                   <button type="button"
-                    class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center rounded-full text-[#9291aa] hover:bg-[#f0f1f8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#5956e9] transition-all duration-200 ease-out">
+                    class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center rounded-full text-[#9291aa] hover:bg-[#f0f1f8] dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#5956e9] transition-all duration-200 ease-out">
                     <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                       viewBox="0 0 16 16">
                       <path
@@ -153,10 +153,10 @@
 
                   <!-- Menú desplegable -->
                   <div
-                    class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-[9999] bg-white shadow-[0_2px_6px_rgba(0,0,0,0.05)] rounded-2xl p-2 mt-2">
+                    class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-[9999] bg-white dark:bg-[#1A1A1E] dark:border dark:border-slate-700 shadow-[0_2px_6px_rgba(0,0,0,0.05)] rounded-2xl p-2 mt-2">
                     <div class="first:pt-0 last:pb-0">
-                      <span class="block py-2 px-3 mb-2 text-xs font-medium uppercase text-[#9291aa]">Acciones</span>
-                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#796ffc] hover:bg-[#f9f9fe] transition-colors duration-200"
+                      <span class="block py-2 px-3 mb-2 text-xs font-medium uppercase text-[#9291aa] dark:text-slate-400">Acciones</span>
+                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#796ffc] hover:bg-[#f9f9fe] dark:hover:bg-slate-700 transition-colors duration-200"
                         [routerLink]="['edicion-usuario', usuario.uid]">
                         <svg class="size-[18px]" xmlns="http://www.w3.org/2000/svg" width="128" height="128"
                           viewBox="0 0 24 24">
@@ -171,7 +171,7 @@
                       </a>
                     </div>
                     <div class="first:pt-0 last:pb-0">
-                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#e77833] hover:bg-[#fef9f9] transition-colors duration-200 cursor-pointer"
+                      <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#e77833] hover:bg-[#fef9f9] dark:hover:bg-slate-700 transition-colors duration-200 cursor-pointer"
                         (click)="eliminarUsuario(usuario)">
                         <svg class="size-[18px]" xmlns="http://www.w3.org/2000/svg" width="128" height="128"
                           viewBox="0 0 48 48">
@@ -190,7 +190,7 @@
           </tr>
           } @empty {
           <tr>
-            <td colspan="4" class="text-center p-10 text-[#9291aa]">
+            <td colspan="4" class="text-center p-10 text-[#9291aa] dark:text-slate-400">
               No se encontraron usuarios con los filtros seleccionados.
             </td>
           </tr>
@@ -203,7 +203,7 @@
     <div class="mt-8 flex justify-center">
       <nav class="flex justify-center items-center gap-x-1" aria-label="Pagination">
         <button type="button"
-          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] hover:bg-[#f0f1f8] focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] dark:text-slate-400 hover:bg-[#f0f1f8] dark:hover:bg-slate-700 focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
           aria-label="Previous" [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
           <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -215,7 +215,7 @@
         <div class="flex items-center gap-x-1">
           @for (page of paginasDisponibles(); track page) {
           <button type="button" (click)="irAPagina(page)"
-            [ngClass]="{'bg-[#5956e9] text-white shadow-sm': paginaActual() === page, 'text-[#707078] hover:bg-[#f0f1f8]': paginaActual() !== page}"
+            [ngClass]="{'bg-[#5956e9] text-white shadow-sm': paginaActual() === page, 'text-[#707078] dark:text-slate-400 hover:bg-[#f0f1f8] dark:hover:bg-slate-700': paginaActual() !== page}"
             class="min-h-9.5 min-w-9.5 flex justify-center items-center py-2 px-3 text-sm rounded-lg focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
             [attr.aria-current]="paginaActual() === page ? 'page' : null">
             {{ page }}
@@ -224,7 +224,7 @@
         </div>
 
         <button type="button"
-          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] hover:bg-[#f0f1f8] focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
+          class="min-h-9.5 min-w-9.5 py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-[#707078] dark:text-slate-400 hover:bg-[#f0f1f8] dark:hover:bg-slate-700 focus:outline-none focus:bg-[#f0f1f8] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
           aria-label="Next" [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
           <span class="sr-only">Next</span>
           <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
