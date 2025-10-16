@@ -1,312 +1,391 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, computed, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { AfterViewInit, Component, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import confetti from 'canvas-confetti';
-
-
+import { EleccionService } from '../../../core/services/eleccion.service';
+import { Candidato, Eleccion, Voto } from '../../../core/interfaces/eleccion.model';
+import { AuthService } from '../../../core/services/auth.service';
+interface VotoTemporal {
+  candidatoId: string;
+  usuarioId: string;
+  belleza: number;      // 1-5
+  carisma: number;      // 1-5
+  elegancia: number;    // 1-5
+  total: number;        // 3-15
+  promedio: number;     // 1-5
+  fecha: Date;
+}
 
 interface CriterioEvaluacion {
-  id: string
-  nombre: string
-  peso?: number
+  id: "belleza" | "carisma" | "elegancia";
+  nombre: string;
 }
 
-interface Candidate {
-  id: number
-  name: string
-  age: number
-  city: string
-  proposal: string
-  images: string[]
-  votes: number
-  category?: string
-  hobbies?: string[]
-}
-
-interface VotoCriterio {
-  candidataId: number
-  criterioId: string
-  valor: number // 1-5 estrellas
-}
 @Component({
   selector: 'app-presentacion-postulantes',
   imports: [CommonModule, RouterModule],
   templateUrl: './presentacion-postulantes.component.html',
   styleUrl: './presentacion-postulantes.component.css'
 })
-export class PresentacionPostulantesComponent implements AfterViewInit {
-  endDate = signal<Date>(new Date("2025-10-17T23:59:59"))
+export class PresentacionPostulantesComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private eleccionService = inject(EleccionService);
+  private authService = inject(AuthService);
+  showFinalizarPanel = signal<boolean>(false);
+  // Señales principales
+  eleccion = signal<Eleccion | null>(null);
+  loading = signal<boolean>(true);
+  error = signal<string>('');
+
+  // Countdown
+  endDate = signal<Date>(new Date())
   countdown = signal<string>("00:00:00")
   private countdownInterval: any
 
+  // Sistema de votación
   criterios = signal<CriterioEvaluacion[]>([
-    { id: "belleza", nombre: "Belleza", peso: 1 },
-    { id: "simpatia", nombre: "Simpatía", peso: 1 },
-    { id: "elegancia", nombre: "Elegancia", peso: 1 },
-    { id: "naturalidad", nombre: "Naturalidad", peso: 1 },
+    { id: "belleza", nombre: "Belleza" },
+    { id: "carisma", nombre: "Carisma" },
+    { id: "elegancia", nombre: "Elegancia" },
   ])
 
-  votaciones = signal<VotoCriterio[]>([])
-  votacionFinalizada = signal<boolean>(false)
+  // Votos temporales del usuario actual
+  votosTemporales = signal<Map<string, VotoTemporal>>(new Map());
+  votacionFinalizada = signal<boolean>(false);
+  showVoteMessage = signal<boolean>(false);
 
-  candidates = signal<Candidate[]>([
-    {
-      id: 1,
-      name: "Isabella Martínez",
-      age: 22,
-      city: "Ciudad de México",
-      proposal:
-        "Promover la educación inclusiva y el empoderamiento femenino en comunidades rurales. Creo en un futuro donde todas las mujeres tengan las mismas oportunidades.",
-      images: [
-        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800&h=1000&fit=crop",
-      ],
-      votes: 245,
-      category: "Favorita",
-      hobbies: ["Danza", "Lectura", "Voluntariado"],
-    },
-    {
-      id: 2,
-      name: "Sofía Rodríguez",
-      age: 21,
-      city: "Guadalajara",
-      proposal:
-        "Impulsar proyectos de sustentabilidad ambiental y concientización sobre el cambio climático en nuestra región.",
-      images: [
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1517841905240-2eeaad7c3fe5?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&h=1000&fit=crop",
-      ],
-      votes: 198,
-      hobbies: ["Yoga", "Fotografía", "Ecología"],
-    },
-    {
-      id: 3,
-      name: "Valentina Torres",
-      age: 23,
-      city: "Monterrey",
-      proposal:
-        "Crear programas de apoyo para jóvenes emprendedores y fomentar la innovación tecnológica en nuestra comunidad.",
-      images: [
-        "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=800&h=1000&fit=crop",
-      ],
-      votes: 187,
-      hobbies: ["Programación", "Emprendimiento", "Música"],
-    },
-    {
-      id: 4,
-      name: "Camila Hernández",
-      age: 20,
-      city: "Puebla",
-      proposal:
-        "Desarrollar iniciativas culturales que preserven nuestras tradiciones y promuevan el arte local entre las nuevas generaciones.",
-      images: [
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1506794778202-cd596325d314?w=800&h=1000&fit=crop",
-      ],
-      votes: 156,
-      hobbies: ["Pintura", "Teatro", "Historia"],
-    },
-    {
-      id: 5,
-      name: "Lucía Gómez",
-      age: 22,
-      city: "Querétaro",
-      proposal: "Trabajar por la salud mental de los jóvenes y crear espacios seguros de expresión y apoyo emocional.",
-      images: [
-        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1496440737103-cd596325d314?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1509967419530-da38b470e1f6?w=800&h=1000&fit=crop",
-      ],
-      votes: 143,
-      hobbies: ["Meditación", "Escritura", "Psicología"],
-    },
-    {
-      id: 6,
-      name: "Martina Silva",
-      age: 21,
-      city: "Mérida",
-      proposal: "Promover el turismo responsable y la conservación de nuestro patrimonio histórico y natural.",
-      images: [
-        "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1479936343636-73cdc5aae0c3?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1503185912284-5271ff81b9a8?w=800&h=1000&fit=crop",
-      ],
-      votes: 132,
-      hobbies: ["Viajes", "Arqueología", "Gastronomía"],
-    },
-    {
-      id: 7,
-      name: "Emma Ramírez",
-      age: 23,
-      city: "Cancún",
-      proposal: "Impulsar programas deportivos inclusivos y promover hábitos de vida saludable en todas las edades.",
-      images: [
-        "https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?w=800&h=1000&fit=crop",
-        "https://images.unsplash.com/photo-1515077678510-ce3bdf418862?w=800&h=1000&fit=crop",
-      ],
-      votes: 128,
-      hobbies: ["Natación", "Nutrición", "Atletismo"],
-    }
-  ])
+  // Gestión de imágenes
+  imageIndices = signal<Map<string, number>>(new Map());
 
-  imageIndices = signal<Map<number, number>>(new Map())
+  // Cambia el nombre y lógica de hasVotedAllCandidates
+  hasVotedAtLeastOneCandidate = computed(() => {
+    const eleccionActual = this.eleccion();
+    const votos = this.votosTemporales();
 
-  showVoteMessage = signal<boolean>(false)
-  showFinalizarPanel = signal<boolean>(false)
+    if (!eleccionActual?.candidatos) return false;
 
-  // Computed values
-  totalVotes = computed(() => this.candidates().reduce((sum, c) => sum + c.votes, 0))
+    // Retorna true si al menos un candidato tiene voto válido
+    return eleccionActual.candidatos.some(candidato =>
+      candidato.id && this.tieneVotoCompleto(candidato.id)
+    );
+  });
 
-  hasVotedAllCriteriaForCandidate(candidataId: number): boolean {
-    const votosActuales = this.votaciones().filter((v) => v.candidataId === candidataId)
-    return votosActuales.length === this.criterios().length
-  }
-
+  // O si quieres mantener el nombre pero cambiar la lógica:
   hasVotedAllCandidates = computed(() => {
-    return this.candidates().every((c) => this.hasVotedAllCriteriaForCandidate(c.id))
-  })
+    const eleccionActual = this.eleccion();
+    const votos = this.votosTemporales();
 
-  getVotoCriterio(candidataId: number, criterioId: string): number {
-    const voto = this.votaciones().find((v) => v.candidataId === candidataId && v.criterioId === criterioId)
-    return voto?.valor || 0
+    if (!eleccionActual?.candidatos) return false;
+
+    // Ahora retorna true si al menos UN candidato tiene voto válido
+    return eleccionActual.candidatos.some(candidato =>
+      candidato.id && this.tieneVotoCompleto(candidato.id)
+    );
+  });
+
+  toggleFinalizarPanel(): void {
+    this.showFinalizarPanel.update(show => !show);
+  }
+  totalVotosRealizados = computed(() => {
+    return Array.from(this.votosTemporales().values()).filter(voto =>
+      this.tieneVotoCompleto(voto.candidatoId)
+    ).length;
+  });
+  usuarioActual = computed(() => {
+    return this.authService.currentUser();
+  });
+
+  ngOnInit(): void {
+    this.cargarEleccion();
   }
 
-  votarCriterio(candidataId: number, criterioId: string, valor: number): void {
-    if (this.votacionFinalizada()) return
+  ngOnDestroy(): void {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+    }
+  }
 
-    this.votaciones.update((votos) => {
-      const index = votos.findIndex((v) => v.candidataId === candidataId && v.criterioId === criterioId)
-      if (index >= 0) {
-        const newVotos = [...votos]
-        newVotos[index] = { ...newVotos[index], valor }
-        return newVotos
-      } else {
-        return [...votos, { candidataId, criterioId, valor }]
+  cargarEleccion(): void {
+    const eleccionId = this.route.snapshot.paramMap.get('id');
+
+    if (!eleccionId) {
+      this.error.set('ID de elección no válido');
+      this.loading.set(false);
+      return;
+    }
+
+    this.loading.set(true);
+
+    this.eleccionService.getEleccionById(eleccionId).subscribe({
+      next: (eleccion) => {
+        this.eleccion.set(eleccion);
+        this.loading.set(false);
+
+        this.configurarCountdown(eleccion);
+        this.inicializarIndicesImagenes(eleccion.candidatos);
+        this.cargarVotosExistentes();
+      },
+      error: (error) => {
+        console.error('Error al cargar la elección:', error);
+        this.error.set('Error al cargar la elección');
+        this.loading.set(false);
       }
-    })
+    });
   }
 
-  getCurrentImageIndex(candidataId: number): number {
-    return this.imageIndices().get(candidataId) || 0
+  cargarVotosExistentes(): void {
+    const usuario = this.usuarioActual();
+    const eleccion = this.eleccion();
+
+    if (!usuario || !eleccion?.candidatos) return;
+
+    const nuevosVotos = new Map<string, VotoTemporal>();
+
+    eleccion.candidatos.forEach(candidato => {
+      if (candidato.id && candidato.votos) {
+        const votoExistente = candidato.votos.find(v => v.usuarioId === usuario.uid);
+        if (votoExistente) {
+          // Convertir de escala 2-10 a 1-5
+          nuevosVotos.set(candidato.id, {
+            candidatoId: candidato.id,
+            usuarioId: usuario.uid,
+            belleza: votoExistente.belleza / 2,
+            carisma: votoExistente.carisma / 2,
+            elegancia: votoExistente.elegancia / 2,
+            total: votoExistente.total / 2,
+            promedio: votoExistente.promedio / 2,
+            fecha: votoExistente.fecha
+          });
+        }
+      }
+    });
+
+    this.votosTemporales.set(nuevosVotos);
   }
 
-  nextImage(candidataId: number, totalImages: number): void {
-    const currentIndex = this.getCurrentImageIndex(candidataId)
-    const newIndex = (currentIndex + 1) % totalImages
+  // MÉTODOS DE VOTACIÓN
+  votarCriterio(candidatoId: string, criterioId: "belleza" | "carisma" | "elegancia", valor: number): void {
+    const usuario = this.usuarioActual();
+
+    if (this.votacionFinalizada() || !usuario) {
+      alert('Debes iniciar sesión para votar');
+      return;
+    }
+
+    this.votosTemporales.update(votos => {
+      const nuevoMap = new Map(votos);
+      const votoExistente = nuevoMap.get(candidatoId);
+
+      if (votoExistente) {
+        // Actualizar voto existente
+        const votoActualizado = {
+          ...votoExistente,
+          [criterioId]: valor,
+          fecha: new Date()
+        };
+
+        // Recalcular total y promedio
+        votoActualizado.total = votoActualizado.belleza + votoActualizado.carisma + votoActualizado.elegancia;
+        votoActualizado.promedio = Number((votoActualizado.total / 3).toFixed(2));
+
+        nuevoMap.set(candidatoId, votoActualizado);
+      } else {
+        // Crear nuevo voto
+        const nuevoVoto: VotoTemporal = {
+          candidatoId,
+          usuarioId: usuario.uid,
+          belleza: criterioId === 'belleza' ? valor : 0,
+          carisma: criterioId === 'carisma' ? valor : 0,
+          elegancia: criterioId === 'elegancia' ? valor : 0,
+          total: valor, // Solo un criterio por ahora
+          promedio: valor,
+          fecha: new Date()
+        };
+        nuevoMap.set(candidatoId, nuevoVoto);
+      }
+
+      return nuevoMap;
+    });
+  }
+
+  getVotoCriterio(candidatoId: string, criterioId: "belleza" | "carisma" | "elegancia"): number {
+    const voto = this.votosTemporales().get(candidatoId);
+    return voto ? voto[criterioId] : 0;
+  }
+
+  tieneVotoCompleto(candidatoId: string): boolean {
+    const voto = this.votosTemporales().get(candidatoId);
+    if (!voto) return false;
+
+    // Solo cuenta como voto completo si al menos un criterio tiene puntuación > 0
+    return voto.belleza > 0 || voto.carisma > 0 || voto.elegancia > 0;
+  }
+
+async finalizarVotacion(): Promise<void> {
+  const usuario = this.usuarioActual();
+  
+  if (!usuario) {
+    this.router.navigate(['/login']);
+    return;
+  }
+
+  // Cambiar esta validación
+  if (!this.hasVotedAllCandidates()) {
+    alert('Debes votar por al menos una candidata antes de finalizar');
+    return;
+  }
+
+  this.votacionFinalizada.set(true);
+  this.showFinalizarPanel.set(false);
+  
+  try {
+    await this.guardarVotosEnFirebase();
+    this.showVoteMessage.set(true);
+    this.launchConfetti();
+  } catch (error) {
+    console.error('Error al finalizar votación:', error);
+    this.votacionFinalizada.set(false);
+  }
+}
+
+  private async guardarVotosEnFirebase(): Promise<void> {
+    const eleccion = this.eleccion();
+    const votosTemporalesMap = this.votosTemporales();
+
+    if (!eleccion?.id) return;
+
+    try {
+      // Filtrar solo los votos que tienen al menos un criterio > 0
+      const votosValidos = Array.from(votosTemporalesMap.entries())
+        .filter(([candidatoId, votoTemp]) => this.tieneVotoCompleto(candidatoId));
+
+      // Guardar cada voto válido individualmente
+      const promesas = votosValidos.map(([candidatoId, votoTemp]) => {
+        // Convertir a la interfaz Voto (escala 2-10)
+        const voto: Voto = {
+          usuarioId: votoTemp.usuarioId,
+          belleza: votoTemp.belleza * 2,
+          carisma: votoTemp.carisma * 2,
+          elegancia: votoTemp.elegancia * 2,
+          total: votoTemp.total * 2,
+          promedio: Number((votoTemp.promedio * 2).toFixed(2)),
+          fecha: new Date()
+        };
+
+        return this.eleccionService.agregarVotoACandidato(eleccion.id!, candidatoId, voto);
+      });
+
+      await Promise.all(promesas);
+      console.log('✅ Votos válidos guardados exitosamente');
+
+    } catch (error) {
+      console.error('❌ Error al guardar votos:', error);
+      alert('Error al guardar los votos. Intenta nuevamente.');
+      this.votacionFinalizada.set(false);
+      throw error;
+    }
+  }
+
+  // MÉTODOS EXISTENTES PARA IMÁGENES
+  inicializarIndicesImagenes(candidatos: Candidato[]): void {
+    const nuevosIndices = new Map<string, number>();
+    candidatos.forEach(candidato => {
+      if (candidato.id) {
+        nuevosIndices.set(candidato.id, 0);
+      }
+    });
+    this.imageIndices.set(nuevosIndices);
+  }
+
+  getCurrentImageIndex(candidatoId: string): number {
+    return this.imageIndices().get(candidatoId) || 0;
+  }
+
+  nextImage(candidatoId: string, totalImages: number): void {
+    const currentIndex = this.getCurrentImageIndex(candidatoId);
+    const newIndex = (currentIndex + 1) % totalImages;
     this.imageIndices.update((map) => {
-      const newMap = new Map(map)
-      newMap.set(candidataId, newIndex)
-      return newMap
-    })
+      const newMap = new Map(map);
+      newMap.set(candidatoId, newIndex);
+      return newMap;
+    });
   }
 
-  prevImage(candidataId: number, totalImages: number): void {
-    const currentIndex = this.getCurrentImageIndex(candidataId)
-    const newIndex = (currentIndex - 1 + totalImages) % totalImages
+  prevImage(candidatoId: string, totalImages: number): void {
+    const currentIndex = this.getCurrentImageIndex(candidatoId);
+    const newIndex = (currentIndex - 1 + totalImages) % totalImages;
     this.imageIndices.update((map) => {
-      const newMap = new Map(map)
-      newMap.set(candidataId, newIndex)
-      return newMap
-    })
+      const newMap = new Map(map);
+      newMap.set(candidatoId, newIndex);
+      return newMap;
+    });
   }
 
-  goToImage(candidataId: number, index: number): void {
+  goToImage(candidatoId: string, index: number): void {
     this.imageIndices.update((map) => {
-      const newMap = new Map(map)
-      newMap.set(candidataId, index)
-      return newMap
-    })
+      const newMap = new Map(map);
+      newMap.set(candidatoId, index);
+      return newMap;
+    });
   }
 
-  getImageAtOffset(candidataId: number, images: string[], offset: number): string {
-    const currentIndex = this.getCurrentImageIndex(candidataId)
-    const index = (currentIndex + offset + images.length) % images.length
-    return images[index]
+  getImageAtOffset(candidatoId: string, imagenes: any[], offset: number): string {
+    const currentIndex = this.getCurrentImageIndex(candidatoId);
+    const index = (currentIndex + offset + imagenes.length) % imagenes.length;
+    return imagenes[index]?.secure_url || '';
   }
 
   getImageRange(totalImages: number): number[] {
-    return Array.from({ length: totalImages }, (_, i) => i)
+    return Array.from({ length: totalImages }, (_, i) => i);
   }
 
   getHeartArray(): number[] {
-    return [1, 2, 3, 4, 5]
+    return [1, 2, 3, 4, 5];
   }
 
-  toggleFinalizarPanel(): void {
-    this.showFinalizarPanel.update((show) => !show)
+  formatearFecha(fechaString: string): string {
+    const fecha = new Date(fechaString);
+    return fecha.toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   }
 
-  ngAfterViewInit(): void {
-    this.setupScrollAnimations()
-  }
+  configurarCountdown(eleccion: Eleccion): void {
+    const fechaFin = new Date(eleccion.fechaFin);
+    this.endDate.set(fechaFin);
 
-  setupScrollAnimations(): void {
-    const cards = document.querySelectorAll(".candidate-card")
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("card-visible")
-          }
-        })
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      },
-    )
-
-    cards.forEach((card) => {
-      observer.observe(card)
-    })
-  }
-
-  constructor() {
-    this.updateCountdown()
+    this.updateCountdown();
     this.countdownInterval = setInterval(() => {
-      this.updateCountdown()
-    }, 1000)
+      this.updateCountdown();
+    }, 1000);
   }
 
   updateCountdown(): void {
-    const now = new Date().getTime()
-    const end = this.endDate().getTime()
-    const distance = end - now
+    const now = new Date().getTime();
+    const end = this.endDate().getTime();
+    const distance = end - now;
 
     if (distance < 0) {
-      this.countdown.set("00:00:00")
+      this.countdown.set("00:00:00");
       if (this.countdownInterval) {
-        clearInterval(this.countdownInterval)
+        clearInterval(this.countdownInterval);
       }
-      return
+      return;
     }
 
-    const hours = Math.floor(distance / (1000 * 60 * 60))
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+    const hours = Math.floor(distance / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const formattedHours = hours.toString().padStart(2, "0")
-    const formattedMinutes = minutes.toString().padStart(2, "0")
-    const formattedSeconds = seconds.toString().padStart(2, "0")
+    const formattedHours = hours.toString().padStart(2, "0");
+    const formattedMinutes = minutes.toString().padStart(2, "0");
+    const formattedSeconds = seconds.toString().padStart(2, "0");
 
-    this.countdown.set(`${formattedHours}:${formattedMinutes}:${formattedSeconds}`)
+    this.countdown.set(`${formattedHours}:${formattedMinutes}:${formattedSeconds}`);
   }
-  finalizarVotacion(): void {
-    this.votacionFinalizada.set(true);
-    this.showVoteMessage.set(true);
-
-    // 🎉 Lanza el confeti
-    this.launchConfetti();
-
-  }
-
 
   private launchConfetti(): void {
     // Primer disparo

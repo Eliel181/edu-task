@@ -9,21 +9,37 @@
     </svg>
     <span class="text-sm font-semibold">Volver</span>
   </a>
+<div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+  <!-- Estado de carga -->
+  @if (loading()) {
+    <div class="mb-8 animate-fade-in">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+      <p class="text-white font_outfit">Cargando elección...</p>
+    </div>
+  }
 
-  <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+  <!-- Error -->
+  @if (error() && !loading()) {
+    <div class="mb-8 animate-fade-in">
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg max-w-md mx-auto">
+        <p class="font_outfit">{{ error() }}</p>
+      </div>
+    </div>
+  }
+
+  <!-- Datos de la elección -->
+  @if (eleccion() && !loading()) {
     <div class="mb-8 animate-fade-in">
       <h1 class="text-5xl md:text-6xl font-black text-white mb-4 tracking-tight font_outfit leading-tight">
-        <span class="inline-block animate-slide-in-right">Elección de</span>
-        <br />
-        <span class="inline-block bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 bg-clip-text text-transparent animate-slide-in-left">
-          Reina 2025
-        </span>
+        <span class="inline-block animate-slide-in-right">{{ eleccion()?.titulo }}</span>
       </h1>
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-full px-5 py-2 border border-white/30 mt-4">
         <svg class="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
         </svg>
-        <span class="text-white text-sm font-semibold font_outfit">Finaliza el 17 de Octubre, 2025</span>
+        <span class="text-white text-sm font-semibold font_outfit">
+          Finaliza el {{ formatearFecha(eleccion()!.fechaFin) }}
+        </span>
       </div>
     </div>
 
@@ -44,7 +60,8 @@
         </div>
       </div>
     </div>
-  </div>
+  }
+</div>
 
 <div class="absolute bottom-0 left-0 right-0">
   <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -105,182 +122,246 @@
         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
         </svg>
-        <span class="text-sm font-bold">¡Votación finalizada con éxito!</span>
+        <span class="text-sm font-bold">¡Gracias por votar!</span>
       </div>
     </div>
   }
 
   <div class="relative z-10 max-w-7xl mx-auto space-y-20 pt-12" style="transform: scale(0.8); transform-origin: top center;">
     
-    @for (candidate of candidates(); track candidate.id; let idx = $index) {
-      <div [class]="'max-w-5xl relative ' + (idx % 2 === 0 ? 'ml-0 mr-auto' : 'ml-auto mr-0')">
-        
-        <div class="flex items-center gap-4 mb-4">
-          <div class="bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-lg font-black shadow-lg ring-2 ring-white font_outfit shrink-0">
-            {{ candidate.id.toString().padStart(2, '0') }}
-          </div>
-          
-          <div class="flex-1">
-            <h2 class="text-2xl font-black bg-gradient-to-r from-purple-600 to-rose-600 bg-clip-text text-transparent font_outfit mb-1">
-              {{ candidate.name }}
-            </h2>
-            <div class="flex items-center gap-3 text-[16px] text-gray-600 font_outfit">
-              <span class="font-semibold">{{ candidate.age }} años</span>
-              <span class="w-1 h-1 rounded-full bg-gray-400"></span>
-              <span class="font-semibold">{{ candidate.city }}</span>
-            </div>
-          </div>
-
-          @if (candidate.hobbies && candidate.hobbies.length > 0) {
-            <div class="flex flex-wrap gap-2 justify-end">
-              @for (hobby of candidate.hobbies; track hobby; let hobbyIdx = $index) {
-                <span 
-                  [class]="'inline-block px-3 py-1 rounded-full text-xs font-semibold shadow-sm font_outfit ' + 
-                    (hobbyIdx % 4 === 0 ? 'bg-purple-100 text-purple-700' : 
-                     hobbyIdx % 4 === 1 ? 'bg-pink-100 text-pink-700' : 
-                     hobbyIdx % 4 === 2 ? 'bg-blue-100 text-blue-700' : 
-                     'bg-rose-100 text-rose-700')">
-                  {{ hobby }}
-                </span>
-              }
-            </div>
-          }
-
-          @if (candidate.category) {
-            <div class="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1.5 rounded-full shadow-md">
-              <span class="text-xs font-black tracking-wide uppercase font_outfit">
-                {{ candidate.category }}
-              </span>
-            </div>
-          } 
-        </div>
-        
-        <div class="grid lg:grid-cols-2 gap-10 items-start">
-          
-          <div class="flex flex-col relative">
-            <div class="relative flex items-center justify-center h-[360px]">
-              
-              @if (candidate.images.length > 1) {
-                <div 
-                  class="absolute left-0 top-1/2 -translate-y-1/2 w-32 h-[245px] cursor-pointer transition-all duration-300 hover:scale-105 z-10"
-                  (click)="prevImage(candidate.id, candidate.images.length)">
-                  <img
-                    [src]="getImageAtOffset(candidate.id, candidate.images, -1)"
-                    alt="Foto anterior"
-                    class="w-full h-full object-cover rounded-2xl opacity-60 hover:opacity-75 transition-opacity duration-300 shadow-lg" />
-                </div>
-              }
-
-              <div class="relative w-[250px] aspect-[3/4] overflow-hidden rounded-2xl bg-white shadow-xl z-20">
-                <img
-                  [src]="candidate.images[getCurrentImageIndex(candidate.id)]"
-                  [alt]="candidate.name + ' - Foto ' + (getCurrentImageIndex(candidate.id) + 1)"
-                  class="w-full h-full object-cover animate-fade-in" />
-              </div>
-
-              @if (candidate.images.length > 1) {
-                <div 
-                  class="absolute right-0 top-1/2 -translate-y-1/2 w-32 h-[245px] cursor-pointer transition-all duration-300 hover:scale-105 z-10"
-                  (click)="nextImage(candidate.id, candidate.images.length)">
-                  <img
-                    [src]="getImageAtOffset(candidate.id, candidate.images, 1)"
-                    alt="Foto siguiente"
-                    class="w-full h-full object-cover rounded-2xl opacity-60 hover:opacity-75 transition-opacity duration-300 shadow-lg" />
-                </div>
-              }
-            </div>
-          </div>
-
-          <div class="relative flex flex-col justify-center space-y-4 h-[360px]">
-            
-            <div class="relative bg-gradient-to-br from-violet-600 via-fuchsia-600 to-pink-600 rounded-2xl p-5 shadow-xs overflow-hidden ">
-              <svg class="absolute top-2 left-2 w-10 h-10 text-white/30 opacity-50" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p class="text-[16px] opacity-80 text-white leading-relaxed relative z-10 pl-12 font_outfit font-medium">
-                {{ candidate.proposal }}
-              </p>
-            </div>
-
-            <div class="relative bg-gradient-to-br from-purple-50 to-rose-50 rounded-3xl p-5 shadow-xs overflow-hidden ">
-              <div class="space-y-2">
-                @for (criterio of criterios(); track criterio.id) {
-                  <div class="flex items-center justify-between gap-3 py-1">
-                    <span class="text-sm font-bold text-gray-700 font_outfit min-w-[90px]">{{ criterio.nombre }}</span>
-                    <div class="flex gap-1">
-                      @for (heart of getHeartArray(); track heart) {
-                        <button
-                          (click)="votarCriterio(candidate.id, criterio.id, heart)"
-                          [disabled]="votacionFinalizada()"
-                          [class]="votacionFinalizada() 
-                            ? 'w-7 h-7 rounded transition-all duration-200 cursor-not-allowed opacity-50 flex items-center justify-center ' + (heart <= getVotoCriterio(candidate.id, criterio.id) ? 'text-rose-500' : 'text-gray-300')
-                            : 'w-7 h-7 rounded transition-all duration-200 hover:scale-125 active:scale-95 flex items-center justify-center ' + (heart <= getVotoCriterio(candidate.id, criterio.id) ? 'text-rose-500' : 'text-gray-300 hover:text-rose-400')">
-                          <svg 
-                            class="w-5 h-5"
-                            [class.fill-current]="heart <= getVotoCriterio(candidate.id, criterio.id)"
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                          </svg>
-                        </button>
-                      }
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-5 flex items-center justify-start gap-4 pt-4 border-t border-purple-200/50">
-          <div class="flex items-center gap-2 bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-500 text-white rounded-full px-4 py-2 shadow-md">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-            <span class="text-base font-black font_outfit">{{ candidate.votes }} votos</span>
-          </div>
+@for (candidato of eleccion()?.candidatos || []; track candidato.id; let idx = $index) {
+  <div [class]="'max-w-5xl relative ' + (idx % 2 === 0 ? 'ml-0 mr-auto' : 'ml-auto mr-0')">
+    
+    <div class="flex items-center gap-4 mb-4">
+      <div class="bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-lg font-black shadow-lg ring-2 ring-white font_outfit shrink-0">
+        {{ (idx + 1).toString().padStart(2, '0') }}
+      </div>
+      
+      <div class="flex-1">
+        <h2 class="text-2xl font-black bg-gradient-to-r from-purple-600 to-rose-600 bg-clip-text text-transparent font_outfit mb-1">
+          {{ candidato.nombre }} {{ candidato.apellido }}
+        </h2>
+        <div class="flex items-center gap-3 text-[16px] text-gray-600 font_outfit">
+          <span class="font-semibold">{{ candidato.edad }} años</span>
+          <span class="w-1 h-1 rounded-full bg-gray-400"></span>
+          <span class="font-semibold">{{ candidato.hobies }}</span>
         </div>
       </div>
-    }
-  </div>
 
-  <button
-    (click)="toggleFinalizarPanel()"
-    class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-600 hover:to-purple-700 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 ring-2 ring-white">
-    <svg 
-      class="w-4 h-4 transition-transform duration-300"
-      [class.rotate-180]="showFinalizarPanel()"
-      fill="none" 
-      stroke="currentColor" 
-      viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
-    </svg>
-  </button>
-
-  @if (showFinalizarPanel()) {
-    <div class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 animate-fade-in">
-      <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 border border-purple-200">
-        <button
-          (click)="finalizarVotacion()"
-          [disabled]="!hasVotedAllCandidates() || votacionFinalizada()"
-          [class]="!hasVotedAllCandidates() || votacionFinalizada()
-            ? 'px-8 py-3 text-sm font-bold rounded-full transition-all duration-200 opacity-50 cursor-not-allowed bg-gray-300 text-gray-500 shadow-md'
-            : 'px-8 py-3 text-sm font-bold rounded-full transition-all duration-300 hover:scale-105 active:scale-95 bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-600 hover:to-purple-700 text-white shadow-xl'">
-          @if (votacionFinalizada()) {
-            <span class="flex items-center justify-center gap-2">
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Votación Finalizada
+      <!-- Hobbies como tags -->
+      @if (candidato.hobies) {
+        <div class="flex flex-wrap gap-2 justify-end">
+          @for (hobby of candidato.hobies.split(','); track hobby; let hobbyIdx = $index) {
+            <span 
+              [class]="'inline-block px-3 py-1 rounded-full text-xs font-semibold shadow-sm font_outfit ' + 
+                (hobbyIdx % 4 === 0 ? 'bg-purple-100 text-purple-700' : 
+                 hobbyIdx % 4 === 1 ? 'bg-pink-100 text-pink-700' : 
+                 hobbyIdx % 4 === 2 ? 'bg-blue-100 text-blue-700' : 
+                 'bg-rose-100 text-rose-700')">
+              {{ hobby.trim() }}
             </span>
-          } @else if (!hasVotedAllCandidates()) {
-            Completa la votación de todas las candidatas
-          } @else {
-            Finalizar Votación
           }
-        </button>
+        </div>
+      }
+
+      <!-- Categoría destacada si tiene mejor puntuación -->
+      @if (candidato.promedioGeneral && candidato.promedioGeneral > 4.5) {
+        <div class="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1.5 rounded-full shadow-md">
+          <span class="text-xs font-black tracking-wide uppercase font_outfit">
+            Destacada
+          </span>
+        </div>
+      } 
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-10 items-start">
+      
+      <div class="flex flex-col relative">
+        <div class="relative flex items-center justify-center h-[360px]">
+          
+          @if (candidato.imagenes.length > 1) {
+            <div 
+              class="absolute left-0 top-1/2 -translate-y-1/2 w-32 h-[245px] cursor-pointer transition-all duration-300 hover:scale-105 z-10"
+              (click)="prevImage(candidato.id!, candidato.imagenes.length)">
+              <img
+                [src]="getImageAtOffset(candidato.id!, candidato.imagenes, -1)"
+                alt="Foto anterior"
+                class="w-full h-full object-cover rounded-2xl opacity-60 hover:opacity-75 transition-opacity duration-300 shadow-lg" />
+            </div>
+          }
+
+          <div class="relative w-[250px] aspect-[3/4] overflow-hidden rounded-2xl bg-white shadow-xl z-20">
+            <img
+              [src]="candidato.imagenes[getCurrentImageIndex(candidato.id!)]?.secure_url"
+              [alt]="candidato.nombre + ' - Foto ' + (getCurrentImageIndex(candidato.id!) + 1)"
+              class="w-full h-full object-cover animate-fade-in" />
+          </div>
+
+          @if (candidato.imagenes.length > 1) {
+            <div 
+              class="absolute right-0 top-1/2 -translate-y-1/2 w-32 h-[245px] cursor-pointer transition-all duration-300 hover:scale-105 z-10"
+              (click)="nextImage(candidato.id!, candidato.imagenes.length)">
+              <img
+                [src]="getImageAtOffset(candidato.id!, candidato.imagenes, 1)"
+                alt="Foto siguiente"
+                class="w-full h-full object-cover rounded-2xl opacity-60 hover:opacity-75 transition-opacity duration-300 shadow-lg" />
+            </div>
+          }
+        </div>
+
+        <!-- Indicadores de imagen -->
+        @if (candidato.imagenes.length > 1) {
+          <div class="flex justify-center gap-2 mt-4">
+            @for (imgIndex of getImageRange(candidato.imagenes.length); track imgIndex) {
+              <button
+                (click)="goToImage(candidato.id!, imgIndex)"
+                [class]="'w-3 h-3 rounded-full transition-all duration-300 ' + 
+                  (getCurrentImageIndex(candidato.id!) === imgIndex 
+                    ? 'bg-purple-600 scale-125' 
+                    : 'bg-gray-300 hover:bg-gray-400')">
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="relative flex flex-col justify-center space-y-4 h-[360px]">
+        
+        <!-- Propuesta -->
+        <div class="relative bg-gradient-to-br from-violet-600 via-fuchsia-600 to-pink-600 rounded-2xl p-5 shadow-xs overflow-hidden ">
+          <svg class="absolute top-2 left-2 w-10 h-10 text-white/30 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <p class="text-[16px] opacity-80 text-white leading-relaxed relative z-10 pl-12 font_outfit font-medium">
+            {{ candidato.propuesta }}
+          </p>
+        </div>
+
+        <!-- Sistema de votación -->
+        <div class="relative bg-gradient-to-br from-purple-50 to-rose-50 rounded-3xl p-5 shadow-xs overflow-hidden ">
+          <div class="space-y-2">
+            @for (criterio of criterios(); track criterio.id) {
+              <div class="flex items-center justify-between gap-3 py-1">
+                <span class="text-sm font-bold text-gray-700 font_outfit min-w-[90px]">{{ criterio.nombre }}</span>
+                <div class="flex gap-1">
+                  @for (heart of getHeartArray(); track heart) {
+                    <button
+                      (click)="votarCriterio(candidato.id!, criterio.id, heart)"
+                      [disabled]="votacionFinalizada()"
+                      [class]="votacionFinalizada() 
+                        ? 'w-7 h-7 rounded transition-all duration-200 cursor-not-allowed opacity-50 flex items-center justify-center ' + (heart <= getVotoCriterio(candidato.id!, criterio.id) ? 'text-rose-500' : 'text-gray-300')
+                        : 'w-7 h-7 rounded transition-all duration-200 hover:scale-125 active:scale-95 flex items-center justify-center ' + (heart <= getVotoCriterio(candidato.id!, criterio.id) ? 'text-rose-500' : 'text-gray-300 hover:text-rose-400')">
+                      <svg 
+                        class="w-5 h-5"
+                        [class.fill-current]="heart <= getVotoCriterio(candidato.id!, criterio.id)"
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
       </div>
     </div>
-  }
+
+    <!-- Información de votos -->
+    <div class="mt-5 flex items-center justify-start gap-4 pt-4 border-t border-purple-200/50">
+      <div class="flex items-center gap-2 bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-500 text-white rounded-full px-4 py-2 shadow-md">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+        <span class="text-base font-black font_outfit">
+          {{ candidato.votos?.length || 0 }} votos
+        </span>
+      </div>
+
+      @if (candidato.promedioGeneral) {
+        <div class="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-full px-4 py-2 shadow-md">
+          <span class="text-base font-black font_outfit">
+            ⭐ {{ candidato.promedioGeneral.toFixed(1) }}
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+}
+</div>
+
+<button
+  (click)="toggleFinalizarPanel()"
+  class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-600 hover:to-purple-700 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 ring-2 ring-white">
+  <svg 
+    class="w-4 h-4 transition-transform duration-300"
+    [class.rotate-180]="showFinalizarPanel()"
+    fill="none" 
+    stroke="currentColor" 
+    viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
+
+@if (showFinalizarPanel()) {
+  <div class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 animate-fade-in">
+    <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 border border-purple-200">
+      <button
+        (click)="finalizarVotacion()"
+        [disabled]="!hasVotedAllCandidates() || votacionFinalizada() || !usuarioActual()"
+        [class]="!hasVotedAllCandidates() || votacionFinalizada() || !usuarioActual()
+          ? 'px-8 py-3 text-sm font-bold rounded-full transition-all duration-200 opacity-50 cursor-not-allowed bg-gray-300 text-gray-500 shadow-md'
+          : 'px-8 py-3 text-sm font-bold rounded-full transition-all duration-300 hover:scale-105 active:scale-95 bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-600 hover:to-purple-700 text-white shadow-xl'">
+        
+        @if (!usuarioActual()) {
+          <span class="flex items-center justify-center gap-2">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Inicia sesión para votar
+          </span>
+        } @else if (votacionFinalizada()) {
+          <span class="flex items-center justify-center gap-2">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Votación Finalizada
+          </span>
+        } @else if (!hasVotedAllCandidates()) {
+          <span class="flex items-center justify-center gap-2">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            Vota al menos una candidata ({{ totalVotosRealizados() }} votadas)
+          </span>
+        } @else {
+          <span class="flex items-center justify-center gap-2">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            Finalizar Votación ({{ totalVotosRealizados() }} votadas)
+          </span>
+        }
+      </button>
+    </div>
+  </div>
+}
+
+<!-- Mensaje de votación completada -->
+@if (showVoteMessage()) {
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+    <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl">
+      <div class="text-6xl mb-4">🎉</div>
+      <h3 class="text-2xl font-black text-gray-800 mb-2 font_outfit">¡Votación Completada!</h3>
+      <p class="text-gray-600 mb-6 font_outfit">Tu votación ha sido registrada exitosamente.</p>
+      <button 
+        (click)="showVoteMessage.set(false)"
+        class="px-6 py-2 bg-gradient-to-r from-[#5956e9] to-[#6d71f9] text-white rounded-full font-bold hover:from-[#4845d8] hover:to-[#5c60e8] transition-all duration-300 font_outfit">
+        Aceptar
+      </button>
+    </div>
+  </div>
+}
 </div>

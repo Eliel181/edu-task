@@ -28,8 +28,11 @@ export const routes: Routes = [
       {
         path: 'reset-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
       },
+      // {
+      //   path: 'votacion', loadComponent: () => import('./votacion/carrusel-elecciones/presentacion-postulantes/presentacion-postulantes.component').then(m => m.PresentacionPostulantesComponent)
+      // },
       {
-        path: 'votacion', loadComponent: () => import('./votacion/carrusel-elecciones/presentacion-postulantes/presentacion-postulantes.component').then(m => m.PresentacionPostulantesComponent)
+        path: 'votacion/:id', loadComponent: () => import('./votacion/carrusel-elecciones/presentacion-postulantes/presentacion-postulantes.component').then(m => m.PresentacionPostulantesComponent)
       },
       {
         path: 'elecciones', loadComponent: () => import('./votacion/lista-elecciones/lista-elecciones/lista-elecciones.component').then(m => m.ListaEleccionesComponent)
