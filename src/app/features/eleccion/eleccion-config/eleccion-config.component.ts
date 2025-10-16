@@ -5,6 +5,7 @@ import { Candidato, Eleccion, ImagenCandidato } from '../../../core/interfaces/e
 import { ActivatedRoute } from '@angular/router';
 import { EleccionService } from '../../../core/services/eleccion.service';
 import { CloudinaryService } from '../../../core/services/cloudinary.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-eleccion-config',
@@ -147,6 +148,7 @@ export class EleccionConfigComponent implements OnInit {
         imagenes: imagenesFinales
       };
       await this.eleccionService.editarCandidato(eleccionId, candidatoActualizado);
+      Swal.fire('Actualizado', 'El candidato ha sido actualizado con éxito', 'success');
     } else {
       const nuevoCandidato: Candidato = {
         ...this.candidatoForm.value,
@@ -154,9 +156,42 @@ export class EleccionConfigComponent implements OnInit {
         imagenes: imagenesFinales
       };
       await this.eleccionService.agregarCandidato(eleccionId, nuevoCandidato);
+      Swal.fire('Creado', 'El candidato ha sido creado con éxito', 'success');
     }
 
     this.closeModal();
     this.isSubmitting = false;
+  }
+
+  async eliminarCandidato(candidatoId: string): Promise<void> {
+    const eleccionId = this.route.snapshot.paramMap.get('id');
+    if (!eleccionId) return;
+
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esta acción',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+      await this.eleccionService.eliminarCandidato(eleccionId, candidatoId);
+      Swal.fire('Eliminado', 'El candidato ha sido eliminado con éxito', 'success');
+      // Refresh the election data
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        this.eleccionService.getEleccionById(id).subscribe(eleccion => {
+          this.eleccion.set(eleccion);
+          if (eleccion && eleccion.candidatos) {
+            this.currentImageIndexes = eleccion.candidatos.map(() => 0);
+            this.isImageLoading = eleccion.candidatos.map(() => false);
+          }
+        });
+      }
+    }
   }
 }
