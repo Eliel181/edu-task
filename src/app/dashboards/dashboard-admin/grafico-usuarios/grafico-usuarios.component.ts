@@ -43,7 +43,7 @@ export class GraficoUsuariosComponent implements OnInit {
       width: 0,
       colors: ['transparent'] // Hace los bordes transparentes
     },
-    labels: ['Admin', 'Empleado', 'RTE', 'Director', 'Docente'],
+    labels: ['Admin', 'Empleado', 'RTE', 'Director', 'Alumno'],
     plotOptions: {
       pie: {
         donut: {
@@ -118,7 +118,7 @@ export class GraficoUsuariosComponent implements OnInit {
   }
 
   contarPorRol(usuarios: Usuario[]) {
-    const roles: RolUsuario[] = ['Admin', 'Empleado', 'RTE', 'Director', 'Docente'];
+    const roles: RolUsuario[] = ['Admin', 'Empleado', 'RTE', 'Director', 'Alumno'];
     const series = roles.map(rol => usuarios.filter(u => u.rol === rol).length);
     return { labels: roles, series };
   }

@@ -1,0 +1,9 @@
+.font_outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+}
+
+:host {
+  display: block;
+  scroll-behavior: smooth;
+}
