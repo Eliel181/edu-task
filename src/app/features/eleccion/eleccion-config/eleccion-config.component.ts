@@ -1,9 +1,10 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Candidato, Eleccion } from '../../../core/interfaces/eleccion.model';
+import { Candidato, Eleccion, ImagenCandidato } from '../../../core/interfaces/eleccion.model';
 import { ActivatedRoute } from '@angular/router';
 import { EleccionService } from '../../../core/services/eleccion.service';
+import { CloudinaryService } from '../../../core/services/cloudinary.service';
 
 @Component({
   selector: 'app-eleccion-config',
@@ -16,10 +17,14 @@ export class EleccionConfigComponent implements OnInit {
   private fb:FormBuilder = inject(FormBuilder);
   private route:ActivatedRoute = inject(ActivatedRoute);
   private eleccionService: EleccionService = inject(EleccionService);
+  private cloudinaryService: CloudinaryService = inject(CloudinaryService);
 
   isModalVisible = false;
   candidatoForm: FormGroup;
   eleccion: WritableSignal<Eleccion | null> = signal(null);
+
+  private archivosParaSubir: (File | null)[] = [null, null, null];
+  vistasPrevias: (string | null)[] = [null, null, null];
 
   constructor() {
     this.candidatoForm = this.fb.group({
@@ -36,8 +41,23 @@ export class EleccionConfigComponent implements OnInit {
     if (id) {
       this.eleccionService.getEleccionById(id).subscribe(eleccion => {
         this.eleccion.set(eleccion);
+        console.log(eleccion);
+
       });
     }
+  }
+
+  onFileSelected(event: any, index: number): void {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    this.archivosParaSubir[index] = file;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.vistasPrevias[index] = reader.result as string;
+    };
   }
 
   openModal() {
@@ -49,10 +69,38 @@ export class EleccionConfigComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.candidatoForm.invalid) {
-      return;
       this.candidatoForm.markAllAsTouched();
+      return;
+    }
+
+    const imagenesSubidas: (ImagenCandidato | null)[] = [null, null, null];
+    for (let i = 0; i < this.archivosParaSubir.length; i++) {
+      const archivo = this.archivosParaSubir[i];
+      if (archivo) {
+        const resultado = await this.cloudinaryService.uploadImage(archivo);
+        imagenesSubidas[i] = resultado;
+      }
+    }
+
+    const imagenesFinales: ImagenCandidato[] = [];
+    for (let i = 0; i < 3; i++) {
+      if (imagenesSubidas[i]) {
+        imagenesFinales.push(imagenesSubidas[i]!);
+      }
+    }
+
+    const nuevoCandidato: Candidato = {
+      ...this.candidatoForm.value,
+      id: crypto.randomUUID(),
+      imagenes: imagenesFinales
+    };
+
+    const eleccionId = this.route.snapshot.paramMap.get('id');
+    if (eleccionId) {
+      await this.eleccionService.agregarCandidato(eleccionId, nuevoCandidato);
+      this.closeModal();
     }
   }
 }
