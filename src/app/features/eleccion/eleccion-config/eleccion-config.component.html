@@ -118,9 +118,10 @@
           class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] transition-all duration-200 shadow-2xs">
           Cancelar
         </button>
-        <button type="submit" [disabled]="!candidatoForm.valid"
+        <button type="submit" [disabled]="!candidatoForm.valid || isSubmitting"
           class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none shadow-2xs hover:shadow-md">
-          Guardar Candidato
+          <span *ngIf="isSubmitting" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></span>
+          <span *ngIf="!isSubmitting">Guardar Candidato</span>
         </button>
       </div>
     </form>

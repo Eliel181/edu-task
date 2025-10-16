@@ -26,6 +26,8 @@ export class EleccionConfigComponent implements OnInit {
   private archivosParaSubir: (File | null)[] = [null, null, null];
   vistasPrevias: (string | null)[] = [null, null, null];
 
+  isSubmitting = false;
+
   constructor() {
     this.candidatoForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -74,6 +76,7 @@ export class EleccionConfigComponent implements OnInit {
       this.candidatoForm.markAllAsTouched();
       return;
     }
+    this.isSubmitting = true;
 
     const imagenesSubidas: (ImagenCandidato | null)[] = [null, null, null];
     for (let i = 0; i < this.archivosParaSubir.length; i++) {
@@ -102,6 +105,7 @@ export class EleccionConfigComponent implements OnInit {
       await this.eleccionService.agregarCandidato(eleccionId, nuevoCandidato);
       this.closeModal();
     }
+    this.isSubmitting = false;
   }
 }
 
