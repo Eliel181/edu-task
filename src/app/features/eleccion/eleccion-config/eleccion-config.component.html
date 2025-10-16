@@ -1,55 +1,178 @@
 <div class="p-4">
-  <button (click)="openModal()" type="button" class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+  <button (click)="openModal()" type="button"
+    class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
     Agregar Candidato
   </button>
 </div>
 
+<div *ngIf="eleccion()" class="p-4">
+  <h2 class="text-2xl font-bold text-[#2d2c63] dark:text-[#A78BFA] mb-4">{{ eleccion()?.titulo }}</h2>
+  <div *ngIf="eleccion()?.candidatos && eleccion()?.candidatos!.length > 0; else noCandidatos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div *ngFor="let candidato of eleccion()?.candidatos" class="bg-white dark:bg-[#2A2433] rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+      <img [src]="candidato.imagenes[0] || 'https://placehold.co/600x400/6b7280/ffffff?text=' + candidato.nombre" alt="Foto de {{ candidato.nombre }}" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-bold text-[#2d2c63] dark:text-[#A78BFA]">{{ candidato.nombre }} {{ candidato.apellido }}</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">{{ candidato.edad }} años</p>
+        <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{{ candidato.propuesta }}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #noCandidatos>
+    <div class="flex justify-center items-center h-40 bg-gray-100 dark:bg-gray-800 rounded-2xl">
+      <p class="text-lg text-gray-500 dark:text-gray-400">No hay candidatos en la elección</p>
+    </div>
+  </ng-template>
+</div>
+
 <!-- Modal -->
-<div *ngIf="isModalVisible" (click)="closeModal()" class="fixed inset-0 bg-[#4e3e76]/30 backdrop-blur-sm z-100 flex items-center justify-center p-4">
-  <div (click)="$event.stopPropagation()" class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-2xl shadow-2xl w-full max-w-lg max-h-[95vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+<div *ngIf="isModalVisible" (click)="closeModal()"
+  class="fixed inset-0 bg-[#4e3e76]/30 backdrop-blur-sm z-100 flex items-center justify-center p-4">
+  <div (click)="$event.stopPropagation()"
+    class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-2xl shadow-2xl w-full max-w-lg max-h-[95vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
     <form [formGroup]="candidatoForm" (ngSubmit)="onSubmit()" class="p-8">
       <div class="mb-8 text-center">
-          <h2 class="text-2xl font-bold text-[#2d2c63] dark:text-[#A78BFA]">
-              Agregar Nuevo Candidato
-          </h2>
-          <p class="text-sm text-[#9291aa] mt-1">
-              Completa la información del candidato.
-          </p>
+        <h2 class="text-2xl font-bold text-[#2d2c63] dark:text-[#A78BFA]">
+          Agregar Nuevo Candidato
+        </h2>
+        <p class="text-sm text-[#9291aa] mt-1">
+          Completa la información del candidato.
+        </p>
       </div>
 
       <div class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div>
-            <label for="nombre" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Nombre *</label>
-            <input id="nombre" formControlName="nombre" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+            <label for="nombre" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Nombre
+              *</label>
+            <input id="nombre" formControlName="nombre" type="text"
+              class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
           </div>
           <div>
-            <label for="apellido" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Apellido *</label>
-            <input id="apellido" formControlName="apellido" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+            <label for="apellido" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Apellido
+              *</label>
+            <input id="apellido" formControlName="apellido" type="text"
+              class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
           </div>
         </div>
         <div>
           <label for="edad" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Edad *</label>
-          <input id="edad" formControlName="edad" type="number" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+          <input id="edad" formControlName="edad" type="number"
+            class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
         </div>
         <div>
           <label for="hobies" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Hobbies</label>
-          <input id="hobies" formControlName="hobies" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+          <input id="hobies" formControlName="hobies" type="text"
+            class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
         </div>
         <div>
-          <label for="propuesta" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Propuesta *</label>
-          <textarea id="propuesta" formControlName="propuesta" rows="3" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs"></textarea>
+          <div class="space-y-6">
+            <div class="space-y-3">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen principal</label>
+              <div class="relative group">
+                <div class="w-80 h-80 mx-auto rounded-lg flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-600 bg-transparent">
+                  <img [src]="'https://placehold.co/600x400/6b7280/ffffff?text=Imagen+Principal'" alt="Imagen principal" class="w-full h-full object-contain p-4">
+                </div>
+                <label class="absolute bottom-6 right-1/2 transform translate-x-1/2">
+                  <span class="inline-flex items-center px-4 py-2 bg-[#003a6f] text-white text-sm font-medium rounded-lg shadow-md cursor-pointer hover:opacity-90 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Cambiar imagen
+                    <input type="file" class="hidden" accept="image/*">
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imágenes adicionales</label>
+              <div class="flex justify-center gap-6">
+                @for (idx of [1, 2]; track idx) {
+                <div class="relative group">
+                  <div class="w-40 h-40 rounded-lg flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-600 bg-transparent">
+                    <img [src]="'https://placehold.co/600x400/6b7280/ffffff?text=Imagen+' + (idx + 1)" alt="Miniatura {{idx + 1}}" class="w-full h-full object-contain p-3">
+                  </div>
+                  <label class="absolute bottom-4 right-4">
+                    <span class="inline-flex items-center p-2 bg-white dark:bg-gray-700 text-[#003a6f] dark:text-blue-400 text-sm font-medium rounded-lg shadow-md cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors border border-gray-200 dark:border-gray-600">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                      </svg>
+                      <input type="file" class="hidden" accept="image/*">
+                    </span>
+                  </label>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="propuesta" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Propuesta
+            *</label>
+          <textarea id="propuesta" formControlName="propuesta" rows="3"
+            class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs"></textarea>
         </div>
       </div>
 
       <div class="mt-10 pt-8 border-t border-[#f0f1f8] dark:border-[#F0ABFC] flex justify-end gap-3">
-        <button type="button" (click)="closeModal()" class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] transition-all duration-200 shadow-2xs">
+        <button type="button" (click)="closeModal()"
+          class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] transition-all duration-200 shadow-2xs">
           Cancelar
         </button>
-        <button type="submit" [disabled]="!candidatoForm.valid" class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+        <button type="submit" [disabled]="!candidatoForm.valid"
+          class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none shadow-2xs hover:shadow-md">
           Guardar Candidato
         </button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- <div class="space-y-6">
+  <div class="space-y-3">
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen
+      principal</label>
+    <div class="relative group">
+      <div
+        class="w-80 h-80 mx-auto rounded-lg flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-600 bg-transparent">
+        <img [src]="vistasPrevias[0] || 'https://placehold.co/600x400/6b7280/ffffff?text=Imagen+Principal'"
+          alt="Imagen principal" class="w-full h-full object-contain p-4">
+      </div>
+      <label class="absolute bottom-6 right-1/2 transform translate-x-1/2">
+        <span
+          class="inline-flex items-center px-4 py-2 bg-[#003a6f] text-white text-sm font-medium rounded-lg shadow-md cursor-pointer hover:opacity-90 transition-colors">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Cambiar imagen
+          <input type="file" class="hidden" (change)="onFileSelected($event, 0)" accept="image/*">
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <div class="space-y-3">
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imágenes
+      adicionales</label>
+    <div class="flex justify-center gap-6">
+      @for (idx of [1, 2]; track idx) {
+      <div class="relative group">
+        <div
+          class="w-40 h-40 rounded-lg flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-600 bg-transparent">
+          <img [src]="vistasPrevias[idx] || 'https://placehold.co/600x400/6b7280/ffffff?text=Imagen+' + (idx + 1)"
+            alt="Miniatura {{idx + 1}}" class="w-full h-full object-contain p-3">
+        </div>
+        <label class="absolute bottom-4 right-4">
+          <span
+            class="inline-flex items-center p-2 bg-white dark:bg-gray-700 text-[#003a6f] dark:text-blue-400 text-sm font-medium rounded-lg shadow-md cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors border border-gray-200 dark:border-gray-600">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+            <input type="file" class="hidden" (change)="onFileSelected($event, idx)" accept="image/*">
+          </span>
+        </label>
+      </div>
+      }
+    </div>
+  </div>
+</div> -->

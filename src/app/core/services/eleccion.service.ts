@@ -20,6 +20,11 @@ export class EleccionService {
     return collectionData(eleccionCollection, { idField: 'id' }) as Observable<Eleccion[]>;
   }
 
+  getEleccionById(id: string): Observable<Eleccion> {
+    const eleccionDocRef = doc(this.firestore, `elecciones/${id}`);
+    return docData(eleccionDocRef, { idField: 'id' }) as Observable<Eleccion>;
+  }
+
   async agregarCandidato(eleccionId: string, candidato: Candidato): Promise<void> {
     const eleccionDocRef = doc(this.firestore, `elecciones/${eleccionId}`);
     await updateDoc(eleccionDocRef, {
