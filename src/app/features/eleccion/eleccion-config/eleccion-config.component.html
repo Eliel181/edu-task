@@ -7,6 +7,23 @@
 
 <div *ngIf="eleccion()" class="p-4">
   <h2 class="text-2xl font-bold text-[#2d2c63] dark:text-[#A78BFA] mb-4">{{ eleccion()?.titulo }}</h2>
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center gap-2">
+      <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Estado:</span>
+      <span class="px-2 py-1 rounded-full text-xs font-semibold"
+        [class.bg-green-100]="eleccion()?.estado === 'Iniciada'"
+        [class.text-green-800]="eleccion()?.estado === 'Iniciada'"
+        [class.bg-yellow-100]="eleccion()?.estado === 'Pendiente'"
+        [class.text-yellow-800]="eleccion()?.estado === 'Pendiente'"
+        [class.bg-red-100]="eleccion()?.estado === 'Finalizada'"
+        [class.text-red-800]="eleccion()?.estado === 'Finalizada'">
+        {{ eleccion()?.estado }}
+      </span>
+    </div>
+    <button class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-green-500 text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+      Iniciar Votación
+    </button>
+  </div>
   <div *ngIf="eleccion()?.candidatos && eleccion()?.candidatos!.length > 0; else noCandidatos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <div *ngFor="let candidato of eleccion()?.candidatos; let i = index" class="relative bg-white dark:bg-[#2A2433] rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
       <!-- <div class="absolute top-2 right-2 z-10">
