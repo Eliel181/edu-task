@@ -23,7 +23,6 @@ export class EleccionListComponent implements OnInit {
       descripcion: [''],
       fechaInicio: ['', Validators.required],
       fechaFin: ['', Validators.required],
-      criterios: this.fb.array([]),
       candidatos: this.fb.array([]),
       votos: this.fb.array([]),
       estado: ['Pendiente']
@@ -48,23 +47,22 @@ export class EleccionListComponent implements OnInit {
       candidatos: [],
       votos: []
     });
-    this.criterios.clear();
   }
 
-  get criterios(): FormArray {
-    return this.eleccionForm.get('criterios') as FormArray;
-  }
+  // get criterios(): FormArray {
+  //   return this.eleccionForm.get('criterios') as FormArray;
+  // }
 
-  addCriterio() {
-    const criterioGroup = this.fb.group({
-      nombre: ['', Validators.required]
-    });
-    this.criterios.push(criterioGroup);
-  }
+  // addCriterio() {
+  //   const criterioGroup = this.fb.group({
+  //     nombre: ['', Validators.required]
+  //   });
+  //   this.criterios.push(criterioGroup);
+  // }
 
-  removeCriterio(index: number) {
-    this.criterios.removeAt(index);
-  }
+  // removeCriterio(index: number) {
+  //   this.criterios.removeAt(index);
+  // }
 
   onSubmit() {
     if (this.eleccionForm.valid) {

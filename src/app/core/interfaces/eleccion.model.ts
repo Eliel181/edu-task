@@ -1,13 +1,16 @@
+export interface ImagenCandidato {
+  public_id: string;
+  secure_url: string;
+}
+
 export interface Eleccion {
   id?: string;
   titulo: string;                        // Ej: "Elección Miss Primavera 2025"
-  descripcion?: string;
-  criterios: CriterioEvaluacion[];       // Criterios definidos por el usuario
+  descripcion?: string;       // Criterios definidos por el usuario
   candidatos: Candidato[];               // Participantes
   fechaInicio: string;
   fechaFin: string;
   estado: 'Pendiente' | 'Iniciada' | 'Finalizada';
-  votos?: Voto[];                       // Almacena los votos de los usuarios
 }
 
 export interface Candidato {
@@ -18,27 +21,17 @@ export interface Candidato {
   hobies: string;
   propuesta: string;
   imagenes: ImagenCandidato[];
+  votos?: Voto[];
+  puntuacionTotal?: number; // Suma de todos los votos (total general)
+  promedioGeneral?: number; // Promedio total (suma promedios / cantidad de votos)
 }
 
-export interface CriterioEvaluacion {
-  id: string;               // Identificador único (por ejemplo UUID)
-  nombre: string;           // Ejemplo: "Presentación", "Carisma", "Conocimientos"
-  peso?: number;            // Ponderación (opcional, por si cada criterio vale distinto)
-}
-
-export interface EvaluacionCandidato {
-  criterioId: string;       // Referencia al criterio
-  puntaje: number;          // Puntuación obtenida (por ejemplo 0–10)
-}
-
-export interface ImagenCandidato {
-  public_id: string;
-  secure_url: string;
-}
-
-// Representa el voto detallado de un usuario por un candidato, incluyendo la puntuación para cada criterio.
 export interface Voto {
-  usuarioId: string;
-  candidatoId: string;
-  evaluaciones: EvaluacionCandidato[];
+  usuarioId: string;    // UID del votante
+  belleza: number;      // Puntuación 0–10
+  carisma: number;      // Puntuación 0–10
+  elegancia: number;    // Puntuación 0–10
+  total: number;        // Suma de los tres criterios
+  promedio: number;     // Promedio de los tres criterios
+  fecha: Date;          // Fecha del voto
 }
