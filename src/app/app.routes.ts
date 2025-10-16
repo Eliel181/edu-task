@@ -14,12 +14,29 @@ export const routes: Routes = [
     path: '',
     component: PublicLayoutComponent,
     children: [
-      { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent),
-        canActivate: [publicGuard] },
-      { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent),
-        canActivate: [publicGuard] },
-      { path: 'verificar-email', loadComponent: () => import('./features/auth/verificar-email/verificar-email.component').then(m => m.VerificarEmailComponent) },
-      { path: 'reset-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
+      {
+        path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent),
+        canActivate: [publicGuard]
+      },
+      {
+        path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent),
+        canActivate: [publicGuard]
+      },
+      {
+        path: 'verificar-email', loadComponent: () => import('./features/auth/verificar-email/verificar-email.component').then(m => m.VerificarEmailComponent)
+      },
+      {
+        path: 'reset-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
+      },
+      // {
+      //   path: 'votacion', loadComponent: () => import('./votacion/carrusel-elecciones/presentacion-postulantes/presentacion-postulantes.component').then(m => m.PresentacionPostulantesComponent)
+      // },
+      {
+        path: 'votacion/:id', loadComponent: () => import('./votacion/carrusel-elecciones/presentacion-postulantes/presentacion-postulantes.component').then(m => m.PresentacionPostulantesComponent)
+      },
+      {
+        path: 'elecciones', loadComponent: () => import('./votacion/lista-elecciones/lista-elecciones/lista-elecciones.component').then(m => m.ListaEleccionesComponent)
+      },
     ]
   },
 
@@ -29,13 +46,13 @@ export const routes: Routes = [
     component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
-    {
-      path: '',
-      pathMatch: 'full',
-      // usar un guard que espere currentUser
-      loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component')
-        .then(m => m.DashboardComponent)
-    },
+      {
+        path: '',
+        pathMatch: 'full',
+        // usar un guard que espere currentUser
+        loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component')
+          .then(m => m.DashboardComponent)
+      },
       // { path: 'dashboard', loadComponent: () => import('./dashboards/dashboard-admin/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [adminGuard] },
 
       { path: 'gestion-usuarios', loadComponent: () => import('./features/admin/gestion-usuarios/gestion-usuarios.component').then(m => m.GestionUsuariosComponent), canActivate: [adminGuard] },

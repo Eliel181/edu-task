@@ -28,9 +28,9 @@ export interface Candidato {
 
 export interface Voto {
   usuarioId: string;    // UID del votante
-  belleza: number;      // Puntuación 0–10
-  carisma: number;      // Puntuación 0–10
-  elegancia: number;    // Puntuación 0–10
+  belleza: number;      // Puntuación 0–5
+  carisma: number;      // Puntuación 0–5
+  elegancia: number;    // Puntuación 0–5
   total: number;        // Suma de los tres criterios
   promedio: number;     // Promedio de los tres criterios
   fecha: Date;          // Fecha del voto
