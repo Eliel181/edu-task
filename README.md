@@ -49,6 +49,8 @@ ng g s core/services/school --skip-tests
 ng g s features/tasks/task --skip-tests
 ng g s core/services/visita --skip-tests
 ng g s core/services/activityFeed  --skip-tests
+ng g s core/services/cloudinary  --skip-tests
+ng g s core/services/eleccion  --skip-tests
 ```
 
 ```bash
@@ -99,6 +101,7 @@ ng g c features/referents/calendario --skip-tests
 
 #Eleccion
 ng g c features/eleccion/eleccion-list --skip-tests
+ng g c features/eleccion/eleccion-config --skip-tests
 
 # Public
 ng g c features/auth/login --skip-tests
