@@ -2,21 +2,22 @@ export interface Eleccion {
   id?: string;
   titulo: string;                        // Ej: "Elección Miss Primavera 2025"
   descripcion?: string;
-  tipo: string;                          // Ej: "belleza", "rendimiento", "popularidad"
   criterios: CriterioEvaluacion[];       // Criterios definidos por el usuario
   candidatos: Candidato[];               // Participantes
   fechaInicio: string;
   fechaFin: string;
   estado: 'Pendiente' | 'Iniciada' | 'Finalizada';
+  votos?: Voto[];                       // Almacena los votos de los usuarios
 }
 
 export interface Candidato {
   id?: string;
   nombre: string;
-  partido?: string;
-  cargo?: string;
+  apellido: string;
+  edad: number;
+  hobies: string;
+  propuesta: string;
   imagenes: ImagenCandidato[];
-  evaluaciones?: EvaluacionCandidato[];  // Puntuaciones por criterio
 }
 
 export interface CriterioEvaluacion {
@@ -33,4 +34,11 @@ export interface EvaluacionCandidato {
 export interface ImagenCandidato {
   public_id: string;
   secure_url: string;
+}
+
+// Representa el voto detallado de un usuario por un candidato, incluyendo la puntuación para cada criterio.
+export interface Voto {
+  usuarioId: string;
+  candidatoId: string;
+  evaluaciones: EvaluacionCandidato[];
 }

@@ -57,6 +57,7 @@ export const routes: Routes = [
       { path: 'calendario', loadComponent: () => import('./features/referents/calendario/calendario.component').then(m => m.CalendarioComponent), canActivate: [authGuard] },
 
       { path: 'gestion-elecciones', loadComponent: () => import('./features/eleccion/eleccion-list/eleccion-list.component').then(m => m.EleccionListComponent), canActivate: [authGuard, adminGuard] },
+      { path: 'gestion-elecciones/configuracion/:id', loadComponent: () => import('./features/eleccion/eleccion-config/eleccion-config.component').then(m => m.EleccionConfigComponent), canActivate: [authGuard, adminGuard] },
     ]
   },
 

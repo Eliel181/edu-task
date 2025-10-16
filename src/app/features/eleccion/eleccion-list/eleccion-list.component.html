@@ -1,1 +1,135 @@
-<p>eleccion-list works!</p>
+<div class="max-w-8xl px-1 py-10 sm:px-2 lg:px-4 mx-auto font_outfit dark:bg-[#1A1A1E]">
+  <div class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-3xl p-4 sm:p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
+    <!-- Header -->
+    <div class="mb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-y-4">
+      <div>
+        <h2 class="text-xl font-semibold text-[#2d2c63] dark:text-[#E4E4E7]">Gestión de Elecciones</h2>
+        <p class="text-sm text-[#9291aa] dark:text-slate-400 mt-2">
+          Administra las elecciones de la plataforma.
+        </p>
+      </div>
+      <button (click)="openModal()" type="button" class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+        Crear Nueva Elección
+      </button>
+    </div>
+
+    <!-- Tabla de Elecciones -->
+    <div class="overflow-x-auto rounded-3xl shadow-[0_2px_6px_rgba(0,0,0,0.02)]">
+      <table class="min-w-full divide-y divide-[#f0f1f8] dark:divide-slate-700">
+        <thead class="bg-[#fafbfe] dark:bg-[#443a52]/50">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider">Título</th>
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider">Inicio</th>
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider">Fin</th>
+            <th scope="col" class="px-4 py-3 text-start text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider">Estado</th>
+            <th scope="col" class="px-2 py-3 text-center text-xs font-semibold uppercase text-[#524380] dark:text-slate-300 tracking-wider sm:static sticky right-0 bg-[#fafbfe] dark:bg-[#2A2433] z-10 w-16 min-w-[4rem]">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#f0f1f8] dark:divide-slate-700">
+          @for (eleccion of elecciones(); track eleccion.id) {
+            <tr class="bg-white dark:bg-[#2A2433] hover:bg-[#fcfdfe] dark:hover:bg-[#443a52] transition-colors duration-200">
+              <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-[#4e3e76] dark:text-[#E4E4E7]">{{ eleccion.titulo }}</td>
+              <td class="px-4 py-3 whitespace-nowrap text-sm text-[#707078] dark:text-slate-400">{{ eleccion.fechaInicio }}</td>
+              <td class="px-4 py-3 whitespace-nowrap text-sm text-[#707078] dark:text-slate-400">{{ eleccion.fechaFin }}</td>
+              <td class="px-4 py-3 whitespace-nowrap">
+                <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium"
+                      [ngClass]="{
+                        'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-400': eleccion.estado === 'Iniciada',
+                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-400': eleccion.estado === 'Pendiente',
+                        'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-400': eleccion.estado === 'Finalizada'
+                      }">
+                  {{ eleccion.estado }}
+                </span>
+              </td>
+              <td class="px-2 py-3 whitespace-nowrap text-center sm:static sticky right-0 bg-white dark:bg-[#2A2433] z-1 w-16 min-w-[4rem]">
+                <div class="hs-dropdown [--placement:bottom-right] inline-block">
+                  <button type="button" class="hs-dropdown-toggle p-1.5 inline-flex justify-center items-center rounded-full text-[#9291aa] hover:bg-[#f0f1f8] dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#5956e9] transition-all duration-200 ease-out">
+                    <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                    </svg>
+                  </button>
+                  <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-[9999] bg-white dark:bg-[#1A1A1E] dark:border dark:border-slate-700 shadow-[0_2px_6px_rgba(0,0,0,0.05)] rounded-2xl p-2 mt-2">
+                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#796ffc] hover:bg-[#f9f9fe] dark:hover:bg-slate-700 transition-colors duration-200" href="#">
+                      Editar
+                    </a>
+                    <a [routerLink]="['configuracion', eleccion.id]" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-[#e77833] hover:bg-[#fef9f9] dark:hover:bg-slate-700 transition-colors duration-200 cursor-pointer" href="#">
+                      Configurar
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="isModalVisible" (click)="closeModal()" class="fixed inset-0 bg-[#4e3e76]/30 backdrop-blur-sm z-100 flex items-center justify-center p-4">
+  <div (click)="$event.stopPropagation()" class="bg-[#fcfdfe] dark:bg-[#2A2433] rounded-2xl shadow-2xl w-full max-w-3xl max-h-[95vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+    <form [formGroup]="eleccionForm" (ngSubmit)="onSubmit()" class="p-8">
+      <div class="mb-8">
+          <h2 class="text-xl font-semibold text-center text-[#2d2c63] dark:text-[#A78BFA]">
+              Crear Nueva Elección
+          </h2>
+          <p class="text-sm text-center text-[#9291aa] mt-1">
+              Completa la información de la elección.
+          </p>
+      </div>
+
+      <!-- Form fields -->
+      <div class="space-y-4">
+        <div>
+          <label for="titulo" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Título *</label>
+          <input id="titulo" formControlName="titulo" type="text" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+        </div>
+
+        <div>
+          <label for="descripcion" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Descripción</label>
+          <textarea id="descripcion" formControlName="descripcion" rows="3" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div>
+            <label for="fechaInicio" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Fecha de Inicio *</label>
+            <input id="fechaInicio" formControlName="fechaInicio" type="date" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+          </div>
+          <div>
+            <label for="fechaFin" class="block text-sm font-medium text-[#4e3e76] dark:text-[#A78BFA] mb-2">Fecha de Fin *</label>
+            <input id="fechaFin" formControlName="fechaFin" type="date" class="py-2 px-4 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+          </div>
+        </div>
+
+        <!-- Criterios -->
+        <div class="border-t border-[#f0f1f8] dark:border-[#443a52] pt-4 mt-4">
+          <h4 class="text-lg font-semibold mb-2 text-[#2d2c63] dark:text-[#A78BFA]">Criterios de Evaluación</h4>
+          <div formArrayName="criterios">
+            <div *ngFor="let criterio of criterios.controls; let i=index" [formGroupName]="i" class="flex items-center gap-2 mb-2">
+              <input type="text" formControlName="nombre" placeholder="Nombre del Criterio" class="py-2 px-3 block w-full text-[#707078] dark:text-[#E4E4E7] dark:bg-[#443a52] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 shadow-2xs">
+              <button type="button" (click)="removeCriterio(i)" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 8.707a1 1 0 00-1.414 1.414L8.586 11.5l-1.293 1.293a1 1 0 101.414 1.414L10 12.914l1.293 1.293a1 1 0 001.414-1.414L11.414 11.5l1.293-1.293a1 1 0 00-1.414-1.414L10 10.086l-1.293-1.293z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button type="button" (click)="addCriterio()" class="mt-2 py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-dashed border-gray-400 text-gray-800 hover:bg-gray-100 dark:text-white dark:border-neutral-600 dark:hover:bg-neutral-700">
+            Añadir Criterio
+          </button>
+        </div>
+
+      </div>
+
+      <div class="mt-10 pt-8 border-t border-[#f0f1f8] dark:border-[#F0ABFC] flex justify-end gap-3">
+        <button type="button" (click)="closeModal()" class="py-2 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-[#8276a2] hover:bg-[#f9f9fe] hover:text-[#524380] transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="!eleccionForm.valid" class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
