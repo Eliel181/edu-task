@@ -84,6 +84,8 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
       onEventClick: (event: CalendarEvent) => { this.handleEventClick(event); },
       onClickAgendaDate: (date) => { this.openModalForCreate(date); },
       onRangeUpdate: (range) => { this.formatearFecha(range); },
+
+
     }
   });
 
@@ -224,7 +226,6 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
   //funcion encargada de mostrar el modal, cada que se hace click sobre un dia en el calendario
   openModalForCreate(date: string) {
     this.isEditMode = false;
-    this.isCardVisible = false;
     this.visitaForm.reset({
       fecha: date,
       horaInicio: '09:00',
@@ -232,7 +233,6 @@ export class CalendarioComponent implements OnInit, OnDestroy, AfterViewInit {
       estado: 'Planificada',
       escuelaId: '',
     });
-    this.visitaForm.get('fecha')?.enable();
     this.isModalVisible = true;
   }
 

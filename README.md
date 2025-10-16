@@ -72,6 +72,8 @@ ng g i core/interfaces/usuario --type=model
 ng g i core/interfaces/escuela --type=model
 ng g i core/interfaces/tarea --type=model
 ng g i core/interfaces/activityFeed --type=model
+ng g i core/interfaces/eleccion --type=model
+ng g i core/interfaces/candidato --type=model
  
 
 ```
@@ -94,6 +96,9 @@ ng g component features/employee/detalle-tarea --skip-tests
 
 #Referents
 ng g c features/referents/calendario --skip-tests
+
+#Eleccion
+ng g c features/eleccion/eleccion-list --skip-tests
 
 # Public
 ng g c features/auth/login --skip-tests

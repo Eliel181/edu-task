@@ -55,6 +55,8 @@ export const routes: Routes = [
       { path: 'mis-tareas/:id', loadComponent: () => import('./features/employee/detalle-tarea/detalle-tarea.component').then(m => m.DetalleTareaComponent), canActivate: [empleadoGuard] },
 
       { path: 'calendario', loadComponent: () => import('./features/referents/calendario/calendario.component').then(m => m.CalendarioComponent), canActivate: [authGuard] },
+
+      { path: 'gestion-elecciones', loadComponent: () => import('./features/eleccion/eleccion-list/eleccion-list.component').then(m => m.EleccionListComponent), canActivate: [authGuard, adminGuard] },
     ]
   },
 
