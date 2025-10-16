@@ -27,6 +27,8 @@ export class EleccionConfigComponent implements OnInit {
   vistasPrevias: (string | null)[] = [null, null, null];
 
   isSubmitting = false;
+  currentImageIndexes: number[] = [];
+  isImageLoading: boolean[] = [];
 
   constructor() {
     this.candidatoForm = this.fb.group({
@@ -43,9 +45,33 @@ export class EleccionConfigComponent implements OnInit {
     if (id) {
       this.eleccionService.getEleccionById(id).subscribe(eleccion => {
         this.eleccion.set(eleccion);
-        console.log(eleccion);
-
+        if (eleccion && eleccion.candidatos) {
+          this.currentImageIndexes = eleccion.candidatos.map(() => 0);
+          this.isImageLoading = eleccion.candidatos.map(() => false);
+        }
       });
+    }
+  }
+
+  nextImage(candidatoIndex: number): void {
+    const candidato = this.eleccion()?.candidatos[candidatoIndex];
+    if (candidato && candidato.imagenes.length > 1) {
+      this.isImageLoading[candidatoIndex] = true;
+      setTimeout(() => {
+        this.currentImageIndexes[candidatoIndex] = (this.currentImageIndexes[candidatoIndex] + 1) % candidato.imagenes.length;
+        this.isImageLoading[candidatoIndex] = false;
+      }, 500);
+    }
+  }
+
+  prevImage(candidatoIndex: number): void {
+    const candidato = this.eleccion()?.candidatos[candidatoIndex];
+    if (candidato && candidato.imagenes.length > 1) {
+      this.isImageLoading[candidatoIndex] = true;
+      setTimeout(() => {
+        this.currentImageIndexes[candidatoIndex] = (this.currentImageIndexes[candidatoIndex] - 1 + candidato.imagenes.length) % candidato.imagenes.length;
+        this.isImageLoading[candidatoIndex] = false;
+      }, 500);
     }
   }
 

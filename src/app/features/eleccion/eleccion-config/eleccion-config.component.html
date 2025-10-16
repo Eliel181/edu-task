@@ -8,12 +8,25 @@
 <div *ngIf="eleccion()" class="p-4">
   <h2 class="text-2xl font-bold text-[#2d2c63] dark:text-[#A78BFA] mb-4">{{ eleccion()?.titulo }}</h2>
   <div *ngIf="eleccion()?.candidatos && eleccion()?.candidatos!.length > 0; else noCandidatos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let candidato of eleccion()?.candidatos" class="bg-white dark:bg-[#2A2433] rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
-      <img [src]="candidato.imagenes[0]?.secure_url || 'https://placehold.co/600x400/6b7280/ffffff?text=' + candidato.nombre" alt="Foto de {{ candidato.nombre }}" class="w-full h-48 object-cover">
-      <div class="p-4">
-        <h3 class="text-lg font-bold text-[#2d2c63] dark:text-[#A78BFA]">{{ candidato.nombre }} {{ candidato.apellido }}</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400">{{ candidato.edad }} años</p>
-        <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{{ candidato.propuesta }}</p>
+    <div *ngFor="let candidato of eleccion()?.candidatos; let i = index" class="relative group duration-500 cursor-pointer group overflow-hidden text-gray-50 h-72 w-56  rounded-2xl hover:duration-700 ">
+      <div class="w-56 h-72 bg-cover bg-center" [style.backgroundImage]="'url(' + (candidato.imagenes[currentImageIndexes[i]]?.secure_url || 'https://placehold.co/600x400/6b7280/ffffff?text=' + candidato.nombre) + ')'">
+        <div class="absolute inset-0 bg-black bg-opacity-20 flex justify-between items-center">
+          <button (click)="prevImage(i)" class="p-2 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button (click)="nextImage(i)" class="p-2 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="absolute bg-gray-50 -bottom-24 w-56 p-3 flex flex-col gap-1 group-hover:-bottom-0 group-hover:duration-600 duration-500">
+        <span class="text-lime-400 font-bold text-xs">{{ candidato.edad }} años</span>
+        <span class="text-gray-800 font-bold text-3xl">{{ candidato.nombre }} {{ candidato.apellido }}</span>
+        <p class="text-neutral-800">{{ candidato.propuesta }}</p>
       </div>
     </div>
   </div>
@@ -128,52 +141,4 @@
   </div>
 </div>
 
-<!-- <div class="space-y-6">
-  <div class="space-y-3">
-    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen
-      principal</label>
-    <div class="relative group">
-      <div
-        class="w-80 h-80 mx-auto rounded-lg flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-600 bg-transparent">
-        <img [src]="vistasPrevias[0] || 'https://placehold.co/600x400/6b7280/ffffff?text=Imagen+Principal'"
-          alt="Imagen principal" class="w-full h-full object-contain p-4">
-      </div>
-      <label class="absolute bottom-6 right-1/2 transform translate-x-1/2">
-        <span
-          class="inline-flex items-center px-4 py-2 bg-[#003a6f] text-white text-sm font-medium rounded-lg shadow-md cursor-pointer hover:opacity-90 transition-colors">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-          Cambiar imagen
-          <input type="file" class="hidden" (change)="onFileSelected($event, 0)" accept="image/*">
-        </span>
-      </label>
-    </div>
-  </div>
 
-  <div class="space-y-3">
-    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imágenes
-      adicionales</label>
-    <div class="flex justify-center gap-6">
-      @for (idx of [1, 2]; track idx) {
-      <div class="relative group">
-        <div
-          class="w-40 h-40 rounded-lg flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-600 bg-transparent">
-          <img [src]="vistasPrevias[idx] || 'https://placehold.co/600x400/6b7280/ffffff?text=Imagen+' + (idx + 1)"
-            alt="Miniatura {{idx + 1}}" class="w-full h-full object-contain p-3">
-        </div>
-        <label class="absolute bottom-4 right-4">
-          <span
-            class="inline-flex items-center p-2 bg-white dark:bg-gray-700 text-[#003a6f] dark:text-blue-400 text-sm font-medium rounded-lg shadow-md cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors border border-gray-200 dark:border-gray-600">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-              </path>
-            </svg>
-            <input type="file" class="hidden" (change)="onFileSelected($event, idx)" accept="image/*">
-          </span>
-        </label>
-      </div>
-      }
-    </div>
-  </div>
-</div> -->
