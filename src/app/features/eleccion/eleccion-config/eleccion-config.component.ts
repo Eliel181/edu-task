@@ -194,4 +194,36 @@ export class EleccionConfigComponent implements OnInit {
       }
     }
   }
+
+  async iniciarVotacion(): Promise<void> {
+    const eleccionId = this.route.snapshot.paramMap.get('id');
+    if (!eleccionId) return;
+
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Una vez iniciada la votación, no podrás agregar ni editar candidatos.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, iniciar votación',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+      await this.eleccionService.iniciarVotacion(eleccionId);
+      Swal.fire('Votación Iniciada', 'La votación ha sido iniciada con éxito', 'success');
+      // Refresh the election data
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        this.eleccionService.getEleccionById(id).subscribe(eleccion => {
+          this.eleccion.set(eleccion);
+          if (eleccion && eleccion.candidatos) {
+            this.currentImageIndexes = eleccion.candidatos.map(() => 0);
+            this.isImageLoading = eleccion.candidatos.map(() => false);
+          }
+        });
+      }
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <div class="p-4">
-  <button (click)="openModal()" type="button"
+  <button *ngIf="eleccion()?.estado !== 'Iniciada'" (click)="openModal()" type="button"
     class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-[#5956e9] text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
     Agregar Candidato
   </button>
@@ -20,7 +20,7 @@
         {{ eleccion()?.estado }}
       </span>
     </div>
-    <button class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-green-500 text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
+    <button (click)="iniciarVotacion()" class="py-2 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-xl bg-green-500 text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none shadow-2xs hover:shadow-md">
       Iniciar Votación
     </button>
   </div>
@@ -68,7 +68,7 @@
     </div>
   </div>
   <ng-template #noCandidatos>
-    <div class="flex justify-center items-center h-40 bg-gray-100 dark:bg-gray-800 rounded-2xl">
+    <div class="flex justify-center items-center h-40 bg-gray-100 dark:bg-[#2a2433] rounded-2xl">
       <p class="text-lg text-gray-500 dark:text-gray-400">No hay candidatos en la elección</p>
     </div>
   </ng-template>

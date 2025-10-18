@@ -141,4 +141,11 @@ async guardarVotos(eleccionId: string, votos: Voto[]): Promise<void> {
       await updateDoc(eleccionDocRef, { candidatos: candidatosActualizados });
     }
   }
+
+  async iniciarVotacion(eleccionId: string): Promise<void> {
+    const eleccionDocRef = doc(this.firestore, `elecciones/${eleccionId}`);
+    await updateDoc(eleccionDocRef, {
+      estado: 'Iniciada'
+    });
+  }
 }
