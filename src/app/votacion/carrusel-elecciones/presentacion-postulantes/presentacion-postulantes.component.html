@@ -192,7 +192,7 @@
 
           <div class="relative w-[250px] aspect-[3/4] overflow-hidden rounded-2xl bg-white shadow-xl z-20">
             <img
-              [src]="candidato.imagenes[getCurrentImageIndex(candidato.id!)]?.secure_url"
+              [src]="candidato.imagenes[getCurrentImageIndex(candidato.id!)].secure_url"
               [alt]="candidato.nombre + ' - Foto ' + (getCurrentImageIndex(candidato.id!) + 1)"
               class="w-full h-full object-cover animate-fade-in" />
           </div>

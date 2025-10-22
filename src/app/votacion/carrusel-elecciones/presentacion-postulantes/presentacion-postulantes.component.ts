@@ -33,7 +33,7 @@ export class PresentacionPostulantesComponent {
   private eleccionService = inject(EleccionService);
   private authService = inject(AuthService);
   showFinalizarPanel = signal<boolean>(false);
-  // Señales principales
+
   eleccion = signal<Eleccion | null>(null);
   loading = signal<boolean>(true);
   error = signal<string>('');
@@ -43,14 +43,13 @@ export class PresentacionPostulantesComponent {
   countdown = signal<string>("00:00:00")
   private countdownInterval: any
 
-  // Sistema de votación
   criterios = signal<CriterioEvaluacion[]>([
     { id: "belleza", nombre: "Belleza" },
     { id: "carisma", nombre: "Carisma" },
     { id: "elegancia", nombre: "Elegancia" },
   ])
 
-  // Votos temporales del usuario actual
+  // Votos temporales
   votosTemporales = signal<Map<string, VotoTemporal>>(new Map());
   votacionFinalizada = signal<boolean>(false);
   showVoteMessage = signal<boolean>(false);
@@ -58,27 +57,14 @@ export class PresentacionPostulantesComponent {
   // Gestión de imágenes
   imageIndices = signal<Map<string, number>>(new Map());
 
-  // Cambia el nombre y lógica de hasVotedAllCandidates
-  hasVotedAtLeastOneCandidate = computed(() => {
-    const eleccionActual = this.eleccion();
-    const votos = this.votosTemporales();
 
-    if (!eleccionActual?.candidatos) return false;
-
-    // Retorna true si al menos un candidato tiene voto válido
-    return eleccionActual.candidatos.some(candidato =>
-      candidato.id && this.tieneVotoCompleto(candidato.id)
-    );
-  });
-
-  // O si quieres mantener el nombre pero cambiar la lógica:
   hasVotedAllCandidates = computed(() => {
     const eleccionActual = this.eleccion();
     const votos = this.votosTemporales();
 
     if (!eleccionActual?.candidatos) return false;
 
-    // Ahora retorna true si al menos UN candidato tiene voto válido
+    //  retorna true si al menos UN candidato tiene voto válido
     return eleccionActual.candidatos.some(candidato =>
       candidato.id && this.tieneVotoCompleto(candidato.id)
     );
@@ -146,7 +132,7 @@ export class PresentacionPostulantesComponent {
       if (candidato.id && candidato.votos) {
         const votoExistente = candidato.votos.find(v => v.usuarioId === usuario.uid);
         if (votoExistente) {
-          // Convertir de escala 2-10 a 1-5
+          // Convertir de escala 2-10 a 1-5 para mas precicion a la hora de hacer calculos
           nuevosVotos.set(candidato.id, {
             candidatoId: candidato.id,
             usuarioId: usuario.uid,
@@ -217,37 +203,35 @@ export class PresentacionPostulantesComponent {
   tieneVotoCompleto(candidatoId: string): boolean {
     const voto = this.votosTemporales().get(candidatoId);
     if (!voto) return false;
-
-    // Solo cuenta como voto completo si al menos un criterio tiene puntuación > 0
     return voto.belleza > 0 || voto.carisma > 0 || voto.elegancia > 0;
   }
 
-async finalizarVotacion(): Promise<void> {
-  const usuario = this.usuarioActual();
-  
-  if (!usuario) {
-    this.router.navigate(['/login']);
-    return;
-  }
+  async finalizarVotacion(): Promise<void> {
+    const usuario = this.usuarioActual();
 
-  // Cambiar esta validación
-  if (!this.hasVotedAllCandidates()) {
-    alert('Debes votar por al menos una candidata antes de finalizar');
-    return;
-  }
+    if (!usuario) {
+      this.router.navigate(['/login']);
+      return;
+    }
 
-  this.votacionFinalizada.set(true);
-  this.showFinalizarPanel.set(false);
-  
-  try {
-    await this.guardarVotosEnFirebase();
-    this.showVoteMessage.set(true);
-    this.launchConfetti();
-  } catch (error) {
-    console.error('Error al finalizar votación:', error);
-    this.votacionFinalizada.set(false);
+    // Cambiar esta validación
+    if (!this.hasVotedAllCandidates()) {
+      alert('Debes votar por al menos una candidata antes de finalizar');
+      return;
+    }
+
+    this.votacionFinalizada.set(true);
+    this.showFinalizarPanel.set(false);
+
+    try {
+      await this.guardarVotosEnFirebase();
+      this.showVoteMessage.set(true);
+      this.launchConfetti();
+    } catch (error) {
+      console.error('Error al finalizar votación:', error);
+      this.votacionFinalizada.set(false);
+    }
   }
-}
 
   private async guardarVotosEnFirebase(): Promise<void> {
     const eleccion = this.eleccion();
@@ -261,8 +245,9 @@ async finalizarVotacion(): Promise<void> {
         .filter(([candidatoId, votoTemp]) => this.tieneVotoCompleto(candidatoId));
 
       // Guardar cada voto válido individualmente
+      // VotoTemp object complete
       const promesas = votosValidos.map(([candidatoId, votoTemp]) => {
-        // Convertir a la interfaz Voto (escala 2-10)
+        // Convertir a la interfaz Voto (escala 2-10) y crear el voto
         const voto: Voto = {
           usuarioId: votoTemp.usuarioId,
           belleza: votoTemp.belleza * 2,
@@ -276,11 +261,10 @@ async finalizarVotacion(): Promise<void> {
         return this.eleccionService.agregarVotoACandidato(eleccion.id!, candidatoId, voto);
       });
 
+      // Paralelo
       await Promise.all(promesas);
-      console.log('✅ Votos válidos guardados exitosamente');
 
     } catch (error) {
-      console.error('❌ Error al guardar votos:', error);
       alert('Error al guardar los votos. Intenta nuevamente.');
       this.votacionFinalizada.set(false);
       throw error;
